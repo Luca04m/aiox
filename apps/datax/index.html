@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="DataZ — Big Data & Inteligência. Transformamos volumes massivos de dados em vantagem competitiva real para organizações globais." />
+  <title>DataZ — Big Data & Inteligência</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/logos/logo-dataz.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ================================================================
+       DataZ — componentes exclusivos (base: style.css da CSX Tech)
+       ================================================================ */
+
+    /* ── TYPOGRAPHY OVERRIDE ── */
+    :root {
+      --font: 'DM Sans', system-ui, -apple-system, sans-serif;
+    }
+
+    /* ── NAV PILL ── */
+    @media (min-width: 769px) {
+      .dz-nav .nav__links {
+        background: rgba(255,255,255,0.04);
+        border: 1px solid rgba(255,255,255,0.07);
+        border-radius: 100px;
+        padding: 5px 6px;
+        gap: 2px;
+        margin-left: 0;
+      }
+      .dz-nav .nav__link {
+        padding: 7px 16px;
+        border-radius: 100px;
+        font-size: 0.8125rem;
+        transition: background 0.18s, color 0.18s;
+      }
+      .dz-nav .nav__link:hover {
+        background: rgba(255,255,255,0.09);
+        color: #fff;
+      }
+    }
+    .dz-nav .nav__cta {
+      background: var(--dataz) !important;
+      border-color: var(--dataz) !important;
+      color: #000 !important;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 9px 20px;
+    }
+    .dz-nav .nav__cta:hover {
+      background: hsl(170,68%,36%) !important;
+      border-color: hsl(170,68%,36%) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(47,224,190,0.28);
+    }
+
+    /* ── HERO SPLIT ── */
+    .dz-hero {
+      height: auto;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-bottom: 0;
+    }
+    .dz-canvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; display: block;
+    }
+    .dz-hero .hero__overlay {
+      background:
+        linear-gradient(105deg, rgba(8,8,8,0.92) 0%, rgba(8,8,8,0.55) 55%, rgba(8,8,8,0.1) 100%);
+    }
+    .dz-hero__inner {
+      position: relative; z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      width: 100%;
+      padding-top: calc(var(--nav-h) + 48px);
+      padding-bottom: 72px;
+    }
+    /* Badge pill */
+    .dz-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px;
+      background: rgba(47,224,190,0.08);
+      border: 1px solid rgba(47,224,190,0.20);
+      border-radius: 100px;
+      font-size: 0.6875rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--dataz);
+      margin-bottom: 32px;
+    }
+    .dz-badge__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--dataz);
+      animation: dzblink 2s ease-in-out infinite;
+    }
+    @keyframes dzblink {
+      0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(47,224,190,0.5); }
+      50%      { opacity: 0.6; box-shadow: 0 0 0 5px rgba(47,224,190,0); }
+    }
+    /* Hero title */
+    .dz-hero__title {
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 700; line-height: 1.04;
+      letter-spacing: -0.038em;
+      color: #fff; margin-bottom: 24px;
+    }
+    .dz-hero__title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #2FE0BE 15%, rgba(47,224,190,0.45) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .dz-hero__sub {
+      font-size: 1rem; color: rgba(255,255,255,0.42);
+      line-height: 1.82; max-width: 440px; margin-bottom: 40px;
+    }
+    .dz-hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .dz-hero__ctas .btn--primary {
+      padding: 13px 28px;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .dz-hero__ctas .btn--ghost {
+      padding: 12px 22px;
+      border: 1px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.6); font-size: 0.9375rem;
+    }
+    .dz-hero__ctas .btn--ghost:hover {
+      border-color: rgba(255,255,255,0.38);
+      color: #fff; background: rgba(255,255,255,0.06);
+    }
+    /* ── Live data card ── */
+    .dz-hero__visual {
+      display: flex; align-items: center; justify-content: center;
+    }
+    .dz-card {
+      width: 100%; max-width: 420px;
+      background: rgba(10,10,10,0.85);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 24px 24px 18px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      position: relative; overflow: hidden;
+    }
+    .dz-card::before {
+      content: '';
+      position: absolute; top: 0; left: 15%; right: 15%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(47,224,190,0.55), transparent);
+    }
+    .dz-card__header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px; padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dz-live {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 0.625rem; font-weight: 700;
+      letter-spacing: 0.14em; color: var(--dataz);
+      font-family: var(--mono);
+    }
+    .dz-live__dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--dataz);
+      animation: dzlive 1.6s ease-in-out infinite;
+    }
+    @keyframes dzlive {
+      0%,100% { box-shadow: 0 0 0 0 rgba(47,224,190,0.6); }
+      50%      { box-shadow: 0 0 0 4px rgba(47,224,190,0); }
+    }
+    .dz-card__label {
+      font-size: 0.75rem; color: rgba(255,255,255,0.35); font-weight: 500;
+    }
+    /* Progress */
+    .dz-card__section { margin-bottom: 18px; }
+    .dz-card__row {
+      display: flex; justify-content: space-between;
+      align-items: center; margin-bottom: 8px;
+    }
+    .dz-card__key { font-size: 0.75rem; color: rgba(255,255,255,0.38); font-weight: 500; }
+    .dz-pct {
+      font-size: 0.75rem; color: var(--dataz);
+      font-weight: 700; font-family: var(--mono);
+    }
+    .dz-progress {
+      height: 3px; background: rgba(255,255,255,0.07);
+      border-radius: 100px; overflow: hidden;
+    }
+    .dz-progress__fill {
+      height: 100%;
+      background: linear-gradient(90deg, rgba(47,224,190,0.5), #2FE0BE);
+      border-radius: 100px; width: 87.4%;
+      transition: width 1.8s ease;
+    }
+    /* Counter */
+    .dz-counter { margin-bottom: 18px; }
+    .dz-counter__val {
+      display: block; font-size: 1.75rem; font-weight: 700;
+      letter-spacing: -0.04em; font-family: var(--mono);
+      color: #fff; line-height: 1; margin-bottom: 4px;
+    }
+    .dz-counter__lbl {
+      font-size: 0.6875rem; color: rgba(255,255,255,0.3); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+    /* Stats grid */
+    .dz-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.06);
+      border-radius: 8px; overflow: hidden; margin-bottom: 14px;
+    }
+    .dz-stat {
+      background: rgba(255,255,255,0.025); padding: 10px 12px;
+      display: flex; flex-direction: column; gap: 3px;
+    }
+    .dz-stat__val {
+      font-size: 0.875rem; font-weight: 700; font-family: var(--mono);
+      color: #fff; letter-spacing: -0.01em;
+    }
+    .dz-stat__lbl {
+      font-size: 0.5625rem; color: rgba(255,255,255,0.3); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.09em;
+    }
+    /* Bar chart */
+    .dz-bars {
+      display: flex; align-items: flex-end; gap: 2px; height: 36px;
+    }
+    .dz-bar {
+      flex: 1; border-radius: 2px 2px 0 0;
+      background: rgba(47,224,190,0.18);
+      transition: height 0.5s ease, background 0.3s;
+      min-height: 3px;
+    }
+    .dz-bar--hot { background: var(--dataz); }
+
+    /* ── Missão ── */
+    .missao {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .missao::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(47,224,190,0.10) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .missao__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; position: relative;
+    }
+    .missao__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.75rem); font-weight: 700;
+      line-height: 1.15; letter-spacing: -0.025em; margin-bottom: 24px;
+    }
+    .missao__body {
+      font-size: 1rem; color: var(--muted); line-height: 1.82; margin-bottom: 18px;
+    }
+    .missao__founder {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.875rem; color: rgba(255,255,255,0.5); font-weight: 500; margin-top: 4px;
+    }
+    .missao__dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--dataz); flex-shrink: 0;
+    }
+    .missao__visual { display: flex; align-items: center; justify-content: center; min-height: 380px; }
+
+    /* ── Capacidades ── */
+    .cap { position: relative; }
+    .cap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(47,224,190,0.10) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+    .cap-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+      position: relative;
+    }
+    .cap-card {
+      background: var(--bg); padding: 44px 40px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: background var(--dur); position: relative; overflow: hidden;
+    }
+    .cap-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: var(--dataz); opacity: 0; transition: opacity var(--dur);
+    }
+    .cap-card:hover { background: rgba(47,224,190,0.04); }
+    .cap-card:hover::after { opacity: 1; }
+    .cap-card__icon { width: 36px; height: 36px; color: var(--dataz); }
+    .cap-card__icon svg { width: 100%; height: 100%; }
+    .cap-card__title { font-size: 1.125rem; font-weight: 600; }
+    .cap-card__desc { font-size: 0.9375rem; color: var(--muted); line-height: 1.72; }
+
+    /* ── Abordagem ── */
+    .abordagem {
+      background: var(--surface);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .abordagem__steps {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); border-radius: var(--r); overflow: hidden;
+    }
+    .step {
+      background: var(--surface-2); padding: 52px 44px;
+      display: flex; flex-direction: column; gap: 16px;
+      transition: background var(--dur);
+    }
+    .step:hover { background: rgba(47,224,190,0.03); }
+    .step__num {
+      font-family: var(--mono); font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.14em; color: var(--dataz);
+    }
+    .step__title { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+    .step__desc { font-size: 0.9375rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── MANIFESTO CTA ── */
+    .dz-manifesto {
+      position: relative; overflow: hidden;
+      border-top: 1px solid var(--border);
+    }
+    .dz-manifesto__glow {
+      position: absolute; top: 50%; left: -280px;
+      transform: translateY(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(47,224,190,0.055) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .dz-manifesto__watermark {
+      position: absolute; right: -80px; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none; user-select: none;
+    }
+    .dz-manifesto__watermark svg {
+      height: 500px; width: auto; opacity: 0.025;
+      filter: brightness(0) invert(1);
+    }
+    .dz-manifesto__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .dz-manifesto__title {
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 700; line-height: 1.08;
+      letter-spacing: -0.038em; margin-top: 16px;
+    }
+    .dz-manifesto__title em {
+      font-style: normal;
+      background: linear-gradient(135deg, #2FE0BE 15%, rgba(47,224,190,0.42) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .dz-manifesto__sub {
+      font-size: 1.0625rem; color: var(--muted);
+      line-height: 1.78; margin-bottom: 36px;
+    }
+    .dz-manifesto__note {
+      margin-top: 16px;
+      font-size: 0.8125rem; color: rgba(255,255,255,0.22);
+    }
+    .dz-manifesto__divider {
+      width: 32px; height: 2px;
+      background: var(--dataz); margin: 20px 0; opacity: 0.5;
+    }
+
+    /* ── Footer DataZ ── */
+    .dz-footer {
+      border-top: 1px solid var(--border);
+      padding-bottom: 0;
+    }
+    .dz-footer .container {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding-top: 40px; padding-bottom: 28px; gap: 0;
+    }
+    .dz-footer__status {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.625rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.22); font-family: var(--mono);
+      margin-bottom: 40px;
+    }
+    .dz-footer__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--dataz);
+      animation: dzlive 1.6s ease-in-out infinite;
+    }
+    .dz-footer__brand {
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      padding-bottom: 36px; margin-bottom: 0;
+      width: 100%; border-bottom: 1px solid var(--border);
+    }
+    .dz-footer__logo svg { height: 30px; width: auto; }
+    .dz-footer__tagline {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.28); font-weight: 400;
+    }
+    .dz-footer__cta {
+      font-size: 0.875rem; font-weight: 600;
+      color: var(--dataz); transition: opacity 0.2s;
+      margin-top: 4px;
+    }
+    .dz-footer__cta:hover { opacity: 0.65; }
+    .dz-footer__bottom {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 8px 14px;
+      padding-top: 20px; padding-bottom: 8px;
+      font-size: 0.75rem; color: rgba(255,255,255,0.2);
+    }
+    .dz-footer__bottom a { color: rgba(255,255,255,0.32); transition: color 0.2s; }
+    .dz-footer__bottom a:hover { color: rgba(255,255,255,0.65); }
+    .dz-footer__sep { color: rgba(255,255,255,0.10); }
+
+    /* ── Responsive DataZ ── */
+    @media (max-width: 1024px) {
+      .dz-hero__inner { grid-template-columns: 1fr; gap: 48px; padding-bottom: 56px; }
+      .dz-hero__visual { justify-content: flex-start; }
+      .dz-card { max-width: 100%; }
+      .missao__inner { grid-template-columns: 1fr; gap: 40px; }
+      .missao__visual { min-height: auto; }
+      .abordagem__steps { grid-template-columns: 1fr; }
+      .step { padding: 40px 36px; }
+      .dz-manifesto__inner { grid-template-columns: 1fr; gap: 40px; }
+      .dz-manifesto__watermark { display: none; }
+    }
+    /* ── BOTTOM NAV (mobile only) ── */
+    .dz-bottomnav { display: none; }
+    @media (max-width: 768px) {
+      .dz-nav .nav__burger { display: none; }
+      .dz-nav .nav__links  { display: none !important; }
+      .dz-nav .nav__cta    { display: none; }
+      body { padding-bottom: 80px; }
+
+      .dz-bottomnav {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0; z-index: 200;
+        background: rgba(8,8,8,0.94);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 8px 10px;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        gap: 4px;
+        align-items: stretch;
+      }
+      .dz-bn__item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        padding: 8px 4px;
+        color: rgba(255,255,255,0.38);
+        font-size: 0.5625rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: color 0.18s, background 0.18s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .dz-bn__item:hover,
+      .dz-bn__item:active { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.06); }
+      .dz-bn__item svg { width: 18px; height: 18px; }
+      .dz-bn__item--cta {
+        background: var(--dataz);
+        color: #000 !important;
+        font-weight: 700;
+        flex: 1.4;
+      }
+      .dz-bn__item--cta:hover,
+      .dz-bn__item--cta:active { background: hsl(170,68%,36%); }
+    }
+
+    @media (max-width: 768px) {
+      /* Hero: fit content, sem espaço morto */
+      .dz-hero { min-height: auto; align-items: flex-start; }
+      .dz-hero__inner {
+        padding-top: calc(var(--nav-h) + 40px);
+        padding-bottom: 64px;
+        gap: 32px;
+      }
+      .dz-hero__visual { display: none; }
+      .dz-hero__title { font-size: clamp(2.6rem, 9vw, 3.5rem); }
+      .dz-hero__sub { font-size: 0.9375rem; margin-bottom: 32px; }
+      .dz-hero__ctas {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .dz-hero__ctas .btn {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+      }
+
+      /* Missão: esconde visual no mobile */
+      .missao__visual { display: none; }
+      .missao__inner { grid-template-columns: 1fr !important; gap: 0 !important; }
+      .missao__title { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+      /* Capacidades */
+      .cap-grid { grid-template-columns: 1fr; }
+      .cap-card { padding: 28px 20px; }
+
+      /* Abordagem */
+      .step { padding: 32px 24px; }
+
+      /* Manifesto */
+      .dz-manifesto__title { font-size: clamp(2.2rem, 8vw, 3rem); }
+      .dz-manifesto__inner { gap: 28px; }
+
+      /* Footer: links em coluna limpa */
+      .dz-footer__sep { display: none; }
+      .dz-footer__bottom {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding-top: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV PILL -->
+  <nav class="nav dz-nav" id="nav">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo" id="navLogo" aria-label="DataZ"></a>
+      <ul class="nav__links">
+        <li><a href="#missao"      class="nav__link">Sobre</a></li>
+        <li><a href="#capacidades" class="nav__link">Soluções</a></li>
+        <li><a href="#abordagem"   class="nav__link">Abordagem</a></li>
+        <li><a href="https://csxtech.com.br" class="nav__link" style="color:var(--muted-2)">← CSX Tech</a></li>
+        <li class="nav__cta-mobile">
+          <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+             class="btn btn--primary">Falar com a DataZ</a>
+        </li>
+      </ul>
+      <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+         class="btn btn--outline nav__cta">Falar com a DataZ</a>
+      <button class="nav__burger" id="navBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="dz-bottomnav" aria-label="Menu mobile">
+    <a href="#missao" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>
+      </svg>
+      Sobre
+    </a>
+    <a href="#capacidades" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Soluções
+    </a>
+    <a href="#abordagem" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M5 6h14M5 18h14"/>
+      </svg>
+      Abordagem
+    </a>
+    <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer" class="dz-bn__item dz-bn__item--cta">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.35A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.67 0-3.22-.49-4.53-1.33l-.32-.2-3.01.79.8-2.94-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+      </svg>
+      Contato
+    </a>
+  </nav>
+
+  <!-- HERO SPLIT -->
+  <section class="hero dz-hero" id="hero">
+    <canvas class="dz-canvas" id="dzCanvas"></canvas>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="dz-hero__inner container">
+
+      <!-- Left: copy -->
+      <div class="dz-hero__content">
+        <div class="dz-badge">
+          <span class="dz-badge__dot"></span>Big Data &amp; Inteligência
+        </div>
+        <h1 class="dz-hero__title">
+          Dados que<br />criam<br /><em>vantagem real.</em>
+        </h1>
+        <p class="dz-hero__sub">
+          Do volume massivo à decisão estratégica — a DataZ transforma
+          inteligência de dados em resultado concreto para organizações
+          que operam em escala global.
+        </p>
+        <div class="dz-hero__ctas">
+          <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+             class="btn btn--primary">Falar com a DataZ</a>
+          <a href="#missao" class="btn btn--ghost">Explorar soluções →</a>
+        </div>
+      </div>
+
+      <!-- Right: live data card -->
+      <div class="dz-hero__visual">
+        <div class="dz-card">
+          <div class="dz-card__header">
+            <span class="dz-live"><span class="dz-live__dot"></span>LIVE</span>
+            <span class="dz-card__label">DataZ Intelligence</span>
+          </div>
+
+          <div class="dz-card__section">
+            <div class="dz-card__row">
+              <span class="dz-card__key">Pipeline ativo</span>
+              <span class="dz-pct" id="dzPct">87.4%</span>
+            </div>
+            <div class="dz-progress">
+              <div class="dz-progress__fill" id="dzProgress"></div>
+            </div>
+          </div>
+
+          <div class="dz-counter">
+            <span class="dz-counter__val" id="dzCounter">1.247.832.094</span>
+            <span class="dz-counter__lbl">registros processados</span>
+          </div>
+
+          <div class="dz-stats">
+            <div class="dz-stat">
+              <span class="dz-stat__val">&lt;50ms</span>
+              <span class="dz-stat__lbl">Latência</span>
+            </div>
+            <div class="dz-stat">
+              <span class="dz-stat__val">99.8%</span>
+              <span class="dz-stat__lbl">Precisão</span>
+            </div>
+            <div class="dz-stat">
+              <span class="dz-stat__val">99.9%</span>
+              <span class="dz-stat__lbl">Uptime</span>
+            </div>
+          </div>
+
+          <div class="dz-bars" id="dzBars"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MISSÃO -->
+  <section class="missao section" id="missao">
+    <div class="container">
+      <div class="missao__inner">
+
+        <div class="missao__content" data-gsap="fade-right">
+          <p class="section__eyebrow"
+             style="text-align:left;margin-bottom:16px;color:var(--dataz)">Nossa Missão</p>
+          <h2 class="missao__title">Um novo padrão de<br />inteligência aplicada.</h2>
+          <p class="missao__body">
+            DataZ é uma empresa de Big Data criada para liderar o cenário global de
+            inteligência de dados. Sob o comando de Victor Fortinati, a companhia nasce
+            com visão internacional e foco absoluto em performance, escala e inovação —
+            transformando volumes massivos de dados em vantagem competitiva real.
+          </p>
+          <p class="missao__body">
+            Mais do que tecnologia, a DataZ estabelece um novo padrão de inteligência
+            aplicada aos negócios, entregando soluções que ampliam eficiência, antecipam
+            cenários e impulsionam crescimento — posicionando seus clientes à frente
+            do mercado global.
+          </p>
+          <div class="missao__founder">
+            <span class="missao__dot"></span>
+            <span>Victor Fortinati — Fundador &amp; CEO</span>
+          </div>
+        </div>
+
+        <div class="missao__visual" data-gsap="fade-left">
+          <div class="dataz-visual">
+            <div class="dz-grid" id="dzGrid"></div>
+            <div class="dz-glow"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPACIDADES -->
+  <section class="cap section" id="capacidades">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow" data-gsap="fade-up">O que entregamos</p>
+        <h2 class="section__title" data-gsap="fade-up">Quatro pilares.<br />Uma vantagem.</h2>
+        <p class="section__sub" data-gsap="fade-up">
+          Arquitetura, analytics, previsão e inteligência artificial —
+          integrados para gerar impacto real no seu negócio.
+        </p>
+      </div>
+      <div class="cap-grid" data-gsap="fade-up">
+
+        <div class="cap-card">
+          <div class="cap-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="5" rx="9" ry="3"/>
+              <path d="M21 12c0 1.66-4.03 3-9 3S3 13.66 3 12"/>
+              <path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/>
+            </svg>
+          </div>
+          <p class="cap-card__title">Arquitetura de Dados</p>
+          <p class="cap-card__desc">
+            Infraestrutura de alta complexidade com Data Warehouse, Data Lake e
+            pipelines em tempo real — projetados para volumes massivos e evolução contínua.
+          </p>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6"  y1="20" x2="6"  y2="14"/>
+              <line x1="3"  y1="20" x2="21" y2="20"/>
+            </svg>
+          </div>
+          <p class="cap-card__title">Analytics Avançado</p>
+          <p class="cap-card__desc">
+            Da coleta ao insight: dashboards estratégicos, relatórios executivos e
+            análise comportamental em escala para decisões mais rápidas e precisas.
+          </p>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <circle cx="12" cy="12" r="6"/>
+              <circle cx="12" cy="12" r="2"/>
+            </svg>
+          </div>
+          <p class="cap-card__title">Inteligência Preditiva</p>
+          <p class="cap-card__desc">
+            Antecipe cenários antes que aconteçam. Modelos preditivos que ampliam
+            eficiência, reduzem riscos e posicionam sua organização à frente do mercado.
+          </p>
+        </div>
+
+        <div class="cap-card">
+          <div class="cap-card__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="4"  r="2"/>
+              <circle cx="4"  cy="20" r="2"/>
+              <circle cx="20" cy="20" r="2"/>
+              <line x1="12" y1="6"  x2="5"  y2="18"/>
+              <line x1="12" y1="6"  x2="19" y2="18"/>
+              <line x1="6"  y1="20" x2="18" y2="20"/>
+            </svg>
+          </div>
+          <p class="cap-card__title">Machine Learning &amp; IA</p>
+          <p class="cap-card__desc">
+            Modelos de aprendizado de máquina e inteligência artificial aplicados
+            diretamente ao negócio — evoluindo continuamente com seus dados.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABORDAGEM -->
+  <section class="abordagem section" id="abordagem">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow" data-gsap="fade-up">Como trabalhamos</p>
+        <h2 class="section__title" data-gsap="fade-up">Do diagnóstico<br />ao resultado.</h2>
+        <p class="section__sub" data-gsap="fade-up">
+          Três etapas que transformam o potencial dos seus dados
+          em vantagem competitiva real e mensurável.
+        </p>
+      </div>
+      <div class="abordagem__steps" data-gsap="fade-up">
+
+        <div class="step">
+          <span class="step__num">01</span>
+          <h3 class="step__title">Diagnóstico</h3>
+          <p class="step__desc">
+            Mapeamos seus dados, entendemos a fundo seu negócio e identificamos
+            as maiores oportunidades de valor ocultas na sua operação.
+          </p>
+        </div>
+
+        <div class="step">
+          <span class="step__num">02</span>
+          <h3 class="step__title">Arquitetura</h3>
+          <p class="step__desc">
+            Projetamos e implementamos a infraestrutura ideal para o seu volume,
+            velocidade e complexidade — com visão de longo prazo e escalabilidade garantida.
+          </p>
+        </div>
+
+        <div class="step">
+          <span class="step__num">03</span>
+          <h3 class="step__title">Inteligência</h3>
+          <p class="step__desc">
+            Ativamos a camada analítica e preditiva que gera vantagem competitiva
+            contínua, permitindo decisões mais rápidas, precisas e estratégicas.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO CTA -->
+  <section class="dz-manifesto section" id="contato">
+    <div class="dz-manifesto__glow" aria-hidden="true"></div>
+    <div class="dz-manifesto__watermark" id="manifestoWatermark" aria-hidden="true"></div>
+    <div class="container">
+      <div class="dz-manifesto__inner">
+
+        <div data-gsap="fade-right">
+          <p class="section__eyebrow" style="text-align:left;color:var(--dataz)">Próximo nível</p>
+          <h2 class="dz-manifesto__title">
+            Seus dados<br />valem mais<br />do que você<br /><em>imagina.</em>
+          </h2>
+          <div class="dz-manifesto__divider"></div>
+        </div>
+
+        <div data-gsap="fade-left">
+          <p class="dz-manifesto__sub">
+            CIOs e CTOs globais escolhem a DataZ quando performance, escala e
+            inteligência de dados não são opcionais — são o próprio negócio.
+          </p>
+          <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+             class="btn btn--brand btn--lg"
+             style="--bc:var(--dataz);--bch:hsl(170,68%,36%);color:#000;font-weight:700">
+            Falar com a DataZ →
+          </a>
+          <p class="dz-manifesto__note">Resposta em até 24 horas via WhatsApp</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="dz-footer">
+    <div class="container">
+
+      <div class="dz-footer__status">
+        <span class="dz-footer__dot"></span>
+        <span>Sistema operacional</span>
+      </div>
+
+      <div class="dz-footer__brand">
+        <div class="dz-footer__logo" id="footerLogo"></div>
+        <p class="dz-footer__tagline">Inteligência de dados em escala global.</p>
+        <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+           class="dz-footer__cta">Falar com a DataZ →</a>
+      </div>
+
+      <div class="dz-footer__bottom">
+        <span>© 2026 DataZ</span>
+        <span class="dz-footer__sep">·</span>
+        <a href="https://csxtech.com.br">CSX Tech</a>
+        <span class="dz-footer__sep">·</span>
+        <a href="privacidade.html">Privacidade</a>
+        <span class="dz-footer__sep">·</span>
+        <a href="termos.html">Termos</a>
+        <span class="dz-footer__sep">·</span>
+        <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer">Contato</a>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

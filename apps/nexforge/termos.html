@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Termos de Uso — Nexforge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root {
+      --nfont: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --nbody: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --nmono: 'JetBrains Mono', monospace;
+      --nex:   #e53215;
+      --nbg:   #050810;
+      --nsurf: #080c18;
+      --nbord: rgba(255,255,255,0.06);
+    }
+    body { background: var(--nbg) !important; font-family: var(--nbody); }
+
+    .nx-legal-nav {
+      background: rgba(5,8,16,0.92) !important;
+      backdrop-filter: blur(24px) saturate(1.4) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    }
+    .nx-legal-nav .nav__inner {
+      display: flex !important; align-items: center !important;
+      justify-content: space-between !important;
+    }
+    .nx-legal-nav .nav__logo img { height: 24px !important; width: auto !important; }
+    .nx-legal-nav .nav__links { display: none !important; }
+    .nx-legal-nav .nav__burger { display: none !important; }
+    .nx-back {
+      font-family: var(--nmono); font-size: 0.75rem; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.35); transition: color 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nx-back:hover { color: rgba(229,50,21,0.8); }
+
+    .nx-legal {
+      max-width: 760px; margin: 0 auto;
+      padding: calc(var(--nav-h) + 72px) 32px 120px;
+    }
+    .nx-legal__eyebrow {
+      font-family: var(--nmono); font-size: 0.5625rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(229,50,21,0.6); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nx-legal__eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--nex); opacity: 0.5; }
+    .nx-legal__title {
+      font-family: var(--nfont); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      color: #fff; margin-bottom: 12px; line-height: 1.1;
+    }
+    .nx-legal__meta {
+      font-family: var(--nmono); font-size: 0.6875rem;
+      color: rgba(255,255,255,0.25); letter-spacing: 0.04em;
+      margin-bottom: 56px; padding-bottom: 32px;
+      border-bottom: 1px solid rgba(229,50,21,0.08);
+    }
+    .nx-legal__content h2 {
+      font-family: var(--nfont); font-size: 1.125rem; font-weight: 600;
+      letter-spacing: -0.02em; color: rgba(255,255,255,0.9);
+      margin: 48px 0 14px;
+    }
+    .nx-legal__content h2:first-child { margin-top: 0; }
+    .nx-legal__content p {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.45);
+      line-height: 1.85; margin-bottom: 14px;
+    }
+    .nx-legal__content ul {
+      list-style: none; margin: 0 0 16px; padding: 0;
+    }
+    .nx-legal__content ul li {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.45);
+      line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 6px;
+    }
+    .nx-legal__content ul li::before {
+      content: '—'; position: absolute; left: 0;
+      color: rgba(229,50,21,0.4); font-size: 0.75rem;
+    }
+    .nx-legal__contact {
+      margin-top: 56px; padding: 28px 32px;
+      border: 1px solid rgba(229,50,21,0.15);
+      background: rgba(229,50,21,0.04); border-radius: 4px;
+    }
+    .nx-legal__contact p { margin-bottom: 6px; font-size: 0.875rem; color: rgba(255,255,255,0.4); }
+    .nx-legal__contact strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+    .nx-legal__contact a { color: var(--nex); transition: opacity 0.2s; }
+    .nx-legal__contact a:hover { opacity: 0.7; }
+
+    .nx-legal-footer {
+      text-align: center; padding: 32px; font-size: 0.8125rem;
+      color: rgba(255,255,255,0.18); border-top: 1px solid var(--nbord);
+    }
+    .nx-legal-footer a { color: rgba(255,255,255,0.18); transition: color 0.2s; }
+    .nx-legal-footer a:hover { color: rgba(229,50,21,0.7); }
+
+    /* Bottom nav mobile */
+    .nx-bottomnav { display: none; }
+    @media (max-width: 768px) {
+      .nx-bottomnav {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+        background: rgba(5,8,16,0.95); backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(229,50,21,0.1);
+        padding: 0 0 env(safe-area-inset-bottom);
+      }
+      .nx-bn__item {
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        gap: 3px; padding: 10px 0; font-family: var(--nmono); font-size: 0.4375rem;
+        letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+      }
+      .nx-bn__item svg { width: 18px; height: 18px; }
+      .nx-bn__item--cta { background: var(--nex); color: #fff; flex: 1.4; font-weight: 600; }
+      body { padding-bottom: 72px; }
+      .nx-legal { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav nx-legal-nav">
+  <div class="nav__inner container">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logos/nexforge-full.svg" alt="Nexforge" height="24">
+    </a>
+    <a href="index.html" class="nx-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m12 5-7 7 7 7"/></svg>
+      Voltar ao site
+    </a>
+  </div>
+</nav>
+
+<main class="nx-legal">
+  <p class="nx-legal__eyebrow">Documento legal</p>
+  <h1 class="nx-legal__title">Termos de Uso</h1>
+  <p class="nx-legal__meta">Última atualização: Fevereiro de 2026 · Nexforge Tecnologia</p>
+
+  <div class="nx-legal__content">
+
+    <h2>1. Aceitação dos Termos</h2>
+    <p>Ao acessar e utilizar os serviços da Nexforge, você concorda integralmente com estes Termos de Uso. Caso não concorde com qualquer disposição aqui prevista, recomendamos que não utilize nossos serviços.</p>
+    <p>Estes termos regulam a relação entre a Nexforge e seus clientes, parceiros e usuários dos sistemas desenvolvidos pela empresa.</p>
+
+    <h2>2. Sobre a Nexforge</h2>
+    <p>A Nexforge é uma empresa de desenvolvimento de sistemas e consultoria tecnológica, liderada por Victor Fortinati. Atuamos com mentalidade global no desenvolvimento de plataformas robustas, escaláveis e preparadas para ambientes de alta exigência.</p>
+
+    <h2>3. Serviços Prestados</h2>
+    <p>A Nexforge oferece, entre outros:</p>
+    <ul>
+      <li>Desenvolvimento de sistemas, plataformas e produtos digitais</li>
+      <li>Arquitetura e infraestrutura cloud</li>
+      <li>Consultoria tecnológica estratégica</li>
+      <li>Integrações, APIs e automações</li>
+      <li>Suporte técnico e evolução de sistemas entregues</li>
+    </ul>
+
+    <h2>4. Propriedade Intelectual</h2>
+    <p>Todo o código, documentação, arquitetura e entregáveis produzidos pela Nexforge são regidos pelas condições estabelecidas no contrato de prestação de serviços firmado entre as partes.</p>
+    <p>Na ausência de contrato específico, todos os direitos de propriedade intelectual sobre os entregáveis permanecem com a Nexforge até quitação integral dos valores acordados.</p>
+
+    <h2>5. Confidencialidade</h2>
+    <p>A Nexforge trata com sigilo absoluto todas as informações técnicas, estratégicas e comerciais compartilhadas pelos clientes durante a prestação dos serviços. Nossos profissionais são treinados e contratualmente obrigados a manter confidencialidade.</p>
+
+    <h2>6. Responsabilidades do Cliente</h2>
+    <ul>
+      <li>Fornecer informações precisas e completas necessárias ao desenvolvimento</li>
+      <li>Realizar aprovações e validações nos prazos acordados</li>
+      <li>Cumprir as obrigações financeiras nas datas estipuladas</li>
+      <li>Não utilizar os sistemas desenvolvidos para fins ilícitos</li>
+    </ul>
+
+    <h2>7. Limitação de Responsabilidade</h2>
+    <p>A Nexforge não se responsabiliza por perdas ou danos decorrentes do uso inadequado dos sistemas entregues, interrupções de serviços de terceiros (provedores cloud, APIs externas) ou por decisões de negócio tomadas com base nos sistemas desenvolvidos.</p>
+
+    <h2>8. Prazo e Rescisão</h2>
+    <p>Os contratos de serviço têm vigência definida em proposta comercial. A rescisão antecipada está sujeita às condições previstas em contrato, incluindo pagamento dos serviços já executados.</p>
+
+    <h2>9. Legislação Aplicável</h2>
+    <p>Estes Termos são regidos pelas leis da República Federativa do Brasil. Para dirimir eventuais controvérsias, fica eleito o foro da Comarca de São José dos Campos — SP, com renúncia a qualquer outro.</p>
+
+    <div class="nx-legal__contact">
+      <p><strong>Dúvidas sobre estes termos?</strong></p>
+      <p>Entre em contato com a equipe Nexforge:</p>
+      <p><a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer">WhatsApp: +55 (12) 99704-1596</a></p>
+      <p>Victor Fortinati · Fundador &amp; CEO</p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="nx-legal-footer">
+  <p>© 2026 Nexforge Tecnologia. &nbsp;·&nbsp; <a href="privacidade.html">Política de Privacidade</a> &nbsp;·&nbsp; <a href="index.html">nexforge.build</a></p>
+</footer>
+
+<nav class="nx-bottomnav">
+  <a href="index.html" class="nx-bn__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Início
+  </a>
+  <a href="privacidade.html" class="nx-bn__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Privacidade
+  </a>
+  <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer" class="nx-bn__item nx-bn__item--cta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Contato
+  </a>
+</nav>
+
+</body>
+</html>

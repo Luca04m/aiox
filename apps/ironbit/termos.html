@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Termos de Uso — IronBit Cibersegurança." />
+  <title>Termos de Uso — IronBit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/logos/logo-iron-bit.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    :root {
+      --font:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      --mono:    'IBM Plex Mono', 'SF Mono', 'Consolas', monospace;
+      --ironbit: #e53215;
+      --ibh:     hsl(9,77%,34%);
+    }
+
+    /* ── Legal layout ── */
+    .legal { padding: 120px 0 80px; min-height: 100vh; }
+    .legal__back {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.45); font-size: 0.875rem;
+      margin-bottom: 48px; transition: color 0.2s;
+    }
+    .legal__back:hover { color: #fff; }
+    .legal__eyebrow {
+      font-size: 0.6875rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--ironbit); margin-bottom: 16px;
+      font-family: var(--mono);
+    }
+    .legal__title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700;
+      letter-spacing: -0.025em; margin-bottom: 8px;
+    }
+    .legal__date {
+      font-size: 0.875rem; color: rgba(255,255,255,0.35);
+      margin-bottom: 56px; padding-bottom: 32px;
+      border-bottom: 1px solid rgba(229,50,21,0.12);
+    }
+    .legal__body h2 {
+      font-size: 1.0625rem; font-weight: 600;
+      margin: 40px 0 12px; color: #fff;
+    }
+    .legal__body p {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.55);
+      line-height: 1.85; margin-bottom: 16px;
+    }
+    .legal__body ul { padding-left: 20px; margin-bottom: 16px; }
+    .legal__body ul li {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.55);
+      line-height: 1.85; margin-bottom: 8px;
+    }
+    .legal__contact {
+      margin-top: 48px; padding: 24px;
+      border: 1px solid rgba(229,50,21,0.15);
+      border-radius: 4px; background: rgba(229,50,21,0.04);
+    }
+    .legal__contact p { margin: 0; }
+    .legal__contact a { color: var(--ironbit); }
+
+    /* ── Nav IronBit (sem pill) ── */
+    .ib-nav .nav__cta {
+      background: var(--ironbit) !important;
+      border-color: var(--ironbit) !important;
+      color: #fff !important; font-weight: 600;
+      font-size: 0.875rem; padding: 9px 20px;
+      border-radius: 4px !important;
+    }
+    @media (min-width: 769px) {
+      .ib-nav .nav__links {
+        background: none; border: none; border-radius: 0;
+        gap: 0; margin-left: 24px;
+      }
+      .ib-nav .nav__link {
+        padding: 8px 14px; font-size: 0.875rem; position: relative;
+      }
+      .ib-nav .nav__link::after {
+        content: ''; position: absolute;
+        bottom: 4px; left: 14px; right: 14px; height: 1px;
+        background: var(--ironbit);
+        transform: scaleX(0); transform-origin: left;
+        transition: transform 0.22s ease;
+      }
+      .ib-nav .nav__link:hover::after { transform: scaleX(1); }
+      .ib-nav .nav__link:hover { color: #fff; background: none; }
+    }
+
+    /* ── Footer minimal ── */
+    .ib-footer-legal {
+      border-top: 1px solid rgba(229,50,21,0.1);
+      padding: 24px 0;
+    }
+    .ib-footer-legal .container {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      font-size: 0.75rem; color: rgba(255,255,255,0.25);
+    }
+    .ib-footer-legal nav { display: flex; gap: 16px; }
+    .ib-footer-legal a { color: rgba(255,255,255,0.35); transition: color 0.2s; }
+    .ib-footer-legal a:hover { color: rgba(255,255,255,0.7); }
+
+    /* ── Bottom nav (mobile only) ── */
+    .dz-bottomnav { display: none; }
+    @media (max-width: 768px) {
+      .ib-nav .nav__burger { display: none; }
+      .ib-nav .nav__links  { display: none !important; }
+      .ib-nav .nav__cta    { display: none; }
+      body { padding-bottom: 80px; }
+      .legal { padding-top: 88px; }
+      .dz-bottomnav {
+        display: flex; position: fixed;
+        bottom: 0; left: 0; right: 0; z-index: 200;
+        background: rgba(8,8,8,0.94);
+        backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 8px 10px;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        gap: 4px; align-items: stretch;
+      }
+      .dz-bn__item {
+        flex: 1; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 4px;
+        padding: 8px 4px; color: rgba(255,255,255,0.38);
+        font-size: 0.5625rem; font-weight: 600;
+        letter-spacing: 0.05em; text-transform: uppercase;
+        text-decoration: none; border-radius: 10px;
+        transition: color 0.18s, background 0.18s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .dz-bn__item svg { width: 18px; height: 18px; }
+      .dz-bn__item--cta {
+        background: var(--ironbit); color: #fff !important;
+        font-weight: 700; flex: 1.4;
+      }
+      .dz-bn__item--cta:active { background: var(--ibh); }
+      .ib-footer-legal .container { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav ib-nav scrolled" id="ibNav">
+    <div class="nav__inner container">
+      <a href="index.html" class="nav__logo" aria-label="IronBit">
+        <img src="assets/logos/ironbit-full.svg" alt="IronBit" height="28" style="display:block" />
+      </a>
+      <ul class="nav__links">
+        <li><a href="index.html#sobre"     class="nav__link">Sobre</a></li>
+        <li><a href="index.html#servicos"  class="nav__link">Serviços</a></li>
+        <li><a href="index.html#abordagem" class="nav__link">Abordagem</a></li>
+        <li><a href="https://csxtech.com.br" class="nav__link" style="color:rgba(255,255,255,0.3)">← CSX Tech</a></li>
+      </ul>
+      <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+         class="btn btn--outline nav__cta">Falar com a IronBit</a>
+      <button class="nav__burger" id="ibBurger" aria-label="Menu" style="display:none">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BOTTOM NAV (mobile only) -->
+  <nav class="dz-bottomnav" aria-label="Menu mobile">
+    <a href="index.html#sobre" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Sobre
+    </a>
+    <a href="index.html#servicos" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Serviços
+    </a>
+    <a href="index.html#abordagem" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M5 6h14M5 18h14"/>
+      </svg>
+      Abordagem
+    </a>
+    <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer" class="dz-bn__item dz-bn__item--cta">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.35A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.67 0-3.22-.49-4.53-1.33l-.32-.2-3.01.79.8-2.94-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+      </svg>
+      Contato
+    </a>
+  </nav>
+
+  <section class="legal">
+    <div class="container" style="max-width: 760px;">
+      <a href="index.html" class="legal__back">← Voltar à IronBit</a>
+      <p class="legal__eyebrow">IronBit</p>
+      <h1 class="legal__title">Termos de Uso</h1>
+      <p class="legal__date">Última atualização: fevereiro de 2026</p>
+
+      <div class="legal__body">
+        <p>Ao acessar e utilizar o site da IronBit, vertical de Cibersegurança da CSX Holding, você concorda com os presentes Termos de Uso. Caso não concorde com alguma condição, recomendamos que não utilize nossos serviços.</p>
+
+        <h2>1. Sobre a IronBit</h2>
+        <p>A IronBit é uma empresa de cibersegurança posicionada para ser referência global na proteção de ativos digitais. Sob a liderança de Victor Fortinati, a companhia opera com abordagem estratégica, antecipando ameaças e construindo ambientes digitais resilientes para organizações que exigem segurança de alto nível.</p>
+
+        <h2>2. Uso do site</h2>
+        <p>Este site destina-se exclusivamente a fins informativos sobre os serviços e soluções da IronBit. É expressamente proibido:</p>
+        <ul>
+          <li>Utilizar o site para fins ilegais ou não autorizados</li>
+          <li>Tentar acessar áreas restritas sem autorização</li>
+          <li>Reproduzir, distribuir ou modificar o conteúdo sem permissão expressa</li>
+          <li>Realizar ações que possam comprometer a segurança ou disponibilidade do site</li>
+          <li>Usar ferramentas automatizadas para coletar dados sem autorização</li>
+          <li>Tentar realizar engenharia reversa de qualquer sistema, código ou metodologia da IronBit</li>
+        </ul>
+
+        <h2>3. Propriedade intelectual</h2>
+        <p>Todo o conteúdo disponível neste site — incluindo textos, logotipos, imagens, design, código-fonte, metodologias e marcas comerciais — é de propriedade exclusiva da IronBit / CSX Holding ou de seus licenciadores, protegido pelas leis de direitos autorais e propriedade intelectual aplicáveis.</p>
+        <p>A reprodução total ou parcial de qualquer elemento sem autorização prévia e por escrito é expressamente proibida.</p>
+
+        <h2>4. Isenção de responsabilidade</h2>
+        <p>As informações contidas neste site são fornecidas "como estão", sem garantias de qualquer natureza. A IronBit não se responsabiliza por:</p>
+        <ul>
+          <li>Decisões tomadas com base exclusivamente nas informações do site</li>
+          <li>Interrupções temporárias de acesso por motivos técnicos ou de força maior</li>
+          <li>Conteúdo de sites externos vinculados por links</li>
+          <li>Danos diretos ou indiretos decorrentes do uso das informações disponibilizadas</li>
+        </ul>
+
+        <h2>5. Confidencialidade das informações</h2>
+        <p>Informações compartilhadas durante contatos comerciais com a IronBit são tratadas com rigoroso sigilo profissional. Todas as interações podem ser regidas por acordos de não divulgação (NDA) específicos, conforme negociado entre as partes.</p>
+
+        <h2>6. Links externos</h2>
+        <p>Este site pode conter links para sites de terceiros, fornecidos apenas para conveniência. A IronBit não tem controle sobre o conteúdo desses sites e não assume responsabilidade por suas práticas de privacidade ou pelo seu conteúdo.</p>
+
+        <h2>7. Disponibilidade do serviço</h2>
+        <p>A IronBit empenha-se em manter o site disponível continuamente, mas não garante disponibilidade ininterrupta. Reservamos o direito de modificar, suspender ou encerrar o site a qualquer momento, sem aviso prévio.</p>
+
+        <h2>8. Modificações dos termos</h2>
+        <p>A IronBit reserva-se o direito de alterar estes Termos de Uso a qualquer momento. As alterações entram em vigor imediatamente após publicação. O uso continuado do site após as alterações implica aceitação dos novos termos.</p>
+
+        <h2>9. Lei aplicável e foro</h2>
+        <p>Estes Termos de Uso são regidos pelas leis da República Federativa do Brasil. Para dirimir quaisquer controvérsias, fica eleito o foro da comarca de São José dos Campos/SP, com renúncia expressa a qualquer outro, por mais privilegiado que seja.</p>
+
+        <div class="legal__contact">
+          <p>Dúvidas sobre estes Termos de Uso? Entre em contato pelo WhatsApp: <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer">+55 12 99704-1596</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="ib-footer-legal">
+    <div class="container">
+      <span>© 2026 IronBit · CSX Holding. Todos os direitos reservados.</span>
+      <nav>
+        <a href="index.html">IronBit</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="termos.html">Termos</a>
+        <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer">Contato</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>

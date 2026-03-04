@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade — Nexforge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root {
+      --nfont: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --nbody: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --nmono: 'JetBrains Mono', monospace;
+      --nex:   #e53215;
+      --nbg:   #050810;
+      --nsurf: #080c18;
+      --nbord: rgba(255,255,255,0.06);
+    }
+    body { background: var(--nbg) !important; font-family: var(--nbody); }
+
+    .nx-legal-nav {
+      background: rgba(5,8,16,0.92) !important;
+      backdrop-filter: blur(24px) saturate(1.4) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    }
+    .nx-legal-nav .nav__inner {
+      display: flex !important; align-items: center !important;
+      justify-content: space-between !important;
+    }
+    .nx-legal-nav .nav__logo img { height: 24px !important; width: auto !important; }
+    .nx-legal-nav .nav__links { display: none !important; }
+    .nx-legal-nav .nav__burger { display: none !important; }
+    .nx-back {
+      font-family: var(--nmono); font-size: 0.75rem; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.35); transition: color 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .nx-back:hover { color: rgba(229,50,21,0.8); }
+
+    .nx-legal {
+      max-width: 760px; margin: 0 auto;
+      padding: calc(var(--nav-h) + 72px) 32px 120px;
+    }
+    .nx-legal__eyebrow {
+      font-family: var(--nmono); font-size: 0.5625rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(229,50,21,0.6); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nx-legal__eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--nex); opacity: 0.5; }
+    .nx-legal__title {
+      font-family: var(--nfont); font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      color: #fff; margin-bottom: 12px; line-height: 1.1;
+    }
+    .nx-legal__meta {
+      font-family: var(--nmono); font-size: 0.6875rem;
+      color: rgba(255,255,255,0.25); letter-spacing: 0.04em;
+      margin-bottom: 56px; padding-bottom: 32px;
+      border-bottom: 1px solid rgba(229,50,21,0.08);
+    }
+    .nx-legal__content h2 {
+      font-family: var(--nfont); font-size: 1.125rem; font-weight: 600;
+      letter-spacing: -0.02em; color: rgba(255,255,255,0.9);
+      margin: 48px 0 14px;
+    }
+    .nx-legal__content h2:first-child { margin-top: 0; }
+    .nx-legal__content p {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.45);
+      line-height: 1.85; margin-bottom: 14px;
+    }
+    .nx-legal__content ul {
+      list-style: none; margin: 0 0 16px; padding: 0;
+    }
+    .nx-legal__content ul li {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.45);
+      line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 6px;
+    }
+    .nx-legal__content ul li::before {
+      content: '—'; position: absolute; left: 0;
+      color: rgba(229,50,21,0.4); font-size: 0.75rem;
+    }
+    .nx-legal__contact {
+      margin-top: 56px; padding: 28px 32px;
+      border: 1px solid rgba(229,50,21,0.15);
+      background: rgba(229,50,21,0.04); border-radius: 4px;
+    }
+    .nx-legal__contact p { margin-bottom: 6px; font-size: 0.875rem; color: rgba(255,255,255,0.4); }
+    .nx-legal__contact strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+    .nx-legal__contact a { color: var(--nex); transition: opacity 0.2s; }
+    .nx-legal__contact a:hover { opacity: 0.7; }
+
+    .nx-legal-footer {
+      text-align: center; padding: 32px; font-size: 0.8125rem;
+      color: rgba(255,255,255,0.18); border-top: 1px solid var(--nbord);
+    }
+    .nx-legal-footer a { color: rgba(255,255,255,0.18); transition: color 0.2s; }
+    .nx-legal-footer a:hover { color: rgba(229,50,21,0.7); }
+
+    .nx-bottomnav { display: none; }
+    @media (max-width: 768px) {
+      .nx-bottomnav {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+        background: rgba(5,8,16,0.95); backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(229,50,21,0.1);
+        padding: 0 0 env(safe-area-inset-bottom);
+      }
+      .nx-bn__item {
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        gap: 3px; padding: 10px 0; font-family: var(--nmono); font-size: 0.4375rem;
+        letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+      }
+      .nx-bn__item svg { width: 18px; height: 18px; }
+      .nx-bn__item--cta { background: var(--nex); color: #fff; flex: 1.4; font-weight: 600; }
+      body { padding-bottom: 72px; }
+      .nx-legal { padding-left: 24px; padding-right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav nx-legal-nav">
+  <div class="nav__inner container">
+    <a href="index.html" class="nav__logo">
+      <img src="assets/logos/nexforge-full.svg" alt="Nexforge" height="24">
+    </a>
+    <a href="index.html" class="nx-back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 12-14 0"/><path d="m12 5-7 7 7 7"/></svg>
+      Voltar ao site
+    </a>
+  </div>
+</nav>
+
+<main class="nx-legal">
+  <p class="nx-legal__eyebrow">Documento legal</p>
+  <h1 class="nx-legal__title">Política de Privacidade</h1>
+  <p class="nx-legal__meta">Última atualização: Fevereiro de 2026 · Nexforge Tecnologia · LGPD</p>
+
+  <div class="nx-legal__content">
+
+    <h2>1. Controlador dos Dados</h2>
+    <p>Esta Política descreve como a Nexforge coleta, utiliza e protege os dados pessoais de clientes, parceiros e visitantes, em conformidade com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).</p>
+    <p>Controlador: <strong style="color:rgba(255,255,255,0.7)">Nexforge Tecnologia</strong> · Responsável: Victor Fortinati</p>
+
+    <h2>2. Dados que Coletamos</h2>
+    <p>Coletamos apenas os dados estritamente necessários para a prestação de nossos serviços:</p>
+    <ul>
+      <li>Nome completo e dados de contato (e-mail, telefone)</li>
+      <li>Informações da empresa (razão social, CNPJ)</li>
+      <li>Dados técnicos fornecidos para o escopo do projeto</li>
+      <li>Registros de comunicação (e-mail, WhatsApp, reuniões)</li>
+      <li>Dados de acesso aos sistemas que desenvolvemos e operamos</li>
+    </ul>
+
+    <h2>3. Finalidade do Tratamento</h2>
+    <p>Os dados coletados são utilizados exclusivamente para:</p>
+    <ul>
+      <li>Execução dos contratos de prestação de serviço</li>
+      <li>Comunicação sobre projetos em andamento e propostas comerciais</li>
+      <li>Cumprimento de obrigações legais e fiscais</li>
+      <li>Melhoria contínua dos serviços prestados</li>
+      <li>Envio de comunicações relevantes (mediante consentimento)</li>
+    </ul>
+
+    <h2>4. Segurança dos Dados</h2>
+    <p>A Nexforge aplica as melhores práticas de engenharia de software à segurança dos dados que processa. Nossas medidas incluem:</p>
+    <ul>
+      <li>Criptografia em trânsito (TLS 1.3) e em repouso (AES-256)</li>
+      <li>Acesso restrito a dados por princípio de menor privilégio</li>
+      <li>Autenticação multifator obrigatória para acesso a sistemas internos</li>
+      <li>Auditoria de acessos e logs de atividade</li>
+      <li>Backups criptografados com retenção definida contratualmente</li>
+    </ul>
+
+    <h2>5. Compartilhamento de Dados</h2>
+    <p>A Nexforge não vende, aluga ou compartilha dados pessoais de clientes com terceiros, exceto:</p>
+    <ul>
+      <li>Quando necessário para a execução do serviço (ex: provedores cloud contratados pelo cliente)</li>
+      <li>Por determinação legal ou judicial</li>
+      <li>Com parceiros técnicos sob acordo de confidencialidade, quando explicitamente autorizado</li>
+    </ul>
+
+    <h2>6. Retenção de Dados</h2>
+    <p>Os dados são mantidos pelo período necessário ao cumprimento das finalidades para as quais foram coletados, respeitando os prazos legais de guarda de documentos fiscais e contábeis (mínimo de 5 anos), salvo solicitação de exclusão anterior pelo titular.</p>
+
+    <h2>7. Direitos do Titular</h2>
+    <p>Em conformidade com a LGPD, você tem direito a:</p>
+    <ul>
+      <li>Confirmar a existência de tratamento de seus dados</li>
+      <li>Acessar os dados que temos sobre você</li>
+      <li>Solicitar correção de dados incompletos ou desatualizados</li>
+      <li>Solicitar anonimização, bloqueio ou eliminação de dados</li>
+      <li>Revogar consentimento para comunicações de marketing</li>
+      <li>Portabilidade dos dados a outro fornecedor</li>
+    </ul>
+
+    <h2>8. Cookies e Rastreamento</h2>
+    <p>O site da Nexforge utiliza cookies técnicos essenciais para funcionamento. Não utilizamos cookies de rastreamento publicitário ou serviços de analytics de terceiros que coletem dados pessoais sem consentimento.</p>
+
+    <h2>9. Alterações nesta Política</h2>
+    <p>Esta política pode ser atualizada periodicamente. Clientes ativos serão notificados de mudanças relevantes. A versão vigente estará sempre disponível nesta página.</p>
+
+    <div class="nx-legal__contact">
+      <p><strong>Exercício de direitos e dúvidas sobre privacidade:</strong></p>
+      <p>Entre em contato com nosso responsável pelo tratamento de dados:</p>
+      <p><a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer">WhatsApp: +55 (12) 99704-1596</a></p>
+      <p>Victor Fortinati · DPO responsável · Nexforge Tecnologia</p>
+    </div>
+
+  </div>
+</main>
+
+<footer class="nx-legal-footer">
+  <p>© 2026 Nexforge Tecnologia. &nbsp;·&nbsp; <a href="termos.html">Termos de Uso</a> &nbsp;·&nbsp; <a href="index.html">nexforge.build</a></p>
+</footer>
+
+<nav class="nx-bottomnav">
+  <a href="index.html" class="nx-bn__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Início
+  </a>
+  <a href="termos.html" class="nx-bn__item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    Termos
+  </a>
+  <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer" class="nx-bn__item nx-bn__item--cta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Contato
+  </a>
+</nav>
+
+</body>
+</html>

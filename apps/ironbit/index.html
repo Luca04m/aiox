@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="IronBit — Cibersegurança de referência global. Proteção de ativos digitais, monitoramento 24/7 e defesa inteligente para infraestruturas críticas." />
+  <title>IronBit — Cibersegurança</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" href="assets/logos/logo-iron-bit.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    /* ================================================================
+       IronBit — v2 · FULL REDESIGN
+       ================================================================ */
+
+    :root {
+      --font:    'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+      --mono:    'IBM Plex Mono', 'SF Mono', 'Consolas', monospace;
+      --ironbit: #bc0000;
+      --ibh:     hsl(0,100%,30%);
+    }
+
+    /* ── NAV ── */
+    /* ── NAV BASE: glass sempre ativo ── */
+    .ib-nav {
+      background: rgba(8,8,8,0.5) !important;
+      backdrop-filter: blur(24px) saturate(1.4) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+      transition: background 0.35s ease, border-color 0.35s ease !important;
+    }
+    .ib-nav.scrolled {
+      background: rgba(8,8,8,0.88) !important;
+      border-bottom-color: rgba(188,0,0,0.07) !important;
+    }
+
+    /* ── NAV DESKTOP: flex + logo absolute = simetria perfeita ── */
+    @media (min-width: 769px) {
+      .ib-nav .nav__inner {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        position: relative !important;
+      }
+
+      /* Logo: absolutamente centrada no eixo horizontal */
+      .ib-nav .nav__logo {
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 2 !important;
+        padding: 0 !important;
+        line-height: 0 !important;
+      }
+      .ib-nav .nav__logo svg,
+      .ib-nav .nav__logo img {
+        height: 26px !important; width: auto !important; display: block !important;
+      }
+
+      /* Links: lado esquerdo, alinhados pelo flex */
+      .ib-nav .nav__links {
+        position: relative !important; z-index: 1 !important;
+        display: flex !important; align-items: center !important;
+        gap: 0 !important; background: none !important;
+        border: none !important; border-radius: 0 !important;
+        margin: 0 !important; padding: 0 !important;
+      }
+      .ib-nav .nav__link {
+        padding: 8px 14px !important;
+        font-size: 0.8125rem !important; font-weight: 400 !important;
+        color: rgba(255,255,255,0.5) !important;
+        letter-spacing: 0.01em !important;
+        transition: color 0.2s !important;
+        position: relative !important; white-space: nowrap !important;
+      }
+      .ib-nav li:first-child .nav__link { padding-left: 0 !important; }
+      .ib-nav .nav__link::after {
+        content: ''; position: absolute;
+        bottom: 2px; left: 14px; right: 14px; height: 1px;
+        background: var(--ironbit);
+        transform: scaleX(0); transform-origin: left;
+        transition: transform 0.22s ease;
+      }
+      .ib-nav li:first-child .nav__link::after { left: 0; }
+      .ib-nav .nav__link:hover { color: rgba(255,255,255,0.92) !important; background: none !important; }
+      .ib-nav .nav__link:hover::after { transform: scaleX(1); }
+
+      /* Link de volta CSX Tech: oculto no desktop */
+      .ib-nav .nav__link-back { display: none !important; }
+
+      /* CTA: lado direito, outline preciso */
+      .ib-nav .nav__cta {
+        position: relative !important; z-index: 1 !important;
+        background: transparent !important;
+        border: 1px solid rgba(188,0,0,0.38) !important;
+        color: rgba(188,0,0,0.85) !important;
+        font-size: 0.8125rem !important; font-weight: 500 !important;
+        padding: 7px 18px !important; border-radius: 4px !important;
+        letter-spacing: 0.01em !important;
+        transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s !important;
+        white-space: nowrap !important; flex-shrink: 0 !important;
+      }
+      .ib-nav .nav__cta:hover {
+        background: var(--ironbit) !important;
+        border-color: var(--ironbit) !important;
+        color: #fff !important;
+        box-shadow: 0 4px 16px rgba(188,0,0,0.22) !important;
+      }
+
+      .ib-nav .nav__burger { display: none !important; }
+    }
+
+    /* ── HERO ── */
+    .ib-hero {
+      min-height: 100vh; display: flex; align-items: center;
+      overflow: hidden; position: relative;
+    }
+    .ib-canvas {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      z-index: 0; pointer-events: none; display: block;
+    }
+    .ib-hero .hero__overlay {
+      background: linear-gradient(110deg, rgba(8,8,8,0.96) 0%, rgba(8,8,8,0.6) 55%, rgba(8,8,8,0.05) 100%);
+    }
+    .ib-hero__inner {
+      position: relative; z-index: 2; width: 100%;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center; gap: 60px;
+      padding-top: calc(var(--nav-h) + 64px); padding-bottom: 80px;
+    }
+
+    /* Badge */
+    .ib-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 5px 12px 5px 10px;
+      border: 1px solid rgba(188,0,0,0.25);
+      border-radius: 2px;
+      font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(188,0,0,0.85); font-family: var(--mono);
+      margin-bottom: 28px;
+      background: rgba(188,0,0,0.04);
+    }
+    .ib-badge__dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--ironbit); animation: ibblink 1.8s ease-in-out infinite;
+    }
+    @keyframes ibblink {
+      0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(188,0,0,0.5); }
+      50%      { opacity:0.4; box-shadow: 0 0 0 5px rgba(188,0,0,0); }
+    }
+
+    /* Hero title — clean, legível, premium */
+    .ib-hero__title {
+      font-family: var(--font);
+      font-size: clamp(2.6rem, 4.5vw, 4.8rem);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -0.03em; color: #fff;
+      margin-bottom: 24px;
+    }
+    .ib-hero__title .ib-red { color: var(--ironbit); }
+    .ib-hero__title .ib-dim { color: rgba(255,255,255,0.22); font-weight: 300; }
+
+    .ib-hero__sub {
+      font-size: 1rem; color: rgba(255,255,255,0.5); line-height: 1.72;
+      max-width: 400px; margin-bottom: 36px; font-weight: 400;
+    }
+    .ib-hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .ib-hero__ctas .btn--primary {
+      background: var(--ironbit); border-color: var(--ironbit);
+      border-radius: 4px !important; padding: 13px 28px;
+      color: #fff; font-weight: 600;
+      box-shadow: 0 0 0 1px rgba(188,0,0,0.3), 0 4px 20px rgba(188,0,0,0.2);
+    }
+    .ib-hero__ctas .btn--primary:hover {
+      background: var(--ibh); border-color: var(--ibh);
+      box-shadow: 0 0 0 1px rgba(188,0,0,0.4), 0 8px 28px rgba(188,0,0,0.3);
+    }
+    .ib-hero__ctas .btn--ghost {
+      padding: 12px 22px; border-radius: 4px !important;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5); font-size: 0.9375rem;
+    }
+    .ib-hero__ctas .btn--ghost:hover {
+      border-color: rgba(255,255,255,0.32); color: #fff;
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Live strip (below CTAs) */
+    .ib-live-strip {
+      display: flex; gap: 0; margin-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 24px;
+    }
+    .ib-live-stat {
+      flex: 1; display: flex; flex-direction: column; gap: 5px;
+      padding-right: 28px; margin-right: 28px;
+      border-right: 1px solid rgba(255,255,255,0.07);
+    }
+    .ib-live-stat:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+    .ib-live-stat__val {
+      font-family: var(--mono); font-size: 1.25rem; font-weight: 600;
+      color: var(--ironbit); letter-spacing: -0.02em; line-height: 1;
+    }
+    .ib-live-stat__lbl {
+      font-size: 0.5625rem; font-weight: 400; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.32); font-family: var(--mono);
+    }
+
+    /* ── RADAR VISUAL ── */
+    .ib-radar-wrap {
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+    .ib-radar {
+      position: relative; width: 340px; height: 340px;
+      flex-shrink: 0;
+    }
+    /* Outer circle */
+    .ib-radar__outer {
+      position: absolute; inset: 0; border-radius: 50%;
+      border: 1px solid rgba(188,0,0,0.18);
+      overflow: hidden;
+    }
+    /* Crosshairs grid inside */
+    .ib-radar__outer::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        linear-gradient(rgba(188,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(188,0,0,0.06) 1px, transparent 1px);
+      background-size: 80px 80px; background-position: center center;
+    }
+    /* Sweep */
+    .ib-radar__sweep {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg,
+        transparent 310deg,
+        rgba(188,0,0,0.04) 330deg,
+        rgba(188,0,0,0.22) 360deg
+      );
+      animation: ibsweep 4s linear infinite;
+    }
+    @keyframes ibsweep {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    /* Inner rings */
+    .ib-radar__ring {
+      position: absolute; border-radius: 50%; border: 1px solid rgba(188,0,0,0.12);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+    }
+    .ib-radar__ring--1 { width: 33%; height: 33%; }
+    .ib-radar__ring--2 { width: 66%; height: 66%; }
+    /* Cross lines */
+    .ib-radar__cross-h, .ib-radar__cross-v {
+      position: absolute; background: rgba(188,0,0,0.1);
+    }
+    .ib-radar__cross-h { top: 50%; left: 0; right: 0; height: 1px; transform: translateY(-50%); }
+    .ib-radar__cross-v { left: 50%; top: 0; bottom: 0; width: 1px; transform: translateX(-50%); }
+    /* Center dot */
+    .ib-radar__center {
+      position: absolute; top: 50%; left: 50%;
+      width: 8px; height: 8px;
+      transform: translate(-50%, -50%); border-radius: 50%;
+      background: var(--ironbit);
+      box-shadow: 0 0 12px 4px rgba(188,0,0,0.4);
+    }
+    /* Blips */
+    .ib-radar__blip {
+      position: absolute; width: 5px; height: 5px; border-radius: 50%;
+      background: var(--ironbit); animation: ibblip 3.5s ease-in-out infinite;
+    }
+    .ib-radar__blip::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      border: 1px solid rgba(188,0,0,0.4);
+      animation: ibblip-ring 3.5s ease-in-out infinite;
+    }
+    @keyframes ibblip {
+      0%,100% { opacity: 0; transform: scale(0.3); }
+      25%,75% { opacity: 1; transform: scale(1); }
+    }
+    @keyframes ibblip-ring {
+      0%,100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 0.5; transform: scale(3); }
+    }
+    /* Corner labels */
+    .ib-radar__label {
+      position: absolute; font-family: var(--mono); font-size: 0.4rem;
+      font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(188,0,0,0.3);
+    }
+    .ib-radar__label--tl { top: 8px; left: 12px; }
+    .ib-radar__label--tr { top: 8px; right: 12px; }
+    .ib-radar__label--bl { bottom: 8px; left: 12px; }
+    .ib-radar__label--br { bottom: 8px; right: 12px; }
+
+    /* ── TICKER ── */
+    .ib-ticker {
+      overflow: hidden; background: rgba(188,0,0,0.025);
+      border-top: 1px solid rgba(188,0,0,0.08);
+      border-bottom: 1px solid rgba(188,0,0,0.08);
+      padding: 9px 0; user-select: none;
+    }
+    .ib-ticker__track { display: flex; animation: ibtick 45s linear infinite; }
+    .ib-ticker__track:hover { animation-play-state: paused; }
+    .ib-ticker__inner {
+      display: flex; align-items: center; gap: 0; flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .ib-ticker__item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 0 28px;
+      font-family: var(--mono); font-size: 0.5rem;
+      font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .ib-ticker__dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .ib-ticker__dot--red  { background: var(--ironbit); }
+    .ib-ticker__dot--yel  { background: #f59e0b; }
+    .ib-ticker__dot--grn  { background: #22c55e; }
+    .ib-ticker__type--red { color: var(--ironbit); }
+    .ib-ticker__type--yel { color: #f59e0b; }
+    .ib-ticker__type--grn { color: #22c55e; }
+    .ib-ticker__msg { color: rgba(255,255,255,0.35); }
+    .ib-ticker__sep { color: rgba(188,0,0,0.2); padding: 0 8px; font-size: 0.5rem; }
+    @keyframes ibtick {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── SOBRE ── */
+    .ib-sobre {
+      background: var(--surface); position: relative;
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .ib-sobre__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; position: relative;
+    }
+    .ib-sobre__eyebrow {
+      font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ironbit);
+      font-family: var(--mono); margin-bottom: 18px;
+    }
+    .ib-sobre__title {
+      font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700;
+      line-height: 1.18; letter-spacing: -0.02em; margin-bottom: 20px;
+    }
+    .ib-sobre__body { font-size: 0.9375rem; color: var(--muted); line-height: 1.75; margin-bottom: 14px; }
+    .ib-sobre__founder {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.8125rem; color: rgba(255,255,255,0.35);
+      font-family: var(--mono); margin-top: 16px;
+    }
+    .ib-sobre__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ironbit); flex-shrink: 0; }
+
+    /* Terminal window */
+    .ib-terminal {
+      background: #050505;
+      border: 1px solid rgba(188,0,0,0.18);
+      border-radius: 4px; overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(188,0,0,0.06), 0 24px 48px rgba(0,0,0,0.5);
+    }
+    .ib-terminal__header {
+      display: flex; align-items: center; gap: 6px;
+      padding: 10px 14px; border-bottom: 1px solid rgba(188,0,0,0.1);
+      background: rgba(188,0,0,0.04);
+    }
+    .ib-terminal__btn {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .ib-terminal__btn--r { background: rgba(188,0,0,0.7); }
+    .ib-terminal__btn--y { background: rgba(245,158,11,0.5); }
+    .ib-terminal__btn--g { background: rgba(34,197,94,0.5); }
+    .ib-terminal__title {
+      margin-left: 8px; font-family: var(--mono); font-size: 0.5625rem;
+      color: rgba(255,255,255,0.25); letter-spacing: 0.08em;
+    }
+    .ib-terminal__body {
+      padding: 18px 16px; font-family: var(--mono); font-size: 0.6875rem;
+      line-height: 1.9; color: rgba(255,255,255,0.55);
+      min-height: 220px;
+    }
+    .ib-term__prompt { color: var(--ironbit); }
+    .ib-term__cmd    { color: rgba(255,255,255,0.8); }
+    .ib-term__out    { color: rgba(255,255,255,0.4); padding-left: 16px; }
+    .ib-term__ok     { color: #22c55e; padding-left: 16px; }
+    .ib-term__warn   { color: #f59e0b; padding-left: 16px; }
+    .ib-term__cursor {
+      display: inline-block; width: 7px; height: 12px;
+      background: var(--ironbit); margin-left: 2px;
+      animation: ibcursor 1.1s step-end infinite;
+      vertical-align: middle;
+    }
+    @keyframes ibcursor { 0%,100% { opacity:1; } 50% { opacity:0; } }
+
+    /* Reveal lines one by one */
+    .ib-term__line { opacity: 0; animation: ibshow 0.01s ease forwards; }
+    .ib-term__line:nth-child(1)  { animation-delay: 0.3s; }
+    .ib-term__line:nth-child(2)  { animation-delay: 0.9s; }
+    .ib-term__line:nth-child(3)  { animation-delay: 1.3s; }
+    .ib-term__line:nth-child(4)  { animation-delay: 1.8s; }
+    .ib-term__line:nth-child(5)  { animation-delay: 2.3s; }
+    .ib-term__line:nth-child(6)  { animation-delay: 2.9s; }
+    .ib-term__line:nth-child(7)  { animation-delay: 3.5s; }
+    .ib-term__line:nth-child(8)  { animation-delay: 4.2s; }
+    .ib-term__line:nth-child(9)  { animation-delay: 4.8s; }
+    .ib-term__line:nth-child(10) { animation-delay: 5.5s; }
+    .ib-term__cursor-line { opacity: 0; animation: ibshow 0.01s ease forwards; animation-delay: 5.6s; }
+    @keyframes ibshow { to { opacity: 1; } }
+
+    /* ── NÚMEROS ── */
+    .ib-nums {
+      background: var(--bg); position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .ib-nums__inner {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; position: relative;
+    }
+    .ib-nums__inner::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        0deg, transparent, transparent 2px,
+        rgba(188,0,0,0.015) 2px, rgba(188,0,0,0.015) 3px
+      );
+      pointer-events: none;
+    }
+    .ib-num {
+      padding: 72px 56px; position: relative;
+      display: flex; flex-direction: column; gap: 6px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .ib-num:last-child { border-right: none; }
+    .ib-num__prefix {
+      font-family: var(--mono); font-size: 0.5rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(188,0,0,0.5); margin-bottom: 6px;
+    }
+    .ib-num__val {
+      font-family: var(--mono);
+      font-size: clamp(2.5rem, 4.5vw, 4rem);
+      font-weight: 700; letter-spacing: -0.03em;
+      color: #fff; line-height: 1;
+    }
+    .ib-num__val.live { color: var(--ironbit); }
+    .ib-num__lbl {
+      font-size: 0.9375rem; font-weight: 500; color: rgba(255,255,255,0.65); margin-top: 6px;
+      letter-spacing: -0.01em;
+    }
+    .ib-num__sub {
+      font-size: 0.6875rem; color: rgba(255,255,255,0.22); font-family: var(--mono);
+      letter-spacing: 0.02em;
+    }
+
+    /* ── SERVIÇOS — editorial list ── */
+    .ib-servicos { position: relative; border-bottom: 1px solid var(--border); }
+    .ib-svc-list { margin-top: 56px; }
+    .ib-svc {
+      display: grid; grid-template-columns: 44px 1px 1fr 20px;
+      gap: 40px; align-items: start; padding: 44px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      cursor: default; transition: background 0.25s;
+    }
+    .ib-svc:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .ib-svc:hover { background: rgba(188,0,0,0.02); }
+    .ib-svc__num {
+      font-family: var(--mono); font-size: 0.625rem; font-weight: 500;
+      letter-spacing: 0.06em; color: rgba(188,0,0,0.45);
+      padding-top: 5px;
+    }
+    .ib-svc__rule { background: rgba(255,255,255,0.07); min-height: 100%; }
+    .ib-svc__body { display: flex; flex-direction: column; gap: 10px; }
+    .ib-svc__title {
+      font-size: 1.1875rem; font-weight: 600; letter-spacing: -0.02em;
+      color: rgba(255,255,255,0.92); transition: color 0.2s;
+    }
+    .ib-svc:hover .ib-svc__title { color: #fff; }
+    .ib-svc__desc { font-size: 0.9rem; color: rgba(255,255,255,0.42); line-height: 1.72; max-width: 560px; }
+    .ib-svc__tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+    .ib-svc__tag {
+      font-family: var(--mono); font-size: 0.4375rem; font-weight: 500;
+      letter-spacing: 0.07em; text-transform: uppercase;
+      padding: 3px 8px; border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.3); border-radius: 2px;
+    }
+    .ib-svc:hover .ib-svc__tag { border-color: rgba(188,0,0,0.2); color: rgba(188,0,0,0.6); }
+    .ib-svc__arrow {
+      color: rgba(255,255,255,0.15); font-size: 1rem;
+      padding-top: 5px; transition: color 0.2s, transform 0.2s;
+    }
+    .ib-svc:hover .ib-svc__arrow { color: var(--ironbit); transform: translateX(4px); }
+
+    /* ── SETORES ── */
+    .ib-setores {
+      background: var(--surface);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    }
+    .ib-setores__header { margin-bottom: 48px; }
+    .ib-setores__eyebrow {
+      font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ironbit);
+      font-family: var(--mono); margin-bottom: 14px;
+    }
+    .ib-setores__title {
+      font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: 600;
+      letter-spacing: -0.02em; max-width: 440px; color: rgba(255,255,255,0.88);
+    }
+    .ib-setores__grid {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 0; border: 1px solid rgba(188,0,0,0.1);
+      border-radius: 4px; overflow: hidden;
+    }
+    .ib-setor {
+      background: var(--bg); padding: 40px 20px;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 12px; text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.05);
+      position: relative; transition: background 0.25s;
+    }
+    .ib-setor:last-child { border-right: none; }
+    .ib-setor:hover { background: rgba(188,0,0,0.03); }
+    .ib-setor__icon {
+      width: 28px; height: 28px; color: rgba(255,255,255,0.3);
+      transition: color 0.25s;
+    }
+    .ib-setor:hover .ib-setor__icon { color: var(--ironbit); }
+    .ib-setor__icon svg { width: 100%; height: 100%; }
+    .ib-setor__name {
+      font-size: 0.6875rem; font-weight: 500; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.01em;
+    }
+    .ib-setor__tag {
+      font-family: var(--mono); font-size: 0.375rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(34,197,94,0.7); border: 1px solid rgba(34,197,94,0.15);
+      padding: 2px 6px; border-radius: 2px;
+    }
+
+    /* Section headers override — mais respiro */
+    .ib-servicos .section__eyebrow,
+    .ib-abordagem .section__eyebrow {
+      font-size: 0.5625rem !important; letter-spacing: 0.1em !important;
+      font-weight: 500 !important;
+    }
+    .ib-servicos .section__title,
+    .ib-abordagem .section__title {
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem) !important;
+      letter-spacing: -0.025em !important; line-height: 1.15 !important;
+    }
+    .ib-servicos .section__sub,
+    .ib-abordagem .section__sub {
+      font-size: 0.9rem !important; line-height: 1.72 !important;
+      color: rgba(255,255,255,0.42) !important;
+    }
+    .ib-svc-list { margin-top: 48px; }
+
+    /* ── ABORDAGEM — timeline ── */
+    .ib-abordagem { position: relative; border-bottom: 1px solid var(--border); }
+    .ib-tl {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; margin-top: 64px; position: relative;
+      border: 1px solid rgba(188,0,0,0.1);
+      border-radius: 4px; overflow: hidden;
+    }
+    .ib-tl-step {
+      padding: 56px 44px;
+      background: var(--surface-2);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      position: relative; transition: background 0.25s;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .ib-tl-step:last-child { border-right: none; }
+    .ib-tl-step:hover { background: rgba(188,0,0,0.03); }
+    /* top accent bar animates on hover */
+    .ib-tl-step::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--ironbit); opacity: 0; transition: opacity 0.25s;
+    }
+    .ib-tl-step:hover::before { opacity: 1; }
+    .ib-tl-step__index {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .ib-tl-step__num {
+      font-family: var(--mono);
+      font-size: 3rem; font-weight: 700; line-height: 1;
+      color: rgba(188,0,0,0.08); letter-spacing: -0.04em;
+      transition: color 0.25s;
+    }
+    .ib-tl-step:hover .ib-tl-step__num { color: rgba(188,0,0,0.22); }
+    .ib-tl-step__connector {
+      flex: 1; height: 1px; background: rgba(255,255,255,0.06);
+    }
+    .ib-tl-step__title {
+      font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em;
+    }
+    .ib-tl-step__desc { font-size: 0.9rem; color: rgba(255,255,255,0.42); line-height: 1.75; }
+
+    /* ── MANIFESTO / CTA ── */
+    .ib-manifesto {
+      position: relative; overflow: hidden;
+      border-top: 1px solid var(--border);
+      background: #030303;
+    }
+    /* large diagonal accent */
+    .ib-manifesto__slash {
+      position: absolute; top: -10%; right: -5%;
+      width: 480px; height: 120%;
+      background: linear-gradient(135deg, rgba(188,0,0,0.06) 0%, transparent 60%);
+      transform: skewX(-12deg); pointer-events: none;
+    }
+    .ib-manifesto__glow {
+      position: absolute; top: 50%; left: -100px;
+      transform: translateY(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(188,0,0,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .ib-manifesto__watermark {
+      position: absolute; right: -40px; top: 50%;
+      transform: translateY(-50%); pointer-events: none; user-select: none;
+    }
+    .ib-manifesto__watermark svg { height: 520px; width: auto; opacity: 0.02; filter: brightness(0) invert(1); }
+    .ib-manifesto__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center; position: relative; z-index: 1;
+    }
+    .ib-manifesto__eyebrow {
+      font-size: 0.5625rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ironbit);
+      font-family: var(--mono); margin-bottom: 20px;
+    }
+    .ib-manifesto__title {
+      font-family: var(--font);
+      font-size: clamp(2rem, 4vw, 3.75rem);
+      font-weight: 700; line-height: 1.08; letter-spacing: -0.03em;
+    }
+    .ib-manifesto__title em {
+      font-style: normal; color: var(--ironbit);
+    }
+    .ib-manifesto__divider {
+      width: 40px; height: 2px; background: var(--ironbit);
+      margin: 28px 0; opacity: 0.4;
+    }
+    .ib-manifesto__sub {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.45); line-height: 1.75; margin-bottom: 36px;
+    }
+    .ib-manifesto__cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--ironbit); color: #fff; font-weight: 700;
+      font-size: 0.9375rem; padding: 14px 28px; border-radius: 4px;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 0 1px rgba(188,0,0,0.3), 0 4px 20px rgba(188,0,0,0.2);
+    }
+    .ib-manifesto__cta:hover {
+      background: var(--ibh);
+      box-shadow: 0 0 0 1px rgba(188,0,0,0.5), 0 8px 28px rgba(188,0,0,0.3);
+    }
+    .ib-manifesto__note {
+      margin-top: 16px; font-size: 0.8125rem; color: rgba(255,255,255,0.2);
+      font-family: var(--mono);
+    }
+
+    /* ── FOOTER ── */
+    .ib-footer { border-top: 1px solid var(--border); }
+    .ib-footer .container {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center; padding-top: 48px; padding-bottom: 28px;
+    }
+    .ib-footer__status {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 0.5rem; font-weight: 600; letter-spacing: 0.16em;
+      text-transform: uppercase; color: rgba(255,255,255,0.2);
+      font-family: var(--mono); margin-bottom: 36px;
+    }
+    .ib-footer__dot {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--ironbit);
+      animation: ibblink 2s ease-in-out infinite;
+    }
+    .ib-footer__brand {
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      padding-bottom: 32px; margin-bottom: 0; width: 100%;
+      border-bottom: 1px solid rgba(188,0,0,0.08);
+    }
+    .ib-footer__logo svg { height: 28px; width: auto; }
+    .ib-footer__tagline { font-size: 0.9375rem; color: rgba(255,255,255,0.25); }
+    .ib-footer__cta {
+      font-size: 0.875rem; font-weight: 600; color: var(--ironbit); transition: opacity 0.2s;
+    }
+    .ib-footer__cta:hover { opacity: 0.65; }
+    .ib-footer__bottom {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 8px 14px;
+      padding-top: 20px; padding-bottom: 8px;
+      font-size: 0.75rem; color: rgba(255,255,255,0.2);
+    }
+    .ib-footer__bottom a { color: rgba(255,255,255,0.3); transition: color 0.2s; }
+    .ib-footer__bottom a:hover { color: rgba(255,255,255,0.65); }
+    .ib-footer__sep { color: rgba(255,255,255,0.1); }
+
+    /* ── BOTTOM NAV (mobile) ── */
+    .dz-bottomnav { display: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .ib-setores__grid { grid-template-columns: repeat(3, 1fr); }
+      .ib-setor:nth-child(3) { border-right: none; }
+      .ib-setor { border-bottom: 1px solid rgba(188,0,0,0.1); }
+      .ib-setor:nth-child(4), .ib-setor:nth-child(5), .ib-setor:nth-child(6) { border-bottom: none; }
+    }
+    @media (max-width: 1024px) {
+      .ib-hero__inner { grid-template-columns: 1fr; gap: 56px; padding-bottom: 64px; }
+      .ib-radar-wrap { justify-content: flex-start; }
+      .ib-radar { width: 300px; height: 300px; }
+      .ib-sobre__inner { grid-template-columns: 1fr; gap: 48px; }
+      .ib-nums__inner { grid-template-columns: 1fr 1fr; }
+      .ib-num:nth-child(2) { border-right: none; }
+      .ib-num:nth-child(3) { border-top: 1px solid rgba(188,0,0,0.1); grid-column: span 2; border-right: none; }
+      .ib-tl { grid-template-columns: 1fr; }
+      .ib-tl-step { border-right: none; border-bottom: 1px solid rgba(188,0,0,0.08); }
+      .ib-tl-step:last-child { border-bottom: none; }
+      .ib-manifesto__inner { grid-template-columns: 1fr; gap: 48px; }
+      .ib-manifesto__watermark { display: none; }
+    }
+    @media (max-width: 768px) {
+      /* Reset grid on mobile */
+      .ib-nav .nav__inner { display: flex !important; justify-content: space-between !important; }
+      .ib-nav .nav__logo { padding: 0 !important; }
+      .ib-nav .nav__links  { display: none !important; }
+      .ib-nav .nav__cta    { display: none !important; }
+      .ib-nav .nav__burger { display: flex !important; }
+      body { padding-bottom: 80px; }
+
+      .ib-hero { min-height: auto; }
+      .ib-hero__inner { padding-top: calc(var(--nav-h) + 40px); padding-bottom: 60px; gap: 40px; }
+      .ib-radar-wrap { display: none; }
+      .ib-hero__title { font-size: clamp(2.6rem, 10vw, 3.8rem); }
+      .ib-live-strip { flex-direction: column; gap: 16px; }
+      .ib-live-stat { border-right: none; padding-right: 0; margin-right: 0; border-bottom: 1px solid rgba(188,0,0,0.1); padding-bottom: 12px; margin-bottom: 0; }
+      .ib-live-stat:last-child { border-bottom: none; }
+
+      .ib-ticker { display: none; }
+
+      .ib-sobre__inner { grid-template-columns: 1fr !important; gap: 0 !important; }
+      .ib-terminal { display: none; }
+
+      .ib-nums__inner { grid-template-columns: 1fr; }
+      .ib-num { padding: 36px 24px; border-right: none; border-bottom: 1px solid rgba(188,0,0,0.1); }
+      .ib-num:last-child { border-bottom: none; }
+      .ib-num:nth-child(3) { grid-column: span 1; }
+
+      .ib-svc { grid-template-columns: 40px 1px 1fr; gap: 20px; padding: 28px 0; }
+      .ib-svc__arrow { display: none; }
+
+      .ib-setores__grid { grid-template-columns: repeat(2, 1fr); }
+      .ib-setor:nth-child(2) { border-right: none; }
+      .ib-setor:nth-child(3) { border-right: 1px solid rgba(188,0,0,0.1); }
+      .ib-setor:nth-child(4) { border-right: none; border-bottom: 1px solid rgba(188,0,0,0.1); }
+      .ib-setor:nth-child(5) { border-right: 1px solid rgba(188,0,0,0.1); border-bottom: none; }
+
+      .ib-tl-step { padding: 36px 24px; }
+      .ib-tl-step__num { font-size: 1.8rem; }
+
+      .ib-manifesto__title { font-size: clamp(1.8rem, 8vw, 2.6rem); }
+      .ib-manifesto__inner { gap: 32px; }
+      .ib-manifesto__slash { display: none; }
+
+      .ib-footer__sep { display: none; }
+      .ib-footer__bottom { flex-direction: column; gap: 10px; }
+
+      .dz-bottomnav {
+        display: flex; position: fixed;
+        bottom: 0; left: 0; right: 0; z-index: 200;
+        background: rgba(8,8,8,0.94);
+        backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+        border-top: 1px solid rgba(255,255,255,0.08);
+        padding: 8px 10px;
+        padding-bottom: calc(8px + env(safe-area-inset-bottom));
+        gap: 4px; align-items: stretch;
+      }
+      .dz-bn__item {
+        flex: 1; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; gap: 4px;
+        padding: 8px 4px; color: rgba(255,255,255,0.38);
+        font-size: 0.5625rem; font-weight: 600; letter-spacing: 0.05em;
+        text-transform: uppercase; text-decoration: none;
+        border-radius: 10px; transition: color 0.18s, background 0.18s;
+        -webkit-tap-highlight-color: transparent;
+      }
+      .dz-bn__item svg { width: 18px; height: 18px; }
+      .dz-bn__item--cta {
+        background: var(--ironbit); color: #fff !important;
+        font-weight: 700; flex: 1.4;
+      }
+      .dz-bn__item--cta:active { background: var(--ibh); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav ib-nav" id="ibNav">
+    <div class="nav__inner container">
+      <a href="#" class="nav__logo" id="ibNavLogo" aria-label="IronBit"></a>
+      <ul class="nav__links">
+        <li><a href="#sobre"     class="nav__link">Sobre</a></li>
+        <li><a href="#servicos"  class="nav__link">Serviços</a></li>
+        <li><a href="#setores"   class="nav__link">Setores</a></li>
+        <li><a href="#abordagem" class="nav__link">Abordagem</a></li>
+        <li class="nav__link-back"><a href="https://csxtech.com.br" class="nav__link" style="color:rgba(255,255,255,0.25)">← CSX Tech</a></li>
+      </ul>
+      <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+         class="btn btn--outline nav__cta">Acionar a IronBit</a>
+      <button class="nav__burger" id="ibBurger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- BOTTOM NAV (mobile) -->
+  <nav class="dz-bottomnav" aria-label="Menu mobile">
+    <a href="#sobre" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      Sobre
+    </a>
+    <a href="#servicos" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+      Serviços
+    </a>
+    <a href="#abordagem" class="dz-bn__item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14M5 6h14M5 18h14"/>
+      </svg>
+      Abordagem
+    </a>
+    <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer" class="dz-bn__item dz-bn__item--cta">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.38 5.07L2 22l5.07-1.35A9.94 9.94 0 0012 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.67 0-3.22-.49-4.53-1.33l-.32-.2-3.01.79.8-2.94-.21-.33A7.96 7.96 0 014 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8z"/>
+      </svg>
+      Contato
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero ib-hero" id="hero">
+    <canvas class="ib-canvas" id="ibCanvas"></canvas>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <div class="ib-hero__inner container">
+
+      <div class="ib-hero__content">
+        <div class="ib-badge">
+          <span class="ib-badge__dot"></span>Sistema ativo · Proteção 24/7
+        </div>
+        <h1 class="ib-hero__title">
+          Segurança que<br/>
+          <span class="ib-red">não</span> cede.
+        </h1>
+        <p class="ib-hero__sub">
+          Cibersegurança de referência global. A IronBit protege ativos digitais,
+          antecipa ameaças e garante continuidade operacional para infraestruturas
+          que não podem falhar.
+        </p>
+        <div class="ib-hero__ctas">
+          <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+             class="btn btn--primary">Acionar a IronBit</a>
+          <a href="#sobre" class="btn btn--ghost">Conhecer a empresa →</a>
+        </div>
+
+        <!-- Live stats strip -->
+        <div class="ib-live-strip">
+          <div class="ib-live-stat">
+            <span class="ib-live-stat__val" id="ibThreats">2.847</span>
+            <span class="ib-live-stat__lbl">Ameaças bloqueadas · 24h</span>
+          </div>
+          <div class="ib-live-stat">
+            <span class="ib-live-stat__val" id="ibAssets">143</span>
+            <span class="ib-live-stat__lbl">Ativos monitorados</span>
+          </div>
+          <div class="ib-live-stat">
+            <span class="ib-live-stat__val">&lt;15min</span>
+            <span class="ib-live-stat__lbl">MTTR médio</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RADAR -->
+      <div class="ib-radar-wrap" data-gsap="fade-left">
+        <div class="ib-radar">
+          <div class="ib-radar__outer">
+            <div class="ib-radar__sweep"></div>
+          </div>
+          <div class="ib-radar__ring ib-radar__ring--1"></div>
+          <div class="ib-radar__ring ib-radar__ring--2"></div>
+          <div class="ib-radar__cross-h"></div>
+          <div class="ib-radar__cross-v"></div>
+          <div class="ib-radar__center"></div>
+          <div class="ib-radar__label ib-radar__label--tl">LAT -23.18</div>
+          <div class="ib-radar__label ib-radar__label--tr">LON -45.88</div>
+          <div class="ib-radar__label ib-radar__label--bl">ALT 0000M</div>
+          <div class="ib-radar__label ib-radar__label--br">RNG 2400KM</div>
+          <!-- Blips -->
+          <div class="ib-radar__blip" style="top:29%;left:63%;animation-delay:0s"></div>
+          <div class="ib-radar__blip" style="top:58%;left:72%;animation-delay:1.4s"></div>
+          <div class="ib-radar__blip" style="top:71%;left:36%;animation-delay:2.2s"></div>
+          <div class="ib-radar__blip" style="top:38%;left:22%;animation-delay:0.8s"></div>
+          <div class="ib-radar__blip" style="top:48%;left:55%;animation-delay:3.1s"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Hidden feed container for JS compatibility -->
+    <div id="ibFeed" style="display:none" aria-hidden="true"></div>
+  </section>
+
+  <!-- THREAT TICKER -->
+  <div class="ib-ticker" aria-hidden="true">
+    <div class="ib-ticker__track">
+      <div class="ib-ticker__inner">
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">SQL Injection · 45.77.120.18</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">SSH Brute Force · 198.34.20.12</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--yel"></span><span class="ib-ticker__type ib-ticker__type--yel">ALERT</span><span class="ib-ticker__msg">Port Scan · 91.108.56.201</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">XSS Attempt · 103.88.44.77</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--grn"></span><span class="ib-ticker__type ib-ticker__type--grn">OK</span><span class="ib-ticker__msg">Cert rotacionado · auth.core</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">RCE Probe · 78.31.0.144</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--yel"></span><span class="ib-ticker__type ib-ticker__type--yel">ALERT</span><span class="ib-ticker__msg">Geo Anomaly · 188.65.72.3</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">DDoS Vector · 62.190.44.4</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--grn"></span><span class="ib-ticker__type ib-ticker__type--grn">OK</span><span class="ib-ticker__msg">Hash verificado · sys.kernel</span></div>
+        <span class="ib-ticker__sep">|</span>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="ib-ticker__inner" aria-hidden="true">
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">SQL Injection · 45.77.120.18</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">SSH Brute Force · 198.34.20.12</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--yel"></span><span class="ib-ticker__type ib-ticker__type--yel">ALERT</span><span class="ib-ticker__msg">Port Scan · 91.108.56.201</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">XSS Attempt · 103.88.44.77</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--grn"></span><span class="ib-ticker__type ib-ticker__type--grn">OK</span><span class="ib-ticker__msg">Cert rotacionado · auth.core</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">RCE Probe · 78.31.0.144</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--yel"></span><span class="ib-ticker__type ib-ticker__type--yel">ALERT</span><span class="ib-ticker__msg">Geo Anomaly · 188.65.72.3</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--red"></span><span class="ib-ticker__type ib-ticker__type--red">BLOCKED</span><span class="ib-ticker__msg">DDoS Vector · 62.190.44.4</span></div>
+        <span class="ib-ticker__sep">|</span>
+        <div class="ib-ticker__item"><span class="ib-ticker__dot ib-ticker__dot--grn"></span><span class="ib-ticker__type ib-ticker__type--grn">OK</span><span class="ib-ticker__msg">Hash verificado · sys.kernel</span></div>
+        <span class="ib-ticker__sep">|</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section class="ib-sobre section" id="sobre">
+    <div class="container">
+      <div class="ib-sobre__inner">
+
+        <div data-gsap="fade-right">
+          <p class="ib-sobre__eyebrow">Nossa missão</p>
+          <h2 class="ib-sobre__title">Proteção que constrói<br />ambientes resilientes.</h2>
+          <p class="ib-sobre__body">
+            A IronBit é uma empresa de cibersegurança posicionada para ser referência global
+            na proteção de ativos digitais. Sob a liderança de Victor Fortinati, a companhia
+            opera com abordagem estratégica — antecipando ameaças e construindo ambientes
+            digitais resilientes para organizações que exigem segurança de alto nível.
+          </p>
+          <p class="ib-sobre__body">
+            Com tecnologia avançada, monitoramento contínuo e protocolos de defesa robustos,
+            a IronBit fortalece infraestruturas críticas e garante continuidade operacional.
+            Segurança, para a empresa, é pilar de crescimento e confiança.
+          </p>
+          <div class="ib-sobre__founder">
+            <span class="ib-sobre__dot"></span>
+            <span>Victor Fortinati — Fundador &amp; CEO</span>
+          </div>
+        </div>
+
+        <!-- Terminal window -->
+        <div class="ib-terminal" data-gsap="fade-left">
+          <div class="ib-terminal__header">
+            <span class="ib-terminal__btn ib-terminal__btn--r"></span>
+            <span class="ib-terminal__btn ib-terminal__btn--y"></span>
+            <span class="ib-terminal__btn ib-terminal__btn--g"></span>
+            <span class="ib-terminal__title">ironbit@soc-7:~</span>
+          </div>
+          <div class="ib-terminal__body">
+            <div class="ib-term__line"><span class="ib-term__prompt">$</span> <span class="ib-term__cmd">ironbit scan --target=all --deep</span></div>
+            <div class="ib-term__line ib-term__out">Conectando ao SOC-7...</div>
+            <div class="ib-term__line ib-term__out">Mapeando superfície de ataque...</div>
+            <div class="ib-term__line ib-term__out">143 ativos identificados</div>
+            <div class="ib-term__line ib-term__out">Verificando vulnerabilidades...</div>
+            <div class="ib-term__line ib-term__ok">✓ 0 brechas críticas encontradas</div>
+            <div class="ib-term__line ib-term__ok">✓ Firewall ativo · IDS/IPS online</div>
+            <div class="ib-term__line ib-term__ok">✓ 5.284 eventos analisados hoje</div>
+            <div class="ib-term__line ib-term__warn">⚠ 2 tentativas bloqueadas (SQL)</div>
+            <div class="ib-term__line ib-term__ok">✓ Status geral: PROTEGIDO</div>
+            <div class="ib-term__cursor-line"><span class="ib-term__prompt">$</span> <span class="ib-term__cursor"></span></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NÚMEROS -->
+  <section class="ib-nums section" id="numeros">
+    <div class="container" style="padding:0">
+      <div class="ib-nums__inner">
+        <div class="ib-num" data-gsap="fade-up">
+          <span class="ib-num__prefix">Em tempo real</span>
+          <span class="ib-num__val live" id="ibThreats2">5.284</span>
+          <span class="ib-num__lbl">Eventos analisados</span>
+          <span class="ib-num__sub">últimas 24 horas</span>
+        </div>
+        <div class="ib-num" data-gsap="fade-up">
+          <span class="ib-num__prefix">Disponibilidade</span>
+          <span class="ib-num__val">99,8%</span>
+          <span class="ib-num__lbl">Uptime do SOC</span>
+          <span class="ib-num__sub">monitoramento contínuo</span>
+        </div>
+        <div class="ib-num" data-gsap="fade-up">
+          <span class="ib-num__prefix">Resposta</span>
+          <span class="ib-num__val">&lt;15<span style="font-size:0.5em;letter-spacing:0">min</span></span>
+          <span class="ib-num__lbl">Tempo médio de resposta</span>
+          <span class="ib-num__sub">MTTR · incidentes críticos</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS — editorial list -->
+  <section class="ib-servicos section" id="servicos">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow" data-gsap="fade-up" style="color:var(--ironbit)">O que entregamos</p>
+        <h2 class="section__title" data-gsap="fade-up">Defesa em<br />todas as camadas.</h2>
+      </div>
+      <div class="ib-svc-list">
+
+        <div class="ib-svc" data-gsap="fade-up">
+          <span class="ib-svc__num">01</span>
+          <div class="ib-svc__rule"></div>
+          <div class="ib-svc__body">
+            <p class="ib-svc__title">SOC &amp; Monitoramento 24/7</p>
+            <p class="ib-svc__desc">Centro de Operações de Segurança ativo ininterruptamente. Detecção em tempo real, correlação de eventos e resposta imediata antes que ameaças causem impacto.</p>
+            <div class="ib-svc__tags">
+              <span class="ib-svc__tag">SIEM</span>
+              <span class="ib-svc__tag">Threat Detection</span>
+              <span class="ib-svc__tag">24/7</span>
+            </div>
+          </div>
+          <span class="ib-svc__arrow">→</span>
+        </div>
+
+        <div class="ib-svc" data-gsap="fade-up">
+          <span class="ib-svc__num">02</span>
+          <div class="ib-svc__rule"></div>
+          <div class="ib-svc__body">
+            <p class="ib-svc__title">Pentest &amp; Red Team</p>
+            <p class="ib-svc__desc">Simulações de ataques reais para identificar e corrigir vulnerabilidades antes que agentes maliciosos as explorem. Segurança testada em condições de combate.</p>
+            <div class="ib-svc__tags">
+              <span class="ib-svc__tag">Ethical Hacking</span>
+              <span class="ib-svc__tag">Red Team</span>
+              <span class="ib-svc__tag">Vulnerability Assessment</span>
+            </div>
+          </div>
+          <span class="ib-svc__arrow">→</span>
+        </div>
+
+        <div class="ib-svc" data-gsap="fade-up">
+          <span class="ib-svc__num">03</span>
+          <div class="ib-svc__rule"></div>
+          <div class="ib-svc__body">
+            <p class="ib-svc__title">Resposta a Incidentes</p>
+            <p class="ib-svc__desc">Equipe especializada para contenção, erradicação e recuperação rápida. Minimizamos impacto operacional e preservamos evidências para análise forense completa.</p>
+            <div class="ib-svc__tags">
+              <span class="ib-svc__tag">IR</span>
+              <span class="ib-svc__tag">Forensics</span>
+              <span class="ib-svc__tag">Contenção</span>
+            </div>
+          </div>
+          <span class="ib-svc__arrow">→</span>
+        </div>
+
+        <div class="ib-svc" data-gsap="fade-up">
+          <span class="ib-svc__num">04</span>
+          <div class="ib-svc__rule"></div>
+          <div class="ib-svc__body">
+            <p class="ib-svc__title">Gestão de Compliance</p>
+            <p class="ib-svc__desc">Alinhamento com ISO 27001, NIST, SOC 2 e LGPD. Governança sólida que transforma segurança em vantagem competitiva e confiança perante clientes e reguladores.</p>
+            <div class="ib-svc__tags">
+              <span class="ib-svc__tag">ISO 27001</span>
+              <span class="ib-svc__tag">LGPD</span>
+              <span class="ib-svc__tag">SOC 2</span>
+            </div>
+          </div>
+          <span class="ib-svc__arrow">→</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SETORES CRÍTICOS -->
+  <section class="ib-setores section" id="setores">
+    <div class="container">
+      <div class="ib-setores__header" data-gsap="fade-up">
+        <p class="ib-setores__eyebrow">Atuação</p>
+        <h2 class="ib-setores__title">Setores que não podem parar.</h2>
+      </div>
+      <div class="ib-setores__grid" data-gsap="fade-up">
+
+        <div class="ib-setor">
+          <div class="ib-setor__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/>
+            </svg>
+          </div>
+          <span class="ib-setor__name">Financeiro</span>
+          <span class="ib-setor__tag">PROTEGIDO</span>
+        </div>
+
+        <div class="ib-setor">
+          <div class="ib-setor__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+            </svg>
+          </div>
+          <span class="ib-setor__name">Saúde</span>
+          <span class="ib-setor__tag">PROTEGIDO</span>
+        </div>
+
+        <div class="ib-setor">
+          <div class="ib-setor__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <span class="ib-setor__name">Governo</span>
+          <span class="ib-setor__tag">PROTEGIDO</span>
+        </div>
+
+        <div class="ib-setor">
+          <div class="ib-setor__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+          </div>
+          <span class="ib-setor__name">Energia</span>
+          <span class="ib-setor__tag">PROTEGIDO</span>
+        </div>
+
+        <div class="ib-setor">
+          <div class="ib-setor__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>
+            </svg>
+          </div>
+          <span class="ib-setor__name">Telecom</span>
+          <span class="ib-setor__tag">PROTEGIDO</span>
+        </div>
+
+        <div class="ib-setor">
+          <div class="ib-setor__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+            </svg>
+          </div>
+          <span class="ib-setor__name">Indústria</span>
+          <span class="ib-setor__tag">PROTEGIDO</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ABORDAGEM — timeline -->
+  <section class="ib-abordagem section" id="abordagem">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__eyebrow" data-gsap="fade-up" style="color:var(--ironbit)">Como operamos</p>
+        <h2 class="section__title" data-gsap="fade-up">Monitorar. Detectar.<br />Neutralizar.</h2>
+        <p class="section__sub" data-gsap="fade-up">
+          Três protocolos que garantem visibilidade total, detecção precoce
+          e resposta cirúrgica a qualquer ameaça digital.
+        </p>
+      </div>
+      <div class="ib-tl" data-gsap="fade-up">
+
+        <div class="ib-tl-step">
+          <div class="ib-tl-step__index">
+            <span class="ib-tl-step__num">01</span>
+            <div class="ib-tl-step__connector"></div>
+          </div>
+          <h3 class="ib-tl-step__title">Monitorar</h3>
+          <p class="ib-tl-step__desc">
+            Visibilidade total do ambiente digital com sensores distribuídos e SIEM
+            correlacionando eventos em tempo real. Nenhum sinal anômalo passa despercebido.
+          </p>
+        </div>
+
+        <div class="ib-tl-step">
+          <div class="ib-tl-step__index">
+            <span class="ib-tl-step__num">02</span>
+            <div class="ib-tl-step__connector"></div>
+          </div>
+          <h3 class="ib-tl-step__title">Detectar</h3>
+          <p class="ib-tl-step__desc">
+            Algoritmos comportamentais e threat intelligence identificam padrões de ataque
+            e vetores de exploração antes que a brecha seja consumada.
+          </p>
+        </div>
+
+        <div class="ib-tl-step">
+          <div class="ib-tl-step__index">
+            <span class="ib-tl-step__num">03</span>
+            <div class="ib-tl-step__connector"></div>
+          </div>
+          <h3 class="ib-tl-step__title">Neutralizar</h3>
+          <p class="ib-tl-step__desc">
+            Resposta coordenada que isola ameaças, preserva evidências e restaura operações
+            com zero perda de dados críticos e mínimo impacto ao negócio.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO / CTA -->
+  <section class="ib-manifesto section" id="contato">
+    <div class="ib-manifesto__slash" aria-hidden="true"></div>
+    <div class="ib-manifesto__glow" aria-hidden="true"></div>
+    <div class="ib-manifesto__watermark" id="ibWatermark" aria-hidden="true"></div>
+    <div class="container">
+      <div class="ib-manifesto__inner">
+
+        <div data-gsap="fade-right">
+          <p class="ib-manifesto__eyebrow">Proteção máxima</p>
+          <h2 class="ib-manifesto__title">
+            Zero brechas.<br /><em>Zero</em> concessões.
+          </h2>
+          <div class="ib-manifesto__divider"></div>
+        </div>
+
+        <div data-gsap="fade-left">
+          <p class="ib-manifesto__sub">
+            Empresas globais confiam na IronBit quando a falha não é uma opção —
+            e quando segurança precisa ser um pilar de crescimento, não apenas uma obrigação.
+            Infraestruturas críticas exigem proteção de alto nível.
+          </p>
+          <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+             class="ib-manifesto__cta">
+            Acionar a IronBit →
+          </a>
+          <p class="ib-manifesto__note">Resposta em até 24h · WhatsApp</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="ib-footer">
+    <div class="container">
+      <div class="ib-footer__status">
+        <span class="ib-footer__dot"></span>
+        <span>Proteção ativa</span>
+      </div>
+      <div class="ib-footer__brand">
+        <div class="ib-footer__logo" id="ibFooterLogo"></div>
+        <p class="ib-footer__tagline">Cibersegurança de referência global.</p>
+        <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+           class="ib-footer__cta">Acionar a IronBit →</a>
+      </div>
+      <div class="ib-footer__bottom">
+        <span>© 2026 IronBit</span>
+        <span class="ib-footer__sep">·</span>
+        <a href="https://csxtech.com.br">CSX Tech</a>
+        <span class="ib-footer__sep">·</span>
+        <a href="privacidade.html">Privacidade</a>
+        <span class="ib-footer__sep">·</span>
+        <a href="termos.html">Termos</a>
+        <span class="ib-footer__sep">·</span>
+        <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer">Contato</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

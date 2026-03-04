@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexforge — Engenharia de sistemas para a próxima geração</title>
+  <meta name="description" content="A Nexforge forja plataformas robustas, escaláveis e preparadas para ambientes de alta exigência. Sistemas que sustentam crescimento acelerado e competitividade global.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* ================================================================
+       Nexforge — v2 · FORGE aesthetic
+       Plus Jakarta Sans + JetBrains Mono · #050810 · #e53215
+       Pixel canvas · Deploy terminal hero · Bold manifesto
+       ================================================================ */
+
+    :root {
+      --nfont: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --nmono: 'JetBrains Mono', 'SF Mono', monospace;
+      --nex:   #e53215;
+      --nexh:  #c42a10;
+      --nbg:   #050810;
+      --nsurf: #080c18;
+      --nsurf2: #0a1020;
+      --nbord: rgba(255,255,255,0.06);
+    }
+
+    body {
+      background: var(--nbg) !important;
+      font-family: var(--nfont);
+    }
+
+    /* ── CANVAS ── */
+    #nxCanvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+      opacity: 1;
+    }
+
+    /* ── NAV ── */
+    .nx-nav {
+      background: rgba(5,8,16,0.55) !important;
+      backdrop-filter: blur(24px) saturate(1.4) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(1.4) !important;
+      border-bottom: 1px solid rgba(255,255,255,0.05) !important;
+      transition: background 0.35s, border-color 0.35s !important;
+    }
+    .nx-nav.scrolled {
+      background: rgba(5,8,16,0.92) !important;
+      border-bottom-color: rgba(229,50,21,0.07) !important;
+    }
+    @media (min-width: 769px) {
+      .nx-nav .nav__inner {
+        display: flex !important; align-items: center !important;
+        justify-content: space-between !important; position: relative !important;
+      }
+      .nx-nav .nav__logo {
+        position: absolute !important; left: 50% !important; top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 2 !important; padding: 0 !important; line-height: 0 !important;
+      }
+      .nx-nav .nav__logo svg,
+      .nx-nav .nav__logo img { height: 24px !important; width: auto !important; display: block !important; }
+      .nx-nav .nav__links {
+        position: relative !important; z-index: 1 !important;
+        display: flex !important; align-items: center !important;
+        gap: 0 !important; background: none !important; border: none !important;
+        border-radius: 0 !important; margin: 0 !important; padding: 0 !important;
+      }
+      .nx-nav .nav__link {
+        padding: 8px 14px !important; font-size: 0.8125rem !important;
+        font-weight: 500 !important; color: rgba(255,255,255,0.45) !important;
+        letter-spacing: 0 !important; transition: color 0.2s !important;
+        position: relative !important; white-space: nowrap !important;
+        font-family: var(--nfont) !important;
+      }
+      .nx-nav li:first-child .nav__link { padding-left: 0 !important; }
+      .nx-nav .nav__link::after {
+        content: ''; position: absolute; bottom: 2px;
+        left: 14px; right: 14px; height: 1px;
+        background: var(--nex); transform: scaleX(0); transform-origin: left;
+        transition: transform 0.22s ease;
+      }
+      .nx-nav li:first-child .nav__link::after { left: 0; }
+      .nx-nav .nav__link:hover { color: rgba(255,255,255,0.92) !important; background: none !important; }
+      .nx-nav .nav__link:hover::after { transform: scaleX(1); }
+      .nx-nav .nav__link-back { display: none !important; }
+      .nx-nav .nav__cta {
+        position: relative !important; z-index: 1 !important;
+        background: transparent !important;
+        border: 1px solid rgba(229,50,21,0.4) !important;
+        color: rgba(229,50,21,0.85) !important;
+        font-size: 0.8125rem !important; font-weight: 600 !important;
+        padding: 7px 18px !important; border-radius: 4px !important;
+        transition: background 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s !important;
+        white-space: nowrap !important; flex-shrink: 0 !important;
+        font-family: var(--nfont) !important;
+      }
+      .nx-nav .nav__cta:hover {
+        background: var(--nex) !important; border-color: var(--nex) !important;
+        color: #fff !important; box-shadow: 0 4px 16px rgba(229,50,21,0.25) !important;
+      }
+      .nx-nav .nav__burger { display: none !important; }
+    }
+
+    /* ── HERO ── */
+    .nx-hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; z-index: 1; overflow: hidden;
+    }
+
+    .nx-hero__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+      max-width: 1200px; margin: 0 auto;
+      padding: calc(var(--nav-h) + 48px) 24px calc(var(--nav-h) + 48px);
+      position: relative; z-index: 1;
+    }
+
+    /* Left copy */
+    .nx-hero__eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 4px 12px 4px 8px;
+      border: 1px solid rgba(229,50,21,0.25); border-radius: 2px;
+      font-family: var(--nmono); font-size: 0.5rem; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(229,50,21,0.8); background: rgba(229,50,21,0.05);
+      margin-bottom: 18px;
+    }
+    .nx-eyebrow__dot {
+      width: 5px; height: 5px; border-radius: 50%; background: var(--nex);
+      animation: nxpulse 2s ease-in-out infinite;
+    }
+    @keyframes nxpulse {
+      0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(229,50,21,0.5); }
+      50%      { opacity: 0.4; box-shadow: 0 0 0 5px rgba(229,50,21,0); }
+    }
+
+    .nx-hero__title {
+      font-family: var(--nfont);
+      font-size: clamp(2.2rem, 3.8vw, 4rem);
+      font-weight: 800; line-height: 1.04; letter-spacing: -0.04em;
+      color: #fff; margin-bottom: 16px;
+    }
+    .nx-hero__title em {
+      font-style: normal; color: var(--nex);
+    }
+    .nx-hero__sub {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.44); line-height: 1.72;
+      max-width: 440px; margin-bottom: 28px; font-weight: 400;
+    }
+    .nx-hero__ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+    .nx-cta-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--nex); color: #fff; font-weight: 700;
+      font-size: 0.9375rem; padding: 13px 26px; border-radius: 4px;
+      font-family: var(--nfont);
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 0 1px rgba(229,50,21,0.3), 0 4px 20px rgba(229,50,21,0.22);
+    }
+    .nx-cta-primary:hover {
+      background: var(--nexh);
+      box-shadow: 0 0 0 1px rgba(229,50,21,0.5), 0 8px 28px rgba(229,50,21,0.35);
+    }
+    .nx-cta-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 22px; border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.45); font-size: 0.9375rem;
+      font-family: var(--nfont); font-weight: 500;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .nx-cta-ghost:hover { border-color: rgba(255,255,255,0.28); color: rgba(255,255,255,0.85); }
+
+    /* ── TERMINAL WIDGET ── */
+    .nx-terminal {
+      background: rgba(6,9,18,0.85);
+      border: 1px solid rgba(229,50,21,0.18);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(229,50,21,0.06), 0 48px 96px rgba(0,0,0,0.7);
+      backdrop-filter: blur(16px);
+    }
+    .nx-term__bar {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 16px;
+      background: rgba(229,50,21,0.05);
+      border-bottom: 1px solid rgba(229,50,21,0.1);
+    }
+    .nx-term__btn {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .nx-term__btn--r { background: rgba(229,50,21,0.75); }
+    .nx-term__btn--y { background: rgba(245,158,11,0.5); }
+    .nx-term__btn--g { background: rgba(34,197,94,0.5); }
+    .nx-term__title {
+      margin-left: 6px; font-family: var(--nmono); font-size: 0.5rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2);
+    }
+    .nx-term__badge {
+      margin-left: auto; display: flex; align-items: center; gap: 5px;
+      font-family: var(--nmono); font-size: 0.4375rem;
+      letter-spacing: 0.08em; color: rgba(34,197,94,0.7);
+    }
+    .nx-term__badge::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%; background: #22c55e;
+      animation: nxpulse 1.8s ease-in-out infinite;
+    }
+
+    .nx-term__body {
+      padding: 14px 18px; font-family: var(--nmono);
+      font-size: 0.6875rem; line-height: 1.65;
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .nx-tl {
+      display: flex; gap: 10px; align-items: baseline;
+      opacity: 0;
+      animation: nxfadein 0.3s ease forwards;
+    }
+    .nx-tl:nth-child(1)  { animation-delay: 0.4s; }
+    .nx-tl:nth-child(2)  { animation-delay: 0.8s; }
+    .nx-tl:nth-child(3)  { animation-delay: 1.0s; }
+    .nx-tl:nth-child(4)  { animation-delay: 1.2s; }
+    .nx-tl:nth-child(5)  { animation-delay: 1.5s; }
+    .nx-tl:nth-child(6)  { animation-delay: 1.65s; }
+    .nx-tl:nth-child(7)  { animation-delay: 1.8s; }
+    .nx-tl:nth-child(8)  { animation-delay: 1.95s; }
+    .nx-tl:nth-child(9)  { animation-delay: 2.1s; }
+    .nx-tl:nth-child(10) { animation-delay: 2.3s; }
+    .nx-tl:nth-child(11) { animation-delay: 2.5s; }
+    .nx-tl:nth-child(12) { animation-delay: 2.65s; }
+    .nx-tl:nth-child(13) { animation-delay: 2.8s; }
+    .nx-tl:nth-child(14) { animation-delay: 3.0s; }
+    @keyframes nxfadein { to { opacity: 1; } }
+
+    .nx-tl__prompt { color: rgba(229,50,21,0.6); flex-shrink: 0; }
+    .nx-tl__cmd    { color: rgba(255,255,255,0.85); }
+    .nx-tl__ok     { color: #22c55e; flex-shrink: 0; }
+    .nx-tl__warn   { color: #f59e0b; flex-shrink: 0; }
+    .nx-tl__muted  { color: rgba(255,255,255,0.28); }
+    .nx-tl__hi     { color: rgba(229,50,21,0.75); }
+    .nx-tl__blank  { height: 8px; }
+
+    /* Progress bar row */
+    .nx-tl--progress { align-items: center; gap: 10px; }
+    .nx-tl__bar-wrap {
+      flex: 1; height: 4px; background: rgba(255,255,255,0.08);
+      border-radius: 2px; overflow: hidden;
+    }
+    .nx-tl__bar-fill {
+      height: 100%; border-radius: 2px; background: var(--nex); opacity: 0.7;
+    }
+    .nx-tl__bar-pct {
+      flex-shrink: 0; font-size: 0.5rem; color: rgba(255,255,255,0.35); width: 28px; text-align: right;
+    }
+
+    /* Status dots */
+    .nx-tl__status {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nx-tl__dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .nx-tl__dot--g { background: #22c55e; animation: nxpulse 2s ease-in-out infinite; }
+    .nx-tl__dot--r { background: var(--nex); }
+    .nx-tl__dot--y { background: #f59e0b; }
+
+    .nx-term__footer {
+      padding: 12px 18px;
+      border-top: 1px solid rgba(229,50,21,0.08);
+      background: rgba(0,0,0,0.25);
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+    }
+    .nx-term__stat {
+      display: flex; flex-direction: column; gap: 2px;
+      padding: 6px 12px; border-right: 1px solid rgba(255,255,255,0.05);
+      align-items: center;
+    }
+    .nx-term__stat:last-child { border-right: none; }
+    .nx-term__stat-val {
+      font-family: var(--nmono); font-size: 0.625rem; font-weight: 600;
+      color: rgba(255,255,255,0.7);
+    }
+    .nx-term__stat-lbl {
+      font-family: var(--nmono); font-size: 0.3875rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2);
+    }
+
+    /* ── TICKER ── */
+    .nx-ticker {
+      overflow: hidden; background: rgba(229,50,21,0.025);
+      border-top: 1px solid rgba(229,50,21,0.07);
+      border-bottom: 1px solid rgba(229,50,21,0.07);
+      padding: 10px 0; user-select: none; position: relative; z-index: 1;
+    }
+    .nx-ticker__track { display: flex; animation: nxtick 55s linear infinite; }
+    .nx-ticker__track:hover { animation-play-state: paused; }
+    .nx-ticker__inner { display: flex; align-items: center; flex-shrink: 0; white-space: nowrap; }
+    .nx-ticker__item {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0 20px; font-family: var(--nmono); font-size: 0.5625rem;
+      letter-spacing: 0.07em; text-transform: uppercase;
+    }
+    .nx-ticker__dot { width: 3px; height: 3px; border-radius: 50%; flex-shrink: 0; }
+    .nx-ticker__dot--r { background: var(--nex); opacity: 0.7; }
+    .nx-ticker__dot--w { background: rgba(255,255,255,0.22); }
+    .nx-ticker__tech { color: rgba(255,255,255,0.35); }
+    .nx-ticker__tech--hi { color: rgba(229,50,21,0.6); }
+    .nx-ticker__sep { color: rgba(229,50,21,0.15); padding: 0 4px; font-size: 0.35rem; }
+    @keyframes nxtick { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SECTION BASE ── */
+    .nx-wrap {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+    }
+    .nx-section { padding: 88px 0; position: relative; z-index: 1; }
+    .nx-section--dark { background: var(--nsurf); }
+    .nx-section--darker { background: var(--nsurf2); }
+    .nx-section--divider { border-bottom: 1px solid var(--nbord); }
+
+    .nx-label {
+      font-family: var(--nmono); font-size: 0.5625rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(229,50,21,0.6);
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .nx-label::before { content: ''; width: 20px; height: 1px; background: var(--nex); opacity: 0.5; }
+
+    .nx-h2 {
+      font-family: var(--nfont); font-weight: 800;
+      font-size: clamp(2rem, 3.5vw, 3.25rem);
+      letter-spacing: -0.035em; line-height: 1.08; color: #fff;
+    }
+    .nx-h3 {
+      font-family: var(--nfont); font-weight: 700;
+      font-size: 1.1875rem; letter-spacing: -0.02em; color: rgba(255,255,255,0.9);
+    }
+    .nx-body {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.44); line-height: 1.82;
+    }
+
+    /* ── SOBRE ── */
+    .nx-sobre__grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: start;
+    }
+    .nx-sobre__body { margin: 20px 0 36px; max-width: 500px; }
+    .nx-founder {
+      display: flex; align-items: center; gap: 14px;
+      padding: 18px 20px;
+      background: rgba(229,50,21,0.05); border: 1px solid rgba(229,50,21,0.14);
+      border-radius: 4px; max-width: 360px;
+    }
+    .nx-founder__avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: rgba(229,50,21,0.12); border: 1px solid rgba(229,50,21,0.22);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .nx-founder__init {
+      font-family: var(--nfont); font-size: 1rem; font-weight: 800; color: var(--nex);
+    }
+    .nx-founder__name { font-size: 0.875rem; font-weight: 700; color: rgba(255,255,255,0.9); }
+    .nx-founder__role {
+      font-family: var(--nmono); font-size: 0.6875rem;
+      color: rgba(255,255,255,0.28); letter-spacing: 0.04em; margin-top: 2px;
+    }
+
+    /* Right pillars */
+    .nx-pillars { display: flex; flex-direction: column; gap: 1px; }
+    .nx-pillar {
+      padding: 28px 32px; background: var(--nsurf2);
+      border-left: 2px solid rgba(229,50,21,0.2);
+      transition: border-left-color 0.25s, background 0.25s;
+    }
+    .nx-pillar:first-child { border-top: 1px solid rgba(255,255,255,0.05); }
+    .nx-pillar { border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nx-pillar:hover { border-left-color: var(--nex); background: rgba(229,50,21,0.03); }
+    .nx-pillar__n {
+      font-family: var(--nmono); font-size: 0.4375rem;
+      letter-spacing: 0.12em; color: rgba(229,50,21,0.4); margin-bottom: 8px;
+    }
+    .nx-pillar__title {
+      font-family: var(--nfont); font-size: 1rem; font-weight: 700;
+      color: rgba(255,255,255,0.88); margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .nx-pillar__desc { font-size: 0.875rem; color: rgba(255,255,255,0.36); line-height: 1.72; }
+
+    /* ── NÚMEROS ── */
+    .nx-nums { border-top: 1px solid var(--nbord); border-bottom: 1px solid var(--nbord); }
+    .nx-nums__row {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+    }
+    .nx-num {
+      padding: 80px 52px; position: relative;
+      display: flex; flex-direction: column; gap: 4px;
+      border-right: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.25s;
+    }
+    .nx-num:last-child { border-right: none; }
+    .nx-num:hover { background: rgba(229,50,21,0.025); }
+    .nx-num__pre {
+      font-family: var(--nmono); font-size: 0.4375rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(229,50,21,0.38); margin-bottom: 10px;
+    }
+    .nx-num__val {
+      font-family: var(--nfont);
+      font-size: clamp(2.4rem, 3.8vw, 4rem);
+      font-weight: 800; letter-spacing: -0.04em;
+      color: #fff; line-height: 1;
+    }
+    .nx-num__val.live { color: var(--nex); }
+    .nx-num__desc { font-size: 0.875rem; color: rgba(255,255,255,0.3); margin-top: 8px; line-height: 1.55; }
+
+    /* ── SERVIÇOS ── */
+    .nx-svc-header {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      margin-bottom: 64px; gap: 40px;
+    }
+    .nx-svc-intro {
+      font-size: 0.9375rem; color: rgba(255,255,255,0.36); line-height: 1.75;
+      max-width: 300px; text-align: right;
+    }
+    .nx-svc {
+      display: grid; grid-template-columns: 52px 1px 1fr 28px;
+      gap: 40px; align-items: start; padding: 48px 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      transition: background 0.2s;
+    }
+    .nx-svc:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .nx-svc:hover { background: rgba(229,50,21,0.02); }
+    .nx-svc__n {
+      font-family: var(--nmono); font-size: 0.5rem; font-weight: 600;
+      letter-spacing: 0.08em; color: rgba(229,50,21,0.35); padding-top: 4px;
+    }
+    .nx-svc__rule { background: rgba(255,255,255,0.07); min-height: 100%; }
+    .nx-svc__body { display: flex; flex-direction: column; gap: 10px; }
+    .nx-svc__title {
+      font-family: var(--nfont); font-size: 1.3125rem; font-weight: 700;
+      letter-spacing: -0.025em; color: rgba(255,255,255,0.92); transition: color 0.2s;
+    }
+    .nx-svc:hover .nx-svc__title { color: #fff; }
+    .nx-svc__desc { font-size: 0.9rem; color: rgba(255,255,255,0.38); line-height: 1.78; max-width: 580px; }
+    .nx-svc__tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .nx-svc__tag {
+      font-family: var(--nmono); font-size: 0.4375rem; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 3px 8px; border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.25); border-radius: 2px; transition: all 0.2s;
+    }
+    .nx-svc:hover .nx-svc__tag { border-color: rgba(229,50,21,0.2); color: rgba(229,50,21,0.55); }
+    .nx-svc__arrow {
+      color: rgba(255,255,255,0.12); font-size: 1.1rem;
+      padding-top: 4px; transition: color 0.2s, transform 0.2s;
+    }
+    .nx-svc:hover .nx-svc__arrow { color: var(--nex); transform: translateX(4px); }
+
+    /* ── STACK ── */
+    .nx-stack__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border: 1px solid rgba(229,50,21,0.08); border-radius: 4px;
+      overflow: hidden; margin-top: 64px;
+    }
+    .nx-stack__cell {
+      padding: 36px 28px; background: var(--nsurf2);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.25s;
+    }
+    .nx-stack__cell:hover { background: rgba(229,50,21,0.04); }
+    .nx-stack__cell:nth-child(4n) { border-right: none; }
+    .nx-stack__cat {
+      font-family: var(--nmono); font-size: 0.4375rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(229,50,21,0.38); margin-bottom: 9px;
+    }
+    .nx-stack__name {
+      font-family: var(--nfont); font-size: 0.9375rem; font-weight: 700;
+      color: rgba(255,255,255,0.82); margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .nx-stack__desc {
+      font-size: 0.8125rem; color: rgba(255,255,255,0.28); line-height: 1.65;
+    }
+
+    /* ── PROCESSO ── */
+    .nx-proc__grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border: 1px solid rgba(229,50,21,0.08); border-radius: 4px;
+      overflow: hidden; margin-top: 64px;
+    }
+    .nx-proc__step {
+      padding: 52px 40px; background: var(--nsurf);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      position: relative; transition: background 0.25s;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .nx-proc__step:last-child { border-right: none; }
+    .nx-proc__step:hover { background: rgba(229,50,21,0.03); }
+    .nx-proc__step::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--nex); opacity: 0; transition: opacity 0.25s;
+    }
+    .nx-proc__step:hover::before { opacity: 1; }
+    .nx-proc__num {
+      font-family: var(--nfont); font-size: 4rem; font-weight: 800; line-height: 1;
+      color: rgba(229,50,21,0.07); letter-spacing: -0.05em; transition: color 0.25s;
+    }
+    .nx-proc__step:hover .nx-proc__num { color: rgba(229,50,21,0.18); }
+    .nx-proc__title {
+      font-family: var(--nfont); font-size: 1.125rem; font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .nx-proc__desc { font-size: 0.875rem; color: rgba(255,255,255,0.36); line-height: 1.75; }
+
+    /* ── MANIFESTO ── */
+    .nx-manifesto {
+      background: #030507; position: relative; overflow: hidden; z-index: 1;
+      border-top: 1px solid var(--nbord);
+    }
+    .nx-manifesto__grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(229,50,21,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(229,50,21,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black, transparent);
+      pointer-events: none;
+    }
+    .nx-manifesto__glow {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(229,50,21,0.09) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .nx-manifesto__inner {
+      max-width: 860px; margin: 0 auto; padding: 168px 40px;
+      text-align: center; position: relative; z-index: 1;
+    }
+    .nx-manifesto__eyebrow {
+      font-family: var(--nmono); font-size: 0.5625rem;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(229,50,21,0.5); margin-bottom: 40px;
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+    }
+    .nx-manifesto__eyebrow::before,
+    .nx-manifesto__eyebrow::after {
+      content: ''; flex: 0 0 48px; height: 1px; background: rgba(229,50,21,0.22);
+    }
+    .nx-manifesto__title {
+      font-family: var(--nfont);
+      font-size: clamp(2.6rem, 6vw, 6rem);
+      font-weight: 800; letter-spacing: -0.045em; line-height: 1.02;
+      margin-bottom: 28px;
+    }
+    .nx-manifesto__sub {
+      font-size: 1.0625rem; color: rgba(255,255,255,0.38); line-height: 1.8;
+      margin-bottom: 56px; max-width: 540px; margin-left: auto; margin-right: auto;
+    }
+    .nx-manifesto__cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--nex); color: #fff; font-weight: 700;
+      font-size: 1rem; padding: 16px 36px; border-radius: 4px;
+      font-family: var(--nfont);
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 0 1px rgba(229,50,21,0.35), 0 8px 32px rgba(229,50,21,0.3);
+    }
+    .nx-manifesto__cta:hover {
+      background: var(--nexh);
+      box-shadow: 0 0 0 1px rgba(229,50,21,0.5), 0 12px 40px rgba(229,50,21,0.4);
+    }
+    .nx-manifesto__note {
+      margin-top: 20px; font-family: var(--nmono); font-size: 0.75rem;
+      color: rgba(255,255,255,0.18); letter-spacing: 0.04em;
+    }
+
+    /* ── FOOTER ── */
+    .nx-footer { border-top: 1px solid var(--nbord); background: var(--nbg); position: relative; z-index: 1; }
+    .nx-footer__inner {
+      max-width: 1280px; margin: 0 auto; padding: 64px 40px 40px;
+      display: flex; flex-direction: column; align-items: center; gap: 32px;
+    }
+    .nx-footer__live {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--nmono); font-size: 0.5rem;
+      letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.2);
+    }
+    .nx-footer__dot {
+      width: 5px; height: 5px; border-radius: 50%; background: #22c55e;
+      animation: nxpulse 2.2s ease-in-out infinite;
+    }
+    .nx-footer__brand {
+      display: flex; flex-direction: column; align-items: center; gap: 14px;
+      padding-bottom: 32px; width: 100%;
+      border-bottom: 1px solid rgba(229,50,21,0.07);
+    }
+    .nx-footer__logo svg, #nxFooterLogo svg { height: 26px; width: auto; opacity: 1; }
+    .nx-footer__tagline { font-size: 0.9375rem; color: rgba(255,255,255,0.22); }
+    .nx-footer__cta { font-size: 0.875rem; font-weight: 700; color: var(--nex); transition: opacity 0.2s; }
+    .nx-footer__cta:hover { opacity: 0.65; }
+    .nx-footer__bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      width: 100%; flex-wrap: wrap; gap: 12px;
+      font-size: 0.8125rem; color: rgba(255,255,255,0.17);
+    }
+    .nx-footer__links { display: flex; gap: 20px; }
+    .nx-footer__links a { color: rgba(255,255,255,0.17); transition: color 0.2s; }
+    .nx-footer__links a:hover { color: rgba(255,255,255,0.5); }
+
+    /* ── BOTTOM NAV (mobile) ── */
+    .nx-bnav { display: none; }
+    @media (max-width: 768px) {
+      .nx-bnav {
+        display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+        background: rgba(5,8,16,0.96);
+        backdrop-filter: blur(20px) saturate(1.4);
+        border-top: 1px solid rgba(229,50,21,0.12);
+        padding: 0 0 env(safe-area-inset-bottom);
+      }
+      .nx-bn__a {
+        flex: 1; display: flex; flex-direction: column; align-items: center;
+        gap: 3px; padding: 10px 0; font-family: var(--nmono); font-size: 0.4375rem;
+        letter-spacing: 0.08em; text-transform: uppercase;
+        color: rgba(255,255,255,0.3); transition: color 0.2s;
+      }
+      .nx-bn__a svg { width: 18px; height: 18px; }
+      .nx-bn__a:hover { color: rgba(229,50,21,0.7); }
+      .nx-bn__a--cta { background: var(--nex); color: #fff; flex: 1.3; font-weight: 700; }
+      .nx-bn__a--cta:active { background: var(--nexh); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      .nx-stack__grid { grid-template-columns: repeat(2, 1fr); }
+      .nx-stack__cell:nth-child(2n) { border-right: none; }
+    }
+    @media (max-width: 1024px) {
+      .nx-hero__inner { grid-template-columns: 1fr; gap: 48px; padding-bottom: 60px; }
+      .nx-terminal { max-width: 520px; }
+      .nx-sobre__grid { grid-template-columns: 1fr; gap: 48px; }
+      .nx-nums__row { grid-template-columns: repeat(2, 1fr); }
+      .nx-num:nth-child(2) { border-right: none; }
+      .nx-num:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.06); }
+      .nx-proc__grid { grid-template-columns: 1fr 1fr; }
+      .nx-proc__step:nth-child(2) { border-right: none; }
+      .nx-proc__step { border-bottom: 1px solid rgba(229,50,21,0.07); }
+      .nx-proc__step:nth-child(3), .nx-proc__step:nth-child(4) { border-bottom: none; }
+    }
+    @media (max-width: 768px) {
+      .nx-nav .nav__inner { display: flex !important; justify-content: space-between !important; }
+      .nx-nav .nav__logo { padding: 0 !important; position: static !important; transform: none !important; }
+      .nx-nav .nav__links { display: none !important; }
+      .nx-nav .nav__cta { display: none !important; }
+      .nx-nav .nav__burger { display: flex !important; }
+      body { padding-bottom: 72px; }
+      .nx-hero__inner { padding: calc(var(--nav-h) + 32px) 20px 40px; }
+      .nx-terminal { display: none; }
+      .nx-hero__title { font-size: clamp(2.4rem, 9.5vw, 3.4rem); }
+      .nx-wrap { padding: 0 20px; }
+      .nx-section { padding: 64px 0; }
+      .nx-svc-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .nx-svc-intro { text-align: left; max-width: 100%; }
+      .nx-svc { grid-template-columns: 44px 1px 1fr; gap: 18px; padding: 28px 0; }
+      .nx-svc__arrow { display: none; }
+      .nx-nums__row { grid-template-columns: 1fr; }
+      .nx-num { padding: 40px 24px; border-right: none; }
+      .nx-proc__grid { grid-template-columns: 1fr; }
+      .nx-proc__step { border-right: none; padding: 36px 24px; border-bottom: 1px solid rgba(229,50,21,0.07); }
+      .nx-proc__step:last-child { border-bottom: none; }
+      .nx-manifesto__inner { padding: 100px 24px; }
+      .nx-footer__inner { padding: 48px 24px 32px; }
+    }
+
+    /* ── GSAP INITIAL STATES ── */
+    [data-gsap="fade-up"]    { opacity: 0; transform: translateY(28px); }
+    [data-gsap="fade-right"] { opacity: 0; transform: translateX(-28px); }
+    [data-gsap="fade-left"]  { opacity: 0; transform: translateX(28px); }
+  </style>
+</head>
+<body>
+
+<canvas id="nxCanvas"></canvas>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav nx-nav" id="nxNav">
+  <div class="nav__inner container">
+    <ul class="nav__links" id="nxLinks">
+      <li class="nav__link-back"><a href="https://csxtech.com.br" class="nav__link" style="color:rgba(255,255,255,0.22)">← CSX Tech</a></li>
+      <li><a href="#sobre"    class="nav__link">Sobre</a></li>
+      <li><a href="#servicos" class="nav__link">Serviços</a></li>
+      <li><a href="#stack"    class="nav__link">Stack</a></li>
+      <li><a href="#processo" class="nav__link">Processo</a></li>
+    </ul>
+    <a class="nav__logo" id="nxNavLogo" href="#"></a>
+    <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+       class="btn btn--outline nav__cta">Iniciar projeto</a>
+    <button class="nav__burger" id="nxBurger" aria-label="Menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="nx-hero" id="inicio">
+  <div class="nx-hero__inner">
+
+    <!-- Copy -->
+    <div class="nx-hero__copy">
+      <div class="nx-hero__eyebrow">
+        <span class="nx-eyebrow__dot"></span>
+        Victor Fortinati · Mentalidade global
+      </div>
+      <h1 class="nx-hero__title">
+        Forjamos<br/>sistemas que<br/><em>não param.</em>
+      </h1>
+      <p class="nx-hero__sub">
+        Plataformas robustas, escaláveis e preparadas para ambientes de alta exigência. Da arquitetura ao deploy — engenharia de verdade.
+      </p>
+      <div class="nx-hero__ctas">
+        <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+           class="nx-cta-primary">
+          Iniciar projeto
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 14 0"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+        <a href="#sobre" class="nx-cta-ghost">Conheça a empresa</a>
+      </div>
+    </div>
+
+    <!-- Terminal -->
+    <div class="nx-terminal">
+      <div class="nx-term__bar">
+        <span class="nx-term__btn nx-term__btn--r"></span>
+        <span class="nx-term__btn nx-term__btn--y"></span>
+        <span class="nx-term__btn nx-term__btn--g"></span>
+        <span class="nx-term__title">nexforge — deploy production</span>
+        <span class="nx-term__badge">LIVE</span>
+      </div>
+      <div class="nx-term__body">
+
+        <div class="nx-tl">
+          <span class="nx-tl__prompt">$</span>
+          <span class="nx-tl__cmd">nf deploy --env=production --replicas=12</span>
+        </div>
+        <div class="nx-tl nx-tl__blank"></div>
+        <div class="nx-tl">
+          <span class="nx-tl__ok">◆</span>
+          <span class="nx-tl__muted">Authenticating with registry...</span>
+          <span class="nx-tl__ok" style="margin-left:auto">done</span>
+        </div>
+        <div class="nx-tl">
+          <span class="nx-tl__ok">◆</span>
+          <span class="nx-tl__muted">Building Docker image</span>
+          <span class="nx-tl__hi" style="margin-left:auto">3.2s</span>
+        </div>
+        <div class="nx-tl nx-tl--progress">
+          <span class="nx-tl__muted" style="width:140px;flex-shrink:0">Pushing layers</span>
+          <div class="nx-tl__bar-wrap">
+            <div class="nx-tl__bar-fill" style="width:100%;animation:nxbar 1.4s 1.2s ease both;transform:scaleX(0);transform-origin:left"></div>
+          </div>
+          <span class="nx-tl__bar-pct">100%</span>
+        </div>
+        <div class="nx-tl nx-tl--progress">
+          <span class="nx-tl__muted" style="width:140px;flex-shrink:0">Rolling K8s pods</span>
+          <div class="nx-tl__bar-wrap">
+            <div class="nx-tl__bar-fill" style="width:100%;background:#22c55e;animation:nxbar 2s 1.8s ease both;transform:scaleX(0);transform-origin:left"></div>
+          </div>
+          <span class="nx-tl__bar-pct">100%</span>
+        </div>
+        <div class="nx-tl nx-tl__blank"></div>
+        <div class="nx-tl">
+          <span class="nx-tl__ok">✓</span>
+          <span class="nx-tl__cmd">12/12 pods running · 0 errors · 0 restarts</span>
+        </div>
+        <div class="nx-tl nx-tl__blank"></div>
+        <div class="nx-tl">
+          <span class="nx-tl__muted">──</span>
+          <span class="nx-tl__hi">health checks</span>
+        </div>
+        <div class="nx-tl">
+          <span class="nx-tl__status"><span class="nx-tl__dot nx-tl__dot--g"></span></span>
+          <span class="nx-tl__cmd">api-gateway</span>
+          <span class="nx-tl__muted" style="margin-left:auto">12ms · 99.98%</span>
+        </div>
+        <div class="nx-tl">
+          <span class="nx-tl__status"><span class="nx-tl__dot nx-tl__dot--g"></span></span>
+          <span class="nx-tl__cmd">core-services</span>
+          <span class="nx-tl__muted" style="margin-left:auto">8ms · 100%</span>
+        </div>
+        <div class="nx-tl">
+          <span class="nx-tl__status"><span class="nx-tl__dot nx-tl__dot--g"></span></span>
+          <span class="nx-tl__cmd">database-cluster</span>
+          <span class="nx-tl__muted" style="margin-left:auto">2.1k writes/s</span>
+        </div>
+        <div class="nx-tl">
+          <span class="nx-tl__prompt" style="color:rgba(34,197,94,0.7)">$</span>
+          <span class="nx-tl__muted">_</span>
+        </div>
+
+      </div>
+      <div class="nx-term__footer">
+        <div class="nx-term__stat">
+          <span class="nx-term__stat-val">99.97%</span>
+          <span class="nx-term__stat-lbl">Uptime</span>
+        </div>
+        <div class="nx-term__stat">
+          <span class="nx-term__stat-val">48ms</span>
+          <span class="nx-term__stat-lbl">P95</span>
+        </div>
+        <div class="nx-term__stat">
+          <span class="nx-term__stat-val" id="nxDeploys">849</span>
+          <span class="nx-term__stat-lbl">Deploys</span>
+        </div>
+        <div class="nx-term__stat">
+          <span class="nx-term__stat-val" id="nxReqs">18.4k</span>
+          <span class="nx-term__stat-lbl">Req/min</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  @keyframes nxbar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+</style>
+
+<!-- ═══ TICKER ═══ -->
+<div class="nx-ticker" aria-hidden="true">
+  <div class="nx-ticker__track">
+    <div class="nx-ticker__inner">
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Node.js</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">React · Next.js</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">TypeScript</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">PostgreSQL</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Kubernetes</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">AWS · GCP · Azure</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Docker</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">Redis · RabbitMQ</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">GraphQL · gRPC</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">Terraform</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Go · Rust</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">CI/CD · DevOps</span></span><span class="nx-ticker__sep">◆</span>
+    </div>
+    <div class="nx-ticker__inner" aria-hidden="true">
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Node.js</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">React · Next.js</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">TypeScript</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">PostgreSQL</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Kubernetes</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">AWS · GCP · Azure</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Docker</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">Redis · RabbitMQ</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">GraphQL · gRPC</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">Terraform</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--r"></span><span class="nx-ticker__tech nx-ticker__tech--hi">Go · Rust</span></span><span class="nx-ticker__sep">◆</span>
+      <span class="nx-ticker__item"><span class="nx-ticker__dot nx-ticker__dot--w"></span><span class="nx-ticker__tech">CI/CD · DevOps</span></span><span class="nx-ticker__sep">◆</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SOBRE ═══ -->
+<section class="nx-section nx-section--dark nx-section--divider" id="sobre">
+  <div class="nx-wrap">
+    <div class="nx-sobre__grid">
+
+      <div data-gsap="fade-right">
+        <p class="nx-label">Sobre a empresa</p>
+        <h2 class="nx-h2">Próxima geração<br/>de soluções digitais.</h2>
+        <p class="nx-body nx-sobre__body">
+          A Nexforge nasceu para construir o que vem a seguir. Com mentalidade global e execução de alta precisão, desenvolvemos plataformas robustas capazes de sustentar crescimento acelerado, inovação contínua e competitividade internacional.
+        </p>
+        <p class="nx-body nx-sobre__body" style="margin-top:-16px">
+          Não apenas desenvolvemos sistemas — estruturamos ecossistemas digitais completos, conectando engenharia de software, arquitetura moderna e visão estratégica de negócios.
+        </p>
+        <div class="nx-founder">
+          <div class="nx-founder__avatar">
+            <span class="nx-founder__init">VF</span>
+          </div>
+          <div>
+            <div class="nx-founder__name">Victor Fortinati</div>
+            <div class="nx-founder__role">Fundador &amp; CEO · Nexforge</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="nx-pillars" data-gsap="fade-left">
+        <div class="nx-pillar">
+          <div class="nx-pillar__n">01 · Fundação</div>
+          <div class="nx-pillar__title">Engenharia de Software</div>
+          <div class="nx-pillar__desc">Código limpo, arquitetura sólida e processos que escalam. Cada sistema que entregamos é construído para durar e crescer sem atrito.</div>
+        </div>
+        <div class="nx-pillar">
+          <div class="nx-pillar__n">02 · Estrutura</div>
+          <div class="nx-pillar__title">Arquitetura Moderna</div>
+          <div class="nx-pillar__desc">Microservices, cloud-native, CI/CD contínuo. Ambientes de alta exigência exigem arquitetura que não cede sob pressão.</div>
+        </div>
+        <div class="nx-pillar">
+          <div class="nx-pillar__n">03 · Estratégia</div>
+          <div class="nx-pillar__title">Visão de Negócios</div>
+          <div class="nx-pillar__desc">Tecnologia que responde a objetivos reais. Traduzimos desafios de negócio em sistemas que geram resultados mensuráveis.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NÚMEROS ═══ -->
+<section class="nx-nums" id="numeros" style="position:relative;z-index:1;">
+  <div class="nx-nums__row" style="max-width:1280px;margin:0 auto;">
+    <div class="nx-num" data-gsap="fade-up">
+      <div class="nx-num__pre">// projetos</div>
+      <div class="nx-num__val live" id="nxProjects">24</div>
+      <div class="nx-num__desc">Sistemas em produção monitorados em tempo real</div>
+    </div>
+    <div class="nx-num" data-gsap="fade-up">
+      <div class="nx-num__pre">// disponibilidade</div>
+      <div class="nx-num__val">99.97%</div>
+      <div class="nx-num__desc">Uptime médio das plataformas entregues</div>
+    </div>
+    <div class="nx-num" data-gsap="fade-up">
+      <div class="nx-num__pre">// velocidade</div>
+      <div class="nx-num__val">3×</div>
+      <div class="nx-num__desc">Mais rápido que a média do mercado de dev sob medida</div>
+    </div>
+    <div class="nx-num" data-gsap="fade-up">
+      <div class="nx-num__pre">// alcance</div>
+      <div class="nx-num__val">Global</div>
+      <div class="nx-num__desc">Clientes em múltiplos países, mentalidade sem fronteiras</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SERVIÇOS ═══ -->
+<section class="nx-section nx-section--dark nx-section--divider" id="servicos">
+  <div class="nx-wrap">
+    <div class="nx-svc-header">
+      <div>
+        <p class="nx-label">O que construímos</p>
+        <h2 class="nx-h2">Soluções para<br/>alta exigência.</h2>
+      </div>
+      <p class="nx-svc-intro">
+        De plataformas SaaS a sistemas enterprise — engenharia de ponta em cada camada do produto.
+      </p>
+    </div>
+
+    <div class="nx-svc" data-gsap="fade-up">
+      <span class="nx-svc__n">01</span>
+      <span class="nx-svc__rule"></span>
+      <div class="nx-svc__body">
+        <div class="nx-svc__title">Desenvolvimento de Sistemas e Plataformas</div>
+        <p class="nx-svc__desc">Construção de plataformas SaaS, sistemas enterprise e produtos digitais completos — do design de banco de dados ao frontend — com foco em performance, escalabilidade e manutenibilidade de longo prazo.</p>
+        <div class="nx-svc__tags">
+          <span class="nx-svc__tag">SaaS</span>
+          <span class="nx-svc__tag">Enterprise</span>
+          <span class="nx-svc__tag">Full-stack</span>
+          <span class="nx-svc__tag">APIs REST · GraphQL</span>
+        </div>
+      </div>
+      <span class="nx-svc__arrow">→</span>
+    </div>
+
+    <div class="nx-svc" data-gsap="fade-up">
+      <span class="nx-svc__n">02</span>
+      <span class="nx-svc__rule"></span>
+      <div class="nx-svc__body">
+        <div class="nx-svc__title">Arquitetura e Infraestrutura Cloud</div>
+        <p class="nx-svc__desc">Design e implementação de arquiteturas cloud-native — microservices, containers, orquestração Kubernetes, pipelines de CI/CD e infraestrutura como código. Construída para crescer sem reescrever.</p>
+        <div class="nx-svc__tags">
+          <span class="nx-svc__tag">Kubernetes</span>
+          <span class="nx-svc__tag">AWS · GCP</span>
+          <span class="nx-svc__tag">Terraform</span>
+          <span class="nx-svc__tag">Microservices</span>
+        </div>
+      </div>
+      <span class="nx-svc__arrow">→</span>
+    </div>
+
+    <div class="nx-svc" data-gsap="fade-up">
+      <span class="nx-svc__n">03</span>
+      <span class="nx-svc__rule"></span>
+      <div class="nx-svc__body">
+        <div class="nx-svc__title">Consultoria Tecnológica Estratégica</div>
+        <p class="nx-svc__desc">Diagnóstico técnico profundo, roadmap de evolução tecnológica e decisões de arquitetura que impactam o crescimento do negócio. Para empresas que precisam de direção técnica sênior sem contratar internamente.</p>
+        <div class="nx-svc__tags">
+          <span class="nx-svc__tag">Tech audit</span>
+          <span class="nx-svc__tag">Roadmap</span>
+          <span class="nx-svc__tag">CTO as a Service</span>
+        </div>
+      </div>
+      <span class="nx-svc__arrow">→</span>
+    </div>
+
+    <div class="nx-svc" data-gsap="fade-up">
+      <span class="nx-svc__n">04</span>
+      <span class="nx-svc__rule"></span>
+      <div class="nx-svc__body">
+        <div class="nx-svc__title">Integrações, APIs e Automações</div>
+        <p class="nx-svc__desc">Conectamos sistemas legados a plataformas modernas, construímos APIs robustas e automatizamos processos críticos — transformando silos tecnológicos em ecossistemas coesos e eficientes.</p>
+        <div class="nx-svc__tags">
+          <span class="nx-svc__tag">REST · gRPC</span>
+          <span class="nx-svc__tag">Webhooks</span>
+          <span class="nx-svc__tag">ETL · Pipelines</span>
+        </div>
+      </div>
+      <span class="nx-svc__arrow">→</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STACK ═══ -->
+<section class="nx-section nx-section--divider" id="stack" style="position:relative;z-index:1;background:var(--nbg)">
+  <div class="nx-wrap">
+    <div data-gsap="fade-up">
+      <p class="nx-label">Tecnologias</p>
+      <h2 class="nx-h2">Stack de alta performance.</h2>
+    </div>
+    <div class="nx-stack__grid">
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Frontend</div>
+        <div class="nx-stack__name">React · Next.js</div>
+        <div class="nx-stack__desc">Interfaces de alta performance com SSR, SSG e renderização híbrida.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Backend</div>
+        <div class="nx-stack__name">Node.js · Go</div>
+        <div class="nx-stack__desc">APIs de baixa latência e processamento de alta vazão.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Banco de dados</div>
+        <div class="nx-stack__name">PostgreSQL · Redis</div>
+        <div class="nx-stack__desc">Persistência robusta com caching inteligente para throughput máximo.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Cloud & Infra</div>
+        <div class="nx-stack__name">AWS · GCP · K8s</div>
+        <div class="nx-stack__desc">Infraestrutura cloud-native e orquestração de containers.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Linguagem</div>
+        <div class="nx-stack__name">TypeScript</div>
+        <div class="nx-stack__desc">Tipagem forte em todo o stack — menos bugs, mais velocidade.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Protocolos</div>
+        <div class="nx-stack__name">gRPC · GraphQL</div>
+        <div class="nx-stack__desc">Comunicação eficiente entre serviços e APIs flexíveis.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">DevOps</div>
+        <div class="nx-stack__name">Terraform · CI/CD</div>
+        <div class="nx-stack__desc">IaC com pipelines de deploy contínuo e rollback automatizado.</div>
+      </div>
+      <div class="nx-stack__cell" data-gsap="fade-up">
+        <div class="nx-stack__cat">Observability</div>
+        <div class="nx-stack__name">Grafana · Prometheus</div>
+        <div class="nx-stack__desc">Monitoramento em tempo real e rastreamento distribuído.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESSO ═══ -->
+<section class="nx-section nx-section--dark nx-section--divider" id="processo">
+  <div class="nx-wrap">
+    <div data-gsap="fade-up">
+      <p class="nx-label">Como trabalhamos</p>
+      <h2 class="nx-h2">Processo de engenharia<br/>sem atalhos.</h2>
+    </div>
+    <div class="nx-proc__grid">
+      <div class="nx-proc__step" data-gsap="fade-up">
+        <div class="nx-proc__num">01</div>
+        <div class="nx-proc__title">Diagnóstico &amp; Arquitetura</div>
+        <div class="nx-proc__desc">Mapeamento técnico profundo e design da arquitetura ideal antes de escrever a primeira linha de código.</div>
+      </div>
+      <div class="nx-proc__step" data-gsap="fade-up">
+        <div class="nx-proc__num">02</div>
+        <div class="nx-proc__title">Engenharia &amp; Build</div>
+        <div class="nx-proc__desc">Desenvolvimento iterativo com ciclos curtos, revisão de código contínua e testes automatizados em todo o stack.</div>
+      </div>
+      <div class="nx-proc__step" data-gsap="fade-up">
+        <div class="nx-proc__num">03</div>
+        <div class="nx-proc__title">Deploy &amp; Observability</div>
+        <div class="nx-proc__desc">Entrega com CI/CD, monitoramento ativo, rollback automatizado e dashboards de performance em tempo real.</div>
+      </div>
+      <div class="nx-proc__step" data-gsap="fade-up">
+        <div class="nx-proc__num">04</div>
+        <div class="nx-proc__title">Evolução Contínua</div>
+        <div class="nx-proc__desc">Ciclo vivo de otimização — performance profiling, capacity planning e roadmap técnico alinhado ao crescimento.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MANIFESTO / CTA ═══ -->
+<section class="nx-manifesto" id="contato">
+  <div class="nx-manifesto__grid-bg"></div>
+  <div class="nx-manifesto__glow"></div>
+  <div class="nx-manifesto__inner">
+    <p class="nx-manifesto__eyebrow">nexforge · build</p>
+    <h2 class="nx-manifesto__title">
+      Seu próximo<br/>sistema começa<br/><em style="font-style:normal;color:var(--nex)">aqui.</em>
+    </h2>
+    <p class="nx-manifesto__sub">
+      Tem um sistema para construir, uma plataforma para escalar ou um desafio técnico que precisa de engenharia de verdade? Vamos conversar.
+    </p>
+    <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+       class="nx-manifesto__cta">
+      Iniciar projeto
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 14 0"/><path d="m12 5 7 7-7 7"/></svg>
+    </a>
+    <p class="nx-manifesto__note">Victor Fortinati · Nexforge · Resposta em até 24h</p>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="nx-footer">
+  <div class="nx-footer__inner">
+    <div class="nx-footer__live">
+      <span class="nx-footer__dot"></span>
+      Plataformas Nexforge operando
+    </div>
+    <div class="nx-footer__brand">
+      <div id="nxFooterLogo"></div>
+      <p class="nx-footer__tagline">Próxima geração de soluções digitais.</p>
+      <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+         class="nx-footer__cta">Fale com a Nexforge →</a>
+    </div>
+    <div class="nx-footer__bottom">
+      <span>© 2026 Nexforge Tecnologia. Todos os direitos reservados.</span>
+      <div class="nx-footer__links">
+        <a href="termos.html">Termos de uso</a>
+        <a href="privacidade.html">Privacidade</a>
+        <a href="https://csxtech.com.br">CSX Tech</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ BOTTOM NAV (mobile) ═══ -->
+<nav class="nx-bnav" aria-label="Navegação mobile">
+  <a href="#sobre" class="nx-bn__a">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    Sobre
+  </a>
+  <a href="#servicos" class="nx-bn__a">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+    Serviços
+  </a>
+  <a href="#stack" class="nx-bn__a">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m12 2 10 6.5v7L12 22 2 15.5v-7z"/><path d="M12 22V12"/></svg>
+    Stack
+  </a>
+  <a href="https://wa.me/5512997041596" target="_blank" rel="noopener noreferrer"
+     class="nx-bn__a nx-bn__a--cta">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Projeto
+  </a>
+</nav>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

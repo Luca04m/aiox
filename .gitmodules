@@ -1,0 +1,3 @@
+[submodule "apps/hopi"]
+	path = apps/hopi
+	url = https://github.com/Luca04m/hopi-website.git

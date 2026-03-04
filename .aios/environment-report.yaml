@@ -1,0 +1,68 @@
+# AIOS Environment Report
+# Generated: 2026-03-04
+generated_at: '2026-03-04T16:14:00Z'
+
+system:
+  os: macOS
+  version: '15.5'
+  arch: arm64
+  shell: zsh
+
+tools:
+  essential:
+    git:
+      status: installed
+      version: '2.39.5 (Apple Git-154)'
+      path: /usr/bin/git
+    gh:
+      status: installed
+      version: '2.87.3'
+      path: ~/.local/bin/gh
+      auth: pending
+    node:
+      status: installed
+      version: 'v20.20.0'
+      path: ~/.nvm/versions/node/v20.20.0/bin/node
+      manager: nvm
+    npm:
+      status: installed
+      version: '10.8.2'
+      path: ~/.nvm/versions/node/v20.20.0/bin/npm
+
+  infrastructure:
+    supabase:
+      status: missing
+      required: recommended
+    railway:
+      status: missing
+      required: optional
+    docker:
+      status: missing
+      required: recommended
+
+  quality:
+    coderabbit:
+      status: missing
+      required: recommended
+
+  optional:
+    pnpm:
+      status: missing
+    bun:
+      status: missing
+
+  homebrew:
+    status: missing
+    note: 'Install with: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+
+git:
+  initialized: true
+  submodules:
+    - path: apps/hopi
+      url: https://github.com/Luca04m/hopi-website.git
+
+summary:
+  essential_ok: 3/4
+  recommended_installed: 0/3
+  github_authenticated: false
+  next_action: Run gh auth login, then create GitHub repo via @devops
