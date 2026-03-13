@@ -212,6 +212,91 @@
             -webkit-backdrop-filter: blur(20px);
         }
 
+        /* ─── Mobile fixes ─── */
+        @media (max-width: 767px) {
+            /* Overlay mais escuro no mobile — backdrop-filter do vídeo fixo
+               não funciona bem em Safari iOS com position:fixed */
+            .packages-overlay {
+                background: rgba(10, 9, 7, 0.82) !important;
+            }
+
+            /* Cards: fundo sólido suficiente sem depender de backdrop-filter */
+            .glass-card {
+                background: rgba(30, 27, 22, 0.88);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                border-color: rgba(255,255,255,0.12);
+            }
+            .glass-card:hover {
+                background: rgba(40, 36, 30, 0.92);
+                transform: none; /* sem lift no touch */
+            }
+            .glass-card-featured {
+                background: rgba(38, 34, 27, 0.92);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+            .glass-card-featured:hover {
+                background: rgba(48, 43, 35, 0.95);
+                transform: none;
+            }
+
+            /* Badge "mais escolhido" — não sai do card no mobile */
+            .glass-card-featured .absolute.-top-4 {
+                top: -0.75rem;
+            }
+
+            /* Padding do grid container para dar espaço ao badge */
+            #sessoes .grid {
+                padding-top: 1rem;
+            }
+
+            /* Info glass no mobile */
+            .info-glass {
+                background: rgba(28, 25, 20, 0.90);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+
+            /* Info strip no mobile */
+            .info-strip {
+                background: rgba(22, 20, 16, 0.85);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+
+            /* Footer glass no mobile */
+            .footer-glass {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background: rgba(10, 9, 7, 0.95);
+            }
+
+            /* Seção hero: overlay mais escuro para legibilidade */
+            .hero-overlay {
+                background: linear-gradient(
+                    to bottom,
+                    rgba(10, 9, 7, 0.55) 0%,
+                    rgba(10, 9, 7, 0.45) 40%,
+                    rgba(10, 9, 7, 0.60) 100%
+                ) !important;
+            }
+
+            /* Navbar glass no mobile */
+            nav.scrolled {
+                background: rgba(10, 9, 7, 0.90);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+
+            /* Glass pill no mobile */
+            .glass-pill {
+                background: rgba(30, 27, 22, 0.80);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+        }
+
         /* ─── Scroll caret ─── */
         .caret { animation: caret-bounce 2.8s ease-in-out infinite; }
         @keyframes caret-bounce {
@@ -322,7 +407,7 @@
 
             <div class="divider max-w-xs mx-auto mb-16"></div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 pt-6 md:pt-0">
 
                 <!-- 3 horas -->
                 <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col">
