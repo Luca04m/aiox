@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Pérsia — Documentação fotográfica da sua rotina profissional. Belo Horizonte e região metropolitana.">
-    <title>Pérsia — Documentarista de Rotina Profissional</title>
+    <meta name="description" content="Pérsia | Documentação fotográfica da sua rotina profissional. Belo Horizonte e região metropolitana.">
+    <title>Pérsia | Documentarista de Rotina Profissional</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -165,16 +165,18 @@
         }
 
         .btn-outline {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.32);
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: white;
             transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
                         background 0.35s ease,
                         border-color 0.35s ease;
         }
         .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.52);
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.36);
             transform: translateY(-2px);
         }
 
@@ -229,9 +231,10 @@
 
         /* ─── Mobile ─── */
         @media (max-width: 767px) {
-            /* Sem hover lift no touch */
-            .glass-card:hover,
-            .glass-card-featured:hover { transform: none; }
+            .glass-card:active,
+            .glass-card-featured:active {
+                transform: translateY(-3px);
+            }
         }
 
         /* ─── Scroll caret ─── */
@@ -307,7 +310,7 @@
                    class="btn-primary px-9 py-3.5 rounded-full text-sm font-medium tracking-wide">
                     Ver sessões
                 </a>
-                <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20conversar%20antes%20de%20reservar."
+                <a href="https://wa.me/5531995865860"
                    class="btn-outline px-9 py-3.5 rounded-full text-sm font-light tracking-wide">
                     Conversar antes de reservar
                 </a>
@@ -322,8 +325,38 @@
     </section>
 
 
+    <!-- ─── SOBRE ─── -->
+    <section class="relative py-20 sm:py-28 px-6" id="sobre">
+        <div class="packages-overlay absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, rgba(10,9,7,0.48) 0%, rgba(10,9,7,0.50) 100%);"></div>
+
+        <div class="relative max-w-2xl mx-auto text-center" style="z-index:2">
+            <p class="text-dim-40 text-xs uppercase tracking-widest mb-6">Sobre</p>
+            <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-light italic text-white mb-8" style="line-height:1.2">
+                Documentarista de rotina profissional
+            </h2>
+            <p class="text-dim-70 text-sm sm:text-base font-light leading-relaxed tracking-wide mb-6">
+                Fotógrafa por vocação. Encontrei na documentação de rotina a melhor forma de traduzir a essência de uma marca em imagem.
+            </p>
+            <p class="text-dim-60 text-sm sm:text-base font-light leading-relaxed tracking-wide mb-6">
+                Nada de ensaio posado. É a sua rotina real, com luz, direção e estética pensadas pra virar conteúdo que funciona.
+            </p>
+            <p class="text-dim-50 text-sm font-light leading-relaxed tracking-wide mb-10">
+                Cada sessão entrega fotos e vídeos curtos prontos pra redes sociais, com curadoria, edição leve e entrega rápida. Você foca no seu trabalho e eu cuido da imagem.
+            </p>
+
+            <div class="glass-pill inline-flex items-center gap-3 px-6 py-3 rounded-full">
+                <svg class="w-4 h-4 text-dim-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span class="text-dim-50 text-xs font-light tracking-wide">Belo Horizonte, MG</span>
+            </div>
+        </div>
+    </section>
+
+
     <!-- ─── SESSÕES ─── -->
-    <section class="relative py-16 sm:py-28 px-4 sm:px-6" id="sessoes">
+    <section class="relative pt-16 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6" id="sessoes">
         <div class="packages-overlay absolute inset-0 pointer-events-none"></div>
 
         <div class="relative max-w-7xl mx-auto" style="z-index:2">
@@ -332,13 +365,13 @@
                 <h2 class="serif text-4xl sm:text-5xl md:text-6xl font-light text-white mb-6">
                     Escolha sua sessão
                 </h2>
-                <p class="text-dim-60 text-sm sm:text-base font-light max-w-lg mx-auto leading-relaxed tracking-wide mb-4">
+                <p class="text-dim-70 text-sm sm:text-base font-light max-w-lg mx-auto leading-relaxed tracking-wide mb-4">
                     Sessões pensadas para marcas que precisam de conteúdo com estética, consistência e agilidade.
                 </p>
-                <p class="text-dim-40 text-xs font-light max-w-md mx-auto leading-relaxed tracking-wide mb-5">
+                <p class="text-dim-60 text-xs font-light max-w-md mx-auto leading-relaxed tracking-wide mb-5">
                     Todas as opções incluem direção da sessão, curadoria do material, edição leve, entrega digital em Drive compartilhado e uso comercial digital pela marca contratante.
                 </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs text-dim-40 font-light tracking-wide">
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs text-dim-50 font-light tracking-wide">
                     <span>50% na reserva · 50% na entrega</span>
                     <span class="hidden sm:block text-dim-25">·</span>
                     <span>Prazo: 3 a 4 dias úteis</span>
@@ -402,7 +435,7 @@
                         </ul>
                     </div>
 
-                    <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20reservar%20o%20plano%20Essencial."
+                    <a href="https://wa.me/5531995865860"
                        class="btn-card w-full py-3.5 rounded-2xl text-sm text-center block">
                         Reservar sessão
                     </a>
@@ -467,7 +500,7 @@
                         </ul>
                     </div>
 
-                    <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20reservar%20o%20plano%20Completo."
+                    <a href="https://wa.me/5531995865860"
                        class="btn-card-featured w-full py-3.5 rounded-2xl text-sm font-medium text-center block">
                         Reservar sessão
                     </a>
@@ -529,7 +562,7 @@
                         </ul>
                     </div>
 
-                    <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20reservar%20o%20plano%20Imers%C3%A3o."
+                    <a href="https://wa.me/5531995865860"
                        class="btn-card w-full py-3.5 rounded-2xl text-sm text-center block">
                         Reservar sessão
                     </a>
@@ -540,8 +573,8 @@
             <!-- Info strip -->
             <div class="info-strip rounded-2xl px-8 py-5 mt-12 max-w-xl mx-auto text-center">
                 <p class="text-dim-50 text-sm font-light leading-relaxed tracking-wide">
-                    Deslocamento incluso em toda BH e região metropolitana.<br>
-                    <span class="text-dim-30">Fora da RMBH: taxa adicional informada antes de qualquer compromisso.</span>
+                    Deslocamento incluso em Belo Horizonte.<br>
+                    <span class="text-dim-30">Região metropolitana e demais localidades: valor a combinar.</span>
                 </p>
             </div>
 
@@ -550,8 +583,8 @@
 
 
     <!-- ─── INFORMAÇÕES GERAIS ─── -->
-    <section class="relative py-16 sm:py-28 px-4 sm:px-6" id="informacoes">
-        <div class="packages-overlay absolute inset-0 pointer-events-none"></div>
+    <section class="relative pt-0 pb-16 sm:pb-28 px-4 sm:px-6" id="informacoes">
+        <div class="packages-overlay absolute inset-0 pointer-events-none" style="background: linear-gradient(to bottom, rgba(10,9,7,0.52) 0%, rgba(10,9,7,0.50) 50%, rgba(10,9,7,0.52) 100%);"></div>
 
         <div class="relative max-w-5xl mx-auto" style="z-index:2">
 
@@ -627,9 +660,9 @@
                     <h4 class="serif text-xl font-light text-white mb-4">Onde atendo</h4>
                     <ul class="space-y-2.5 text-xs text-dim-60 font-light mb-4">
                         <li class="flex gap-2"><span class="check">&#10003;</span> Atendimento no local do cliente</li>
-                        <li class="flex gap-2"><span class="check">&#10003;</span> Deslocamento na cidade-base incluso</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Deslocamento incluso em Belo Horizonte</li>
                     </ul>
-                    <p class="text-dim-30 text-xs font-light italic">Para outras cidades ou regiões: taxa adicional conforme distância, pedágio e estacionamento.</p>
+                    <p class="text-dim-30 text-xs font-light italic">Região metropolitana e demais localidades: valor a combinar.</p>
                 </div>
 
                 <!-- Hora extra + Uso -->
