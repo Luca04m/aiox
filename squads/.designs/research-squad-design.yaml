@@ -1,0 +1,328 @@
+# research-squad — Blueprint
+# Generated: 2026-03-12
+# Agent: @squad-creator (Craft)
+# Overall Confidence: 92%
+
+squad:
+  name: research-squad
+  description: >
+    Squad de inteligência e pesquisa focado em entregáveis práticos para clientes reais.
+    Produz relatórios acionáveis sobre competidores, pessoas e tópicos — cruzando
+    sempre com o contexto do cliente (cerebro/projetos).
+  domain: client-intelligence
+  template: etl
+  version: "1.0.0"
+
+analysis:
+  entities:
+    - Competitor
+    - Person
+    - Topic
+    - Client
+    - Market
+    - Insights
+    - Report
+    - Context
+  workflows:
+    - competitor-intelligence
+    - person-profiling
+    - topic-mastery
+    - insight-synthesis
+    - report-generation
+  integrations:
+    - EXA
+    - TranscriptAPI
+    - Apify
+    - cerebro/projetos
+    - NotebookLM
+    - WebFetch
+  stakeholders:
+    - Client
+    - Target
+    - MrLion
+
+recommendations:
+  agents:
+    - id: intelligence-hunter
+      role: >
+        Varredura e coleta de dados brutos — web, social, YouTube, LinkedIn.
+        Sai à caça de TUDO disponível publicamente sobre o alvo.
+        Não interpreta, apenas coleta de forma exaustiva e estruturada.
+      icon: "🕵️"
+      commands:
+        - hunt-competitor
+        - hunt-person
+        - hunt-topic
+        - validate-sources
+      confidence: 0.95
+      user_added: false
+      user_modified: false
+      entregavel: raw-intel.json
+
+    - id: context-analyst
+      role: >
+        Cruza inteligência coletada com contexto do cliente (cerebro/projetos).
+        Identifica oportunidades, ameaças, diferenciais e blind spots
+        em relação ao alvo pesquisado.
+      icon: "🧠"
+      commands:
+        - analyze-against-context
+        - swot
+        - gap-analysis
+        - opportunity-map
+      confidence: 0.91
+      user_added: false
+      user_modified: false
+      entregavel: analysis.md
+
+    - id: brain-mapper
+      role: >
+        Constrói o "cérebro" de uma pessoa — mental models, frameworks,
+        filosofias, padrões de comportamento e tomada de decisão.
+        Especializado em person-profiling via conteúdo público.
+      icon: "🗺️"
+      commands:
+        - map-brain
+        - extract-frameworks
+        - build-persona
+        - content-audit
+      confidence: 0.88
+      user_added: false
+      user_modified: false
+      entregavel: brain-map.md
+
+    - id: report-architect
+      role: >
+        Transforma todos os achados em relatório executivo acionável.
+        Sem jargão, sem fluff. Insights → Decisões → Próximos Passos.
+        O cliente lê em 10 minutos e sai agindo.
+      icon: "📋"
+      commands:
+        - build-report
+        - executive-summary
+        - action-plan
+      confidence: 0.93
+      user_added: false
+      user_modified: false
+      entregavel: REPORT-{target}-{date}.md
+
+  tasks:
+    # intelligence-hunter tasks
+    - name: hunt-competitor
+      agent: intelligence-hunter
+      description: Varredura completa de empresa concorrente
+      entrada:
+        - competitor_name
+        - client_context_path
+        - depth  # quick | deep | exhaustive
+      saida:
+        - company_profile
+        - products_services
+        - pricing
+        - positioning
+        - team_key_people
+        - tech_stack
+        - content_strategy
+        - social_presence
+        - news_recent
+      confidence: 0.95
+      tools: [EXA, Apify, WebFetch, TranscriptAPI]
+
+    - name: hunt-person
+      agent: intelligence-hunter
+      description: Varredura completa de pessoa pública para clonagem de cérebro
+      entrada:
+        - person_name
+        - focus_areas  # optional: business, mindset, methodology
+      saida:
+        - biography
+        - published_content  # books, articles, videos, podcasts
+        - social_media_presence
+        - known_frameworks
+        - public_appearances
+        - collaborators_network
+      confidence: 0.92
+      tools: [EXA, Apify, TranscriptAPI, WebFetch]
+
+    - name: hunt-topic
+      agent: intelligence-hunter
+      description: Curadoria exaustiva de fontes para dominar um tema
+      entrada:
+        - topic
+        - target_level  # beginner | intermediate | expert
+        - time_constraint  # ex: "1 day"
+      saida:
+        - best_resources  # ranked by quality
+        - key_concepts
+        - leading_experts
+        - practical_exercises
+        - common_mistakes
+      confidence: 0.90
+      tools: [EXA, TranscriptAPI, WebFetch]
+
+    - name: validate-sources
+      agent: intelligence-hunter
+      description: Verificar credibilidade e recência das fontes coletadas
+      entrada:
+        - sources_list
+      saida:
+        - validated_sources
+        - credibility_scores
+        - date_relevance
+      confidence: 0.88
+
+    # context-analyst tasks
+    - name: analyze-against-context
+      agent: context-analyst
+      description: Cruzar intel coletada com contexto real do cliente
+      entrada:
+        - raw_intel_path
+        - client_context_path  # ex: cerebro/projetos/mrlion
+      saida:
+        - relevance_map
+        - competitive_gaps
+        - client_advantages
+        - threats
+      confidence: 0.91
+
+    - name: swot-analysis
+      agent: context-analyst
+      description: SWOT estruturado do alvo vs cliente
+      entrada:
+        - target_profile
+        - client_profile
+      saida:
+        - strengths
+        - weaknesses
+        - opportunities
+        - threats
+        - strategic_implications
+      confidence: 0.93
+
+    - name: opportunity-map
+      agent: context-analyst
+      description: Mapa de oportunidades acionáveis para o cliente
+      entrada:
+        - analysis_path
+        - client_goals  # optional
+      saida:
+        - opportunities_ranked
+        - quick_wins
+        - long_term_plays
+      confidence: 0.87
+
+    # brain-mapper tasks
+    - name: map-brain
+      agent: brain-mapper
+      description: Construir mapa mental completo de uma pessoa
+      entrada:
+        - person_raw_intel_path
+      saida:
+        - core_beliefs
+        - decision_frameworks
+        - mental_models
+        - recurring_themes
+        - behavioral_patterns
+      confidence: 0.88
+
+    - name: extract-frameworks
+      agent: brain-mapper
+      description: Extrair frameworks e metodologias aplicáveis
+      entrada:
+        - brain_map_path
+        - application_context  # ex: "para negócios de bebidas premium"
+      saida:
+        - frameworks_list
+        - how_to_apply
+        - examples_real
+      confidence: 0.85
+
+    - name: content-audit
+      agent: brain-mapper
+      description: Auditoria de todo conteúdo público da pessoa
+      entrada:
+        - person_name
+        - content_sources
+      saida:
+        - content_catalog  # por tipo e tema
+        - top_pieces  # mais impactantes
+        - evolution_timeline
+      confidence: 0.90
+
+    # report-architect tasks
+    - name: build-report
+      agent: report-architect
+      description: Relatório executivo completo e acionável
+      entrada:
+        - raw_intel_path
+        - analysis_path
+        - client_context_path
+        - report_type  # competitor | person | topic
+      saida:
+        - full_report_md
+        - key_findings
+        - action_items
+      confidence: 0.93
+
+    - name: executive-summary
+      agent: report-architect
+      description: Sumário executivo de 1 página para decisão rápida
+      entrada:
+        - full_report_path
+      saida:
+        - one_pager_md
+        - top_3_insights
+        - immediate_next_steps
+      confidence: 0.95
+
+  template: etl
+  config_mode: extend
+
+workflows:
+  - name: competitor-intelligence-flow
+    description: Pesquisa completa de concorrente com insights para o cliente
+    trigger: "*research-competitor {name} --context {path}"
+    steps:
+      - agent: intelligence-hunter
+        task: hunt-competitor
+      - agent: context-analyst
+        task: analyze-against-context
+      - agent: context-analyst
+        task: swot-analysis
+      - agent: report-architect
+        task: build-report
+      - agent: report-architect
+        task: executive-summary
+
+  - name: person-brain-clone-flow
+    description: Clonar o cérebro de uma pessoa pública
+    trigger: "*clone-brain {person_name}"
+    steps:
+      - agent: intelligence-hunter
+        task: hunt-person
+      - agent: brain-mapper
+        task: content-audit
+      - agent: brain-mapper
+        task: map-brain
+      - agent: brain-mapper
+        task: extract-frameworks
+      - agent: report-architect
+        task: build-report
+
+  - name: topic-mastery-flow
+    description: Dominar um tema em 1 dia
+    trigger: "*master-topic {topic}"
+    steps:
+      - agent: intelligence-hunter
+        task: hunt-topic
+      - agent: context-analyst
+        task: analyze-against-context
+      - agent: report-architect
+        task: build-report
+
+metadata:
+  created_at: "2026-03-12T00:00:00Z"
+  source_docs: ["verbal-description"]
+  user_adjustments: 0
+  overall_confidence: 0.92
+  squad_creator_version: "2.1.0"

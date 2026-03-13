@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logoisum — Video Editing Agency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Pinyon+Script&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ===================================
+       RESET & TOKENS
+    =================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --charcoal:    #1E1E1E;
+      --charcoal-2:  #252525;
+      --terra:       #B8693E;
+      --terra-light: #C9845C;
+      --terra-dim:   rgba(184,105,62,0.18);
+      --bordo:       #7A3B2E;
+      --gold:        #C4A882;
+      --gold-dim:    rgba(196,168,130,0.18);
+      --linen:       #F5F0E8;
+      --linen-2:     #EDE8DE;
+      --white:       #FFFFFF;
+      --warm-gray:   #8A7E72;
+
+      /* Glass tokens */
+      --glass-light:  rgba(255,255,255,0.10);
+      --glass-border: rgba(255,255,255,0.16);
+      --glass-gold:   rgba(196,168,130,0.14);
+      --glass-gold-b: rgba(196,168,130,0.28);
+      --glass-dark:   rgba(10,8,6,0.28);
+
+      --f-serif:  'Cormorant Garamond', serif;
+      --f-script: 'Pinyon Script', cursive;
+      --f-sans:   'DM Sans', sans-serif;
+
+      --ease:     cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --transition: 0.26s var(--ease);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--f-sans);
+      background: var(--charcoal);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ===================================
+       NAVBAR — GLASS
+    =================================== */
+    .nav-wrap {
+      position: fixed;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 1160px;
+      z-index: 1000;
+      transition: top 0.3s var(--ease);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      background: rgba(245,240,232,0.14);
+      backdrop-filter: blur(28px) saturate(1.6);
+      -webkit-backdrop-filter: blur(28px) saturate(1.6);
+      border: 1px solid rgba(196,168,130,0.22);
+      border-radius: 16px;
+      padding: 0 8px 0 20px;
+      height: 58px;
+      box-shadow:
+        0 2px 8px rgba(0,0,0,0.12),
+        0 12px 40px rgba(0,0,0,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.12);
+    }
+
+    .nav-logo {
+      font-family: var(--f-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .nav-logo span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .nav-links {
+      display: none;
+      list-style: none;
+      gap: 0;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.68);
+      padding: 0.4rem 0.9rem;
+      border-radius: 10px;
+      transition: background var(--transition), color var(--transition);
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links a:hover {
+      background: rgba(196,168,130,0.14);
+      color: var(--white);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(196,168,130,0.18);
+      border: 1px solid rgba(196,168,130,0.32);
+      backdrop-filter: blur(10px);
+      color: var(--white);
+      font-family: var(--f-sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      padding: 0 8px 0 16px;
+      height: 40px;
+      border-radius: 12px;
+      white-space: nowrap;
+      transition: background var(--transition), border-color var(--transition);
+      flex-shrink: 0;
+    }
+
+    .nav-cta:hover {
+      background: rgba(196,168,130,0.28);
+      border-color: rgba(196,168,130,0.5);
+    }
+
+    .nav-cta-arrow {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--terra);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background var(--transition);
+    }
+
+    .nav-cta:hover .nav-cta-arrow { background: var(--terra-light); }
+
+    .nav-cta-arrow svg { width: 11px; height: 11px; color: var(--white); }
+
+    /* ===================================
+       HERO
+    =================================== */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 1.5rem 5rem;
+      gap: 2rem;
+    }
+
+    /* Eyebrow glass pill */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,168,130,0.16);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border: 1px solid rgba(196,168,130,0.30);
+      color: rgba(255,255,255,0.80);
+      font-family: var(--f-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.45rem 1.1rem;
+      border-radius: 100px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.10);
+    }
+
+    .eyebrow-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--terra-light);
+      animation: pulse-dot 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.45; transform: scale(0.7); }
+    }
+
+    /* Headline */
+    .hero-headline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-line-1 {
+      font-family: var(--f-sans);
+      font-size: clamp(24px, 4.8vw, 52px);
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.35);
+    }
+
+    .hero-line-2 {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: clamp(52px, 9.5vw, 84px);
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.0;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.35);
+    }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.8vw, 18px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.68);
+      max-width: 440px;
+      line-height: 1.6;
+      text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+    }
+
+    /* Glass CTA group */
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-workreel {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--charcoal);
+      font-family: var(--f-sans);
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      padding: 0 24px 0 10px;
+      height: 52px;
+      border-radius: 100px;
+      cursor: pointer;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.6);
+      transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease);
+    }
+
+    .btn-workreel:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 36px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.6);
+    }
+
+    .btn-workreel-play {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .btn-workreel-play svg { width: 12px; height: 12px; margin-left: 2px; }
+
+    .btn-ghost-hero {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,168,130,0.12);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(196,168,130,0.28);
+      color: rgba(255,255,255,0.80);
+      font-family: var(--f-sans);
+      font-size: 14px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      padding: 0 22px;
+      height: 48px;
+      border-radius: 100px;
+      transition: background var(--transition), border-color var(--transition);
+    }
+
+    .btn-ghost-hero:hover {
+      background: rgba(196,168,130,0.22);
+      border-color: rgba(196,168,130,0.45);
+    }
+
+    /* ===================================
+       TICKER
+    =================================== */
+    .ticker {
+      background: var(--charcoal-2);
+      border-top: 1px solid rgba(196,168,130,0.10);
+      border-bottom: 1px solid rgba(196,168,130,0.10);
+      padding: 14px 0;
+      overflow: hidden;
+    }
+
+    .ticker-track {
+      display: flex;
+      white-space: nowrap;
+      animation: ticker-scroll 26s linear infinite;
+    }
+
+    .ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 22px;
+      font-family: var(--f-sans);
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      flex-shrink: 0;
+    }
+
+    .ticker-item::before {
+      content: '';
+      display: block;
+      width: 3px; height: 3px;
+      border-radius: 50%;
+      background: var(--terra-light);
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ===================================
+       SECTION COMMONS
+    =================================== */
+    .section {
+      padding: clamp(5rem, 9vw, 8.5rem) clamp(1.5rem, 5%, 5rem);
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--f-sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--terra-light);
+      margin-bottom: 1.25rem;
+    }
+
+    .label::before {
+      content: '';
+      display: block;
+      width: 22px; height: 1px;
+      background: var(--terra);
+    }
+
+    .label-dark { color: var(--terra); }
+    .label-dark::before { background: var(--terra); }
+
+    .heading-xl {
+      font-family: var(--f-serif);
+      font-size: clamp(2.4rem, 5vw, 4.2rem);
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      line-height: 1.1;
+    }
+
+    .heading-xl em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .heading-lg {
+      font-family: var(--f-serif);
+      font-size: clamp(1.9rem, 3.5vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    .heading-lg em { font-style: italic; color: var(--gold); }
+
+    .body-text {
+      font-family: var(--f-sans);
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.85;
+    }
+
+    /* ===================================
+       STATS — GLASS ROW
+    =================================== */
+    .stats-bg {
+      background: var(--charcoal-2);
+      padding: 0 clamp(1.5rem, 5%, 5rem);
+    }
+
+    .stats-row {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(196,168,130,0.08);
+      border: 1px solid rgba(196,168,130,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) { .stats-row { grid-template-columns: repeat(4, 1fr); } }
+
+    .stat {
+      background: var(--charcoal-2);
+      padding: 2.5rem 2rem;
+      transition: background 0.2s;
+    }
+
+    .stat:hover { background: var(--charcoal); }
+
+    .stat-num {
+      font-family: var(--f-serif);
+      font-size: clamp(2.4rem, 4vw, 3.6rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .stat-num span { color: var(--terra-light); }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--warm-gray);
+      letter-spacing: 0.02em;
+    }
+
+    /* ===================================
+       WORKS — GLASS CARDS
+    =================================== */
+    .works-bg { background: var(--charcoal); }
+
+    .works-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .works-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5px;
+      background: rgba(196,168,130,0.06);
+    }
+
+    @media (min-width: 640px)  { .works-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) {
+      .works-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: auto auto;
+      }
+      .works-item:first-child { grid-row: span 2; }
+    }
+
+    .works-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 16/10;
+      background: var(--charcoal-2);
+      cursor: pointer;
+    }
+
+    @media (min-width: 1024px) {
+      .works-item:first-child { aspect-ratio: auto; }
+    }
+
+    .works-item-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, var(--charcoal-2), var(--charcoal), #2A1E18);
+      transition: transform 0.7s var(--ease);
+    }
+
+    .works-item:nth-child(2) .works-item-bg { background: linear-gradient(135deg, #1A1008, #28180A, #1A1008); }
+    .works-item:nth-child(3) .works-item-bg { background: linear-gradient(135deg, #10181A, #162328, #10181A); }
+    .works-item:nth-child(4) .works-item-bg { background: linear-gradient(135deg, #181018, #241622, #181018); }
+    .works-item:nth-child(5) .works-item-bg { background: linear-gradient(135deg, #0E1410, #161E18, #0E1410); }
+
+    .works-item:hover .works-item-bg { transform: scale(1.05); }
+
+    .works-item-num {
+      position: absolute;
+      top: 1.25rem; left: 1.25rem;
+      font-family: var(--f-serif);
+      font-size: 12px;
+      font-style: italic;
+      color: rgba(196,168,130,0.35);
+    }
+
+    /* Glass play button */
+    .works-item-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(196,168,130,0.14);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(196,168,130,0.30);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: transform 0.35s var(--ease), opacity 0.35s, background 0.3s;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .works-item:hover .works-item-play {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+      background: rgba(196,168,130,0.22);
+    }
+
+    .works-item-play svg { width: 16px; height: 16px; margin-left: 3px; }
+
+    .works-item-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      background: linear-gradient(0deg, rgba(10,6,4,0.75) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform 0.35s var(--ease), opacity 0.35s;
+    }
+
+    .works-item:hover .works-item-info { transform: translateY(0); opacity: 1; }
+
+    .works-item-title {
+      font-family: var(--f-serif);
+      font-size: 16px;
+      font-weight: 400;
+      margin-bottom: 3px;
+      color: var(--white);
+    }
+
+    .works-item-cat {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* ===================================
+       SERVICES — GLASS GRID
+    =================================== */
+    .services-bg { background: var(--linen); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      margin-top: 3.5rem;
+      border: 1px solid rgba(184,105,62,0.12);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(184,105,62,0.08);
+    }
+
+    @media (min-width: 640px)  { .services-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .service-card {
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(8px);
+      padding: 2.5rem 2rem;
+      transition: background var(--transition);
+      position: relative;
+    }
+
+    .service-card:hover { background: var(--white); }
+
+    .service-icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--charcoal);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 12px rgba(30,30,30,0.2);
+    }
+
+    .service-icon svg { width: 20px; height: 20px; color: var(--gold); }
+
+    .service-title {
+      font-family: var(--f-serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 0.6rem;
+      letter-spacing: -0.01em;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--warm-gray);
+      line-height: 1.75;
+    }
+
+    .service-tag {
+      display: inline-block;
+      margin-top: 1.25rem;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--terra);
+    }
+
+    /* ===================================
+       ABOUT — GLASS ON DARK
+    =================================== */
+    .about-bg { background: var(--charcoal-2); }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    @media (min-width: 900px) { .about-layout { grid-template-columns: 1fr 1fr; } }
+
+    /* Glass frame visual */
+    .about-visual {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .about-visual-inner {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #2A1E14, #1E1410, #301E10);
+    }
+
+    .about-visual-overlay {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(196,168,130,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse at 75% 70%, rgba(184,105,62,0.08) 0%, transparent 55%);
+    }
+
+    /* Glass badge */
+    .about-visual-badge {
+      position: absolute;
+      bottom: 1.5rem; left: 1.5rem;
+      background: rgba(245,240,232,0.10);
+      backdrop-filter: blur(20px) saturate(1.5);
+      -webkit-backdrop-filter: blur(20px) saturate(1.5);
+      border: 1px solid rgba(196,168,130,0.25);
+      border-radius: 14px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .about-badge-num {
+      font-family: var(--f-serif);
+      font-size: 2rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .about-badge-label {
+      font-size: 11px;
+      font-weight: 300;
+      color: var(--gold);
+      margin-top: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Gold orb accent */
+    .about-visual-orb {
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      width: 42px; height: 42px;
+      border-radius: 50%;
+      background: rgba(184,105,62,0.18);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(184,105,62,0.35);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .about-visual-orb svg { width: 18px; height: 18px; color: var(--terra-light); }
+
+    .about-text .heading-xl { color: var(--white); margin-bottom: 1.5rem; }
+
+    .about-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    .about-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--terra-light);
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    /* ===================================
+       PROCESS — GLASS STEPS
+    =================================== */
+    .process-bg { background: var(--charcoal); }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      margin-top: 3.5rem;
+      border: 1px solid rgba(196,168,130,0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(196,168,130,0.05);
+    }
+
+    @media (min-width: 768px)  { .process-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .process-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .process-step {
+      background: rgba(37,37,37,0.90);
+      backdrop-filter: blur(6px);
+      padding: 2.5rem 2rem;
+      transition: background var(--transition);
+    }
+
+    .process-step:hover { background: rgba(45,35,28,0.95); }
+
+    .process-step-num {
+      font-family: var(--f-serif);
+      font-size: 11px;
+      font-style: italic;
+      font-weight: 300;
+      letter-spacing: 0.12em;
+      color: var(--terra-light);
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .process-step-title {
+      font-family: var(--f-serif);
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 0.65rem;
+    }
+
+    .process-step-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.40);
+      line-height: 1.75;
+    }
+
+    /* ===================================
+       TESTIMONIALS — GLASS CARDS
+    =================================== */
+    .testimonials-bg { background: var(--charcoal-2); }
+
+    .testimonials-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px)  { .testimonials-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .testimonials-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Glass testimonial card */
+    .t-card {
+      background: rgba(255,255,255,0.040);
+      backdrop-filter: blur(20px) saturate(1.3);
+      -webkit-backdrop-filter: blur(20px) saturate(1.3);
+      border: 1px solid rgba(196,168,130,0.13);
+      border-radius: 18px;
+      padding: 2rem;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.05);
+      transition: border-color 0.24s, transform 0.35s var(--ease), box-shadow 0.35s;
+    }
+
+    .t-card:hover {
+      border-color: rgba(196,168,130,0.28);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.22), inset 0 1px 0 rgba(255,255,255,0.07);
+    }
+
+    .t-stars { display: flex; gap: 3px; margin-bottom: 1.25rem; }
+    .t-star  { width: 13px; height: 13px; color: var(--gold); }
+
+    .t-quote {
+      font-family: var(--f-serif);
+      font-size: 1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.8;
+      margin-bottom: 1.75rem;
+    }
+
+    .t-author { display: flex; align-items: center; gap: 12px; }
+
+    .t-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(196,168,130,0.12);
+      border: 1px solid rgba(196,168,130,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--f-serif);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gold);
+      flex-shrink: 0;
+    }
+
+    .t-name    { font-size: 13px; font-weight: 500; color: var(--white); letter-spacing: -0.01em; }
+    .t-handle  { font-size: 11px; font-weight: 300; color: var(--warm-gray); margin-top: 1px; }
+
+    /* ===================================
+       CTA SECTION — GLASS PANEL
+    =================================== */
+    .cta-section {
+      background: var(--charcoal);
+      padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5%, 5rem);
+    }
+
+    .cta-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(24px) saturate(1.4);
+      -webkit-backdrop-filter: blur(24px) saturate(1.4);
+      border: 1px solid rgba(196,168,130,0.16);
+      border-radius: 28px;
+      padding: clamp(3rem, 6vw, 5.5rem) clamp(2rem, 5vw, 5rem);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,0.06) inset,
+        0 24px 80px rgba(0,0,0,0.22);
+    }
+
+    @media (min-width: 768px) {
+      .cta-inner { flex-direction: row; align-items: center; justify-content: space-between; }
+    }
+
+    /* Ambient glow */
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: -150px; right: -100px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,168,130,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -80px;
+      width: 350px; height: 350px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(184,105,62,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-text { position: relative; z-index: 1; max-width: 520px; }
+    .cta-text .heading-xl { color: var(--white); }
+
+    .cta-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (min-width: 640px) { .cta-actions { flex-direction: row; align-items: center; } }
+
+    /* Glass primary button */
+    .btn-primary-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(245,240,232,0.94);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.5);
+      color: var(--charcoal);
+      font-family: var(--f-sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      padding: 0 10px 0 22px;
+      height: 52px;
+      border-radius: 100px;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.6);
+      transition: transform 0.24s var(--ease), box-shadow 0.24s;
+    }
+
+    .btn-primary-glass:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.24);
+    }
+
+    .btn-primary-glass .arrow-circle {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--terra);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .btn-primary-glass .arrow-circle svg { width: 12px; height: 12px; color: var(--white); }
+
+    .btn-outline-glass {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,168,130,0.08);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(196,168,130,0.22);
+      color: rgba(255,255,255,0.72);
+      font-family: var(--f-sans);
+      font-size: 14px;
+      font-weight: 400;
+      padding: 0 22px;
+      height: 52px;
+      border-radius: 100px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .btn-outline-glass:hover {
+      background: rgba(196,168,130,0.16);
+      border-color: rgba(196,168,130,0.4);
+      color: var(--white);
+    }
+
+    /* ===================================
+       FOOTER
+    =================================== */
+    footer {
+      background: var(--charcoal-2);
+      border-top: 1px solid rgba(196,168,130,0.08);
+    }
+
+    .footer-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5%, 5rem);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    @media (min-width: 768px) { .footer-top { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 2rem; } }
+
+    .footer-brand-name {
+      font-family: var(--f-serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--white);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-brand-name span { font-style: italic; color: var(--gold); }
+
+    .footer-brand-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--warm-gray);
+      line-height: 1.75;
+      max-width: 260px;
+    }
+
+    .footer-col-title {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+
+    .footer-links a {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      transition: color 0.18s;
+    }
+
+    .footer-links a:hover { color: rgba(255,255,255,0.85); }
+
+    .footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.5rem clamp(1.5rem, 5%, 5rem);
+      border-top: 1px solid rgba(196,168,130,0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.25);
+    }
+
+    .footer-socials { display: flex; gap: 0.5rem; }
+
+    .footer-social {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: rgba(196,168,130,0.08);
+      border: 1px solid rgba(196,168,130,0.12);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--warm-gray);
+      transition: background 0.18s, color 0.18s, border-color 0.18s;
+    }
+
+    .footer-social:hover {
+      background: rgba(196,168,130,0.18);
+      border-color: rgba(196,168,130,0.3);
+      color: var(--gold);
+    }
+
+    .footer-social svg { width: 14px; height: 14px; }
+
+    /* Script accent in footer */
+    .footer-script {
+      font-family: var(--f-script);
+      font-size: 1.8rem;
+      color: rgba(196,168,130,0.18);
+      line-height: 1;
+      margin-top: 0.5rem;
+    }
+
+    /* ===================================
+       SCROLL ANIMATIONS
+    =================================== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out);
+    }
+
+    .fade-up.visible   { opacity: 1; transform: translateY(0); }
+    .fade-up-d1 { transition-delay: 0.1s; }
+    .fade-up-d2 { transition-delay: 0.2s; }
+    .fade-up-d3 { transition-delay: 0.3s; }
+    .fade-up-d4 { transition-delay: 0.4s; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       NAV — GLASS FLOATING
+  =========================================== -->
+  <div class="nav-wrap">
+    <nav>
+
+      <div class="nav-logo">
+        Logo<span>isum</span>
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#works">Works</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Testimonial</a></li>
+      </ul>
+
+      <a href="#contact" class="nav-cta">
+        Book A Free Meeting
+        <span class="nav-cta-arrow">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 10L10 2M10 2H4M10 2v6"/>
+          </svg>
+        </span>
+      </a>
+
+    </nav>
+  </div>
+
+
+  <!-- ==========================================
+       HERO — VIDEO BG, NO OVERLAY
+  =========================================== -->
+  <section class="hero">
+
+    <video
+      class="hero-video"
+      src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260228_065522_522e2295-ba22-457e-8fdb-fbcd68109c73.mp4"
+      autoplay muted loop playsinline
+    ></video>
+
+    <div class="hero-content">
+
+      <div class="hero-eyebrow fade-up">
+        <span class="eyebrow-dot"></span>
+        Available for new projects
+      </div>
+
+      <div class="hero-headline fade-up fade-up-d1">
+        <h1 class="hero-line-1">Agency that makes your</h1>
+        <h1 class="hero-line-2">videos &amp; reels viral</h1>
+      </div>
+
+      <p class="hero-sub fade-up fade-up-d2">
+        Short-form video editing for Influencers, Creators and Brands
+      </p>
+
+      <div class="hero-cta-group fade-up fade-up-d3">
+        <button class="btn-workreel" onclick="document.getElementById('works').scrollIntoView({behavior:'smooth'})">
+          <span class="btn-workreel-play">
+            <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5l10 5.5-10 5.5z"/></svg>
+          </span>
+          See Our Workreel
+        </button>
+        <a href="#services" class="btn-ghost-hero">Explore Services</a>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ==========================================
+       TICKER
+  =========================================== -->
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Short-form editing</span>
+      <span class="ticker-item">Reels & TikTok</span>
+      <span class="ticker-item">Color grading</span>
+      <span class="ticker-item">Motion graphics</span>
+      <span class="ticker-item">Viral thumbnails</span>
+      <span class="ticker-item">Brand content</span>
+      <span class="ticker-item">Influencer campaigns</span>
+      <span class="ticker-item">Podcast clips</span>
+      <span class="ticker-item">YouTube Shorts</span>
+      <span class="ticker-item">Storytelling edits</span>
+      <span class="ticker-item">Short-form editing</span>
+      <span class="ticker-item">Reels & TikTok</span>
+      <span class="ticker-item">Color grading</span>
+      <span class="ticker-item">Motion graphics</span>
+      <span class="ticker-item">Viral thumbnails</span>
+      <span class="ticker-item">Brand content</span>
+      <span class="ticker-item">Influencer campaigns</span>
+      <span class="ticker-item">Podcast clips</span>
+      <span class="ticker-item">YouTube Shorts</span>
+      <span class="ticker-item">Storytelling edits</span>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       STATS
+  =========================================== -->
+  <div class="stats-bg" style="padding-top:clamp(3rem,6vw,5rem);padding-bottom:clamp(3rem,6vw,5rem);">
+    <div class="stats-row">
+      <div class="stat fade-up">
+        <p class="stat-num">200<span>+</span></p>
+        <p class="stat-label">Creators served</p>
+      </div>
+      <div class="stat fade-up fade-up-d1">
+        <p class="stat-num">1.2<span>B</span></p>
+        <p class="stat-label">Total views generated</p>
+      </div>
+      <div class="stat fade-up fade-up-d2">
+        <p class="stat-num">4.8<span>★</span></p>
+        <p class="stat-label">Average client rating</p>
+      </div>
+      <div class="stat fade-up fade-up-d3">
+        <p class="stat-num">48<span>h</span></p>
+        <p class="stat-label">Average turnaround</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       WORKS
+  =========================================== -->
+  <div id="works" class="works-bg">
+    <div class="section">
+      <div class="works-header">
+        <div>
+          <p class="label">Our Work</p>
+          <h2 class="heading-xl fade-up">Content that <em>performs</em></h2>
+        </div>
+        <a href="#contact" class="btn-outline-glass fade-up fade-up-d1">See all work →</a>
+      </div>
+    </div>
+
+    <div class="works-grid" style="max-width:1280px;margin:0 auto;">
+      <div class="works-item fade-up">
+        <div class="works-item-bg"></div>
+        <span class="works-item-num">01</span>
+        <div class="works-item-play">
+          <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5l10 5.5-10 5.5z"/></svg>
+        </div>
+        <div class="works-item-info">
+          <p class="works-item-title">The Comeback Story</p>
+          <p class="works-item-cat">Reels · 12M views</p>
+        </div>
+      </div>
+      <div class="works-item fade-up fade-up-d1">
+        <div class="works-item-bg"></div>
+        <span class="works-item-num">02</span>
+        <div class="works-item-play">
+          <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5l10 5.5-10 5.5z"/></svg>
+        </div>
+        <div class="works-item-info">
+          <p class="works-item-title">Brand Launch</p>
+          <p class="works-item-cat">TikTok · 4.8M views</p>
+        </div>
+      </div>
+      <div class="works-item fade-up fade-up-d2">
+        <div class="works-item-bg"></div>
+        <span class="works-item-num">03</span>
+        <div class="works-item-play">
+          <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5l10 5.5-10 5.5z"/></svg>
+        </div>
+        <div class="works-item-info">
+          <p class="works-item-title">Fitness Series</p>
+          <p class="works-item-cat">Shorts · 22M views</p>
+        </div>
+      </div>
+      <div class="works-item fade-up fade-up-d1">
+        <div class="works-item-bg"></div>
+        <span class="works-item-num">04</span>
+        <div class="works-item-play">
+          <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5l10 5.5-10 5.5z"/></svg>
+        </div>
+        <div class="works-item-info">
+          <p class="works-item-title">Chef's Daily</p>
+          <p class="works-item-cat">Reels · 7.2M views</p>
+        </div>
+      </div>
+      <div class="works-item fade-up fade-up-d2">
+        <div class="works-item-bg"></div>
+        <span class="works-item-num">05</span>
+        <div class="works-item-play">
+          <svg viewBox="0 0 16 16" fill="white"><path d="M4 2.5l10 5.5-10 5.5z"/></svg>
+        </div>
+        <div class="works-item-info">
+          <p class="works-item-title">Product Drop Edit</p>
+          <p class="works-item-cat">TikTok · 9.1M views</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       SERVICES
+  =========================================== -->
+  <div id="services" class="services-bg">
+    <div class="section">
+      <p class="label label-dark">What We Do</p>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:2rem;">
+        <h2 class="heading-xl fade-up" style="color:var(--charcoal);max-width:520px;">
+          Everything your <em style="color:var(--terra);">content needs</em>
+        </h2>
+        <p class="fade-up fade-up-d1" style="font-size:14px;font-weight:300;color:var(--warm-gray);max-width:320px;line-height:1.8;">
+          From raw footage to viral-ready content — we handle the entire post-production pipeline.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <div class="service-card fade-up">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="6" width="20" height="12" rx="2"/>
+              <path d="M10 9l5 3-5 3V9z" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <p class="service-title">Short-Form Editing</p>
+          <p class="service-desc">Reels, TikToks and Shorts that hook viewers in the first 3 seconds and drive real engagement.</p>
+          <span class="service-tag">Most popular</span>
+        </div>
+
+        <div class="service-card fade-up fade-up-d1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M3 12h2m14 0h2M12 3v2m0 14v2"/>
+              <circle cx="12" cy="12" r="9" stroke-dasharray="2 3"/>
+            </svg>
+          </div>
+          <p class="service-title">Color Grading</p>
+          <p class="service-desc">Cinematic, consistent color that makes your brand instantly recognizable across every platform.</p>
+          <span class="service-tag">Premium</span>
+        </div>
+
+        <div class="service-card fade-up fade-up-d2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
+              <line x1="4" y1="22" x2="4" y2="15"/>
+            </svg>
+          </div>
+          <p class="service-title">Motion Graphics</p>
+          <p class="service-desc">Animated text, transitions, and overlays that add production value and keep viewers glued.</p>
+          <span class="service-tag">Add-on</span>
+        </div>
+
+        <div class="service-card fade-up fade-up-d1">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 1a3 3 0 003 3 3 3 0 003-3M3 9l9 2 9-2M12 3v18"/>
+            </svg>
+          </div>
+          <p class="service-title">Podcast Clips</p>
+          <p class="service-desc">Turn long-form episodes into binge-worthy short clips that expand your audience every day.</p>
+          <span class="service-tag">New</span>
+        </div>
+
+        <div class="service-card fade-up fade-up-d2">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <p class="service-title">Brand Content</p>
+          <p class="service-desc">Premium edits for product launches, campaigns and brand storytelling that convert viewers.</p>
+          <span class="service-tag">Enterprise</span>
+        </div>
+
+        <div class="service-card fade-up fade-up-d3">
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <p class="service-title">Monthly Package</p>
+          <p class="service-desc">Consistent output month over month. Dedicated editor, fast turnaround, unlimited revisions.</p>
+          <span class="service-tag">Best value</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       ABOUT
+  =========================================== -->
+  <div id="about" class="about-bg">
+    <div class="section">
+      <div class="about-layout">
+
+        <div class="about-visual fade-up">
+          <div class="about-visual-inner"></div>
+          <div class="about-visual-overlay"></div>
+          <div class="about-visual-badge">
+            <p class="about-badge-num">3+ yrs</p>
+            <p class="about-badge-label">In the business</p>
+          </div>
+          <div class="about-visual-orb">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="about-text fade-up fade-up-d2">
+          <p class="label">Who We Are</p>
+          <h2 class="heading-xl">
+            We don't just edit.<br>We make you <em>unforgettable.</em>
+          </h2>
+          <p class="body-text" style="margin-top:1.5rem;">
+            Logoisum is a boutique video editing agency obsessed with one thing: making your content perform. We've helped 200+ creators, brands and agencies grow their audiences with edits that stop the scroll.
+          </p>
+          <ul class="about-list">
+            <li><span class="about-dot"></span>Team of 12 specialized editors — each one a platform expert</li>
+            <li><span class="about-dot"></span>Average client doubles their views in the first 30 days</li>
+            <li><span class="about-dot"></span>48-hour turnaround on all standard projects</li>
+            <li><span class="about-dot"></span>Unlimited revisions on every package</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       PROCESS
+  =========================================== -->
+  <div class="process-bg">
+    <div class="section">
+      <p class="label">How It Works</p>
+      <h2 class="heading-xl fade-up" style="max-width:500px;">
+        From raw to <em>viral</em> in 4 steps
+      </h2>
+      <div class="process-grid">
+        <div class="process-step fade-up">
+          <p class="process-step-num">Step 01</p>
+          <h3 class="process-step-title">Discovery Call</h3>
+          <p class="process-step-desc">We learn your brand, audience, and goals. Free 30-minute strategy session — no strings attached.</p>
+        </div>
+        <div class="process-step fade-up fade-up-d1">
+          <p class="process-step-num">Step 02</p>
+          <h3 class="process-step-title">Footage Intake</h3>
+          <p class="process-step-desc">You share your raw footage via Google Drive or Frame.io. We get to work within 24 hours.</p>
+        </div>
+        <div class="process-step fade-up fade-up-d2">
+          <p class="process-step-num">Step 03</p>
+          <h3 class="process-step-title">Edit & Review</h3>
+          <p class="process-step-desc">First cut delivered in 48h. Leave timestamp comments and we revise until it's perfect.</p>
+        </div>
+        <div class="process-step fade-up fade-up-d3">
+          <p class="process-step-num">Step 04</p>
+          <h3 class="process-step-title">Deliver & Grow</h3>
+          <p class="process-step-desc">Final files delivered ready to post. We track performance and optimize together over time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       TESTIMONIALS
+  =========================================== -->
+  <div id="testimonials" class="testimonials-bg">
+    <div class="section">
+      <div class="testimonials-header">
+        <div>
+          <p class="label">Testimonials</p>
+          <h2 class="heading-xl fade-up">What creators <em>say</em></h2>
+        </div>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <div class="t-card fade-up">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+          </div>
+          <p class="t-quote">"Logoisum transformed my raw travel footage into a Reel that hit 8 million views. Their eye for pacing and sound design is insane."</p>
+          <div class="t-author">
+            <div class="t-avatar">MK</div>
+            <div>
+              <p class="t-name">Marcus K.</p>
+              <p class="t-handle">@marcusontheroad · 1.4M followers</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card fade-up fade-up-d1">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+          </div>
+          <p class="t-quote">"We went from 50K to 400K followers in 6 months. Every editor I've worked with before pales in comparison. This is a different league."</p>
+          <div class="t-author">
+            <div class="t-avatar">SR</div>
+            <div>
+              <p class="t-name">Sofia R.</p>
+              <p class="t-handle">@sofiafitofficial · 412K followers</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card fade-up fade-up-d2">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+          </div>
+          <p class="t-quote">"The turnaround speed blew us away. Our product launch Reel was done in 36 hours, looked like a Netflix production, and sold out our drop."</p>
+          <div class="t-author">
+            <div class="t-avatar">JL</div>
+            <div>
+              <p class="t-name">James L.</p>
+              <p class="t-handle">Founder, Drops Studio</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card fade-up">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+          </div>
+          <p class="t-quote">"My podcast clips now get more views than the full episodes. Logoisum knows exactly what makes people stop and watch."</p>
+          <div class="t-author">
+            <div class="t-avatar">AL</div>
+            <div>
+              <p class="t-name">Aisha L.</p>
+              <p class="t-handle">@theaishashow · 890K followers</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card fade-up fade-up-d1">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+          </div>
+          <p class="t-quote">"I've tried 4 editing services before this. Nothing comes close. The motion graphics alone are worth 10x what they charge. Don't sleep on Logoisum."</p>
+          <div class="t-author">
+            <div class="t-avatar">TW</div>
+            <div>
+              <p class="t-name">Tyler W.</p>
+              <p class="t-handle">@tylerwfitness · 2.1M followers</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="t-card fade-up fade-up-d2">
+          <div class="t-stars">
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+            <svg class="t-star" viewBox="0 0 14 14" fill="currentColor"><path d="M7 1l1.6 3.3L12 4.8l-2.5 2.4.6 3.4L7 9l-3.1 1.6.6-3.4L2 4.8l3.4-.5L7 1z"/></svg>
+          </div>
+          <p class="t-quote">"Working with Logoisum is like having a silent creative director. They understand the brief, execute perfectly, and make the process effortless."</p>
+          <div class="t-author">
+            <div class="t-avatar">PN</div>
+            <div>
+              <p class="t-name">Priya N.</p>
+              <p class="t-handle">CMO, NovaBrand Agency</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       CTA — GLASS PANEL
+  =========================================== -->
+  <div id="contact" class="cta-section">
+    <div class="cta-inner fade-up">
+      <div class="cta-text">
+        <p class="label">Start a Project</p>
+        <h2 class="heading-xl" style="color:var(--white);">
+          Ready to make your<br>next video <em>go viral?</em>
+        </h2>
+        <p class="body-text" style="margin-top:1rem;font-size:14px;">
+          Book a free 30-minute strategy call. No commitments. We'll tell you exactly how to grow your channel with better edits.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a href="https://cal.com/logoisum" class="btn-primary-glass">
+          Book A Free Meeting
+          <span class="arrow-circle">
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 10L10 2M10 2H4M10 2v6"/>
+            </svg>
+          </span>
+        </a>
+        <a href="mailto:hello@logoisum.com" class="btn-outline-glass">
+          Send a message
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ==========================================
+       FOOTER
+  =========================================== -->
+  <footer>
+    <div class="footer-top">
+
+      <div>
+        <p class="footer-brand-name">Logo<span>isum</span></p>
+        <p class="footer-script">Studio</p>
+        <p class="footer-brand-desc">
+          Boutique video editing agency helping creators, brands and agencies go viral through world-class post-production.
+        </p>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Navigate</p>
+        <ul class="footer-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#works">Works</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#testimonials">Testimonial</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Services</p>
+        <ul class="footer-links">
+          <li><a href="#">Short-form Editing</a></li>
+          <li><a href="#">Color Grading</a></li>
+          <li><a href="#">Motion Graphics</a></li>
+          <li><a href="#">Podcast Clips</a></li>
+          <li><a href="#">Brand Content</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <p class="footer-col-title">Contact</p>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@logoisum.com">hello@logoisum.com</a></li>
+          <li><a href="#">Book a call</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">TikTok</a></li>
+          <li><a href="#">LinkedIn</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Logoisum. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#" class="footer-social" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.19 8.19 0 004.79 1.53V6.78a4.85 4.85 0 01-1.02-.09z"/>
+          </svg>
+        </a>
+        <a href="#" class="footer-social" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    // Scroll-in animations
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Anchor smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    });
+
+    // Nav compact on scroll
+    const navWrap = document.querySelector('.nav-wrap');
+    window.addEventListener('scroll', () => {
+      navWrap.style.top = window.scrollY > 60 ? '10px' : '18px';
+    }, { passive: true });
+  </script>
+
+</body>
+</html>

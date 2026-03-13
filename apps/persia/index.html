@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pérsia — Documentação fotográfica da sua rotina profissional. Belo Horizonte e região metropolitana.">
+    <title>Pérsia — Documentarista de Rotina Profissional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,300;0,6..96,400;1,6..96,300;1,6..96,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            /* Compensa a navbar fixa ao saltar para âncoras */
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: #0a0907;
+        }
+
+        .serif { font-family: 'Bodoni Moda', serif; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0a0907; }
+        ::-webkit-scrollbar-thumb { background: #3a3028; border-radius: 2px; }
+
+        /* ─── Vídeo fixo atrás de tudo ─── */
+        #bg-video {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* ─── Navbar ─── */
+        /* backdrop-filter removido do transition — não é animável de forma confiável */
+        nav {
+            transition: background 0.5s ease, border-color 0.5s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        /* Padding controlado só por CSS */
+        nav { padding-top: 1.75rem; padding-bottom: 1.75rem; }
+        nav.scrolled { padding-top: 1rem; padding-bottom: 1rem; }
+
+        /* ─── Hero overlay ─── */
+        .hero-overlay {
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 9, 7, 0.38) 0%,
+                rgba(10, 9, 7, 0.28) 25%,
+                rgba(10, 9, 7, 0.32) 60%,
+                rgba(10, 9, 7, 0.48) 100%
+            );
+        }
+
+        /* ─── Packages overlay ─── */
+        /* Começa em 0.48 — exatamente onde hero termina — transição suave */
+        .packages-overlay {
+            background: linear-gradient(
+                to bottom,
+                rgba(10, 9, 7, 0.48) 0%,
+                rgba(10, 9, 7, 0.50) 30%,
+                rgba(10, 9, 7, 0.52) 100%
+            );
+            z-index: 1;
+        }
+
+        /* ─── Cards glass ─── */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                        background 0.4s ease,
+                        border-color 0.4s ease,
+                        box-shadow 0.4s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.24);
+            transform: translateY(-5px);
+            box-shadow: 0 28px 64px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card-featured {
+            background: rgba(255, 255, 255, 0.13);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.26);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .glass-card-featured:hover {
+            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-7px);
+            box-shadow: 0 36px 80px rgba(0, 0, 0, 0.48);
+        }
+
+        /* ─── Location pill ─── */
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+
+        /* ─── Divider ─── */
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+        }
+
+        /* ─── Info strip ─── */
+        .info-strip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* ─── Botões ─── */
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.94);
+            color: #0f0d0b;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        background 0.35s ease,
+                        box-shadow 0.35s ease;
+        }
+        .btn-primary:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            color: white;
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+                        background 0.35s ease,
+                        border-color 0.35s ease;
+        }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.52);
+            transform: translateY(-2px);
+        }
+
+        .btn-card {
+            background: rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            color: rgba(255, 255, 255, 0.80);
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+        .btn-card:hover {
+            background: rgba(255, 255, 255, 0.16);
+            border-color: rgba(255, 255, 255, 0.34);
+        }
+
+        .btn-card-featured {
+            background: rgba(255, 255, 255, 0.94);
+            color: #0f0d0b;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .btn-card-featured:hover {
+            background: #fff;
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.25);
+        }
+
+        /* ─── Featured badge ─── */
+        .featured-tag {
+            background: rgba(255, 255, 255, 0.92);
+            color: #0f0d0b;
+            letter-spacing: 0.09em;
+        }
+
+        /* ─── Checks ─── */
+        .check { color: rgba(255, 255, 255, 0.70); }
+        .cross  { color: rgba(255, 255, 255, 0.25); }
+
+        /* ─── Card subsection label ─── */
+        .card-label {
+            font-size: 0.65rem;
+            letter-spacing: 0.10em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.30);
+            margin-bottom: 0.5rem;
+        }
+
+        /* ─── Info geral grid ─── */
+        .info-glass {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.10);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* ─── Scroll caret ─── */
+        .caret { animation: caret-bounce 2.8s ease-in-out infinite; }
+        @keyframes caret-bounce {
+            0%, 100% { transform: translateY(0);   opacity: 0.4; }
+            50%       { transform: translateY(7px); opacity: 0.8; }
+        }
+
+        /* ─── Footer glass ─── */
+        .footer-glass {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        /* ─── Textos com opacidade customizada (inline-safe) ─── */
+        .text-dim-40  { color: rgba(255,255,255,0.40); }
+        .text-dim-50  { color: rgba(255,255,255,0.50); }
+        .text-dim-60  { color: rgba(255,255,255,0.60); }
+        .text-dim-70  { color: rgba(255,255,255,0.70); }
+        .text-dim-25  { color: rgba(255,255,255,0.25); }
+        .text-dim-30  { color: rgba(255,255,255,0.30); }
+
+        /* ─── Footer links ─── */
+        .footer-link {
+            color: rgba(255,255,255,0.40);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .footer-link:hover { color: rgba(255,255,255,0.65); }
+    </style>
+</head>
+<body>
+
+    <!-- Vídeo fixo como fundo de toda a página -->
+    <video id="bg-video" autoplay muted loop playsinline preload="metadata" poster="1.jpg">
+        <source src="bg.mp4" type="video/mp4">
+    </video>
+
+
+    <!-- ─── NAVBAR ─── -->
+    <nav class="fixed top-0 left-0 right-0 z-50" id="main-nav">
+        <div class="flex items-center justify-center">
+            <img src="p-branco.png" alt="Pérsia" class="h-8 w-auto">
+        </div>
+    </nav>
+
+
+    <!-- ─── HERO ─── -->
+    <section class="relative min-h-screen" id="hero">
+        <div class="hero-overlay absolute inset-0 pointer-events-none" style="z-index:1"></div>
+
+        <div class="relative flex flex-col items-center justify-center min-h-screen px-6 pt-20 sm:pt-24 pb-24 sm:pb-36 text-center" style="z-index:2">
+
+            <h1 class="serif text-4xl sm:text-5xl lg:text-6xl font-light text-white max-w-3xl mb-7"
+                style="line-height:1.12; text-shadow:0 4px 60px rgba(0,0,0,0.55)">
+                Que bom que você<br>
+                <em>chegou até aqui.</em>
+            </h1>
+
+            <p class="text-sm sm:text-base max-w-sm sm:max-w-md mb-12 font-light leading-relaxed tracking-wide"
+               style="color:rgba(255,255,255,0.78); text-shadow:0 2px 20px rgba(0,0,0,0.5)">
+                Eu sou a Pérsia. Criei esse espaço pra você entender como eu trabalho.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center gap-4">
+                <a href="#sessoes" target="_self"
+                   class="btn-primary px-9 py-3.5 rounded-full text-sm font-medium tracking-wide">
+                    Ver sessões
+                </a>
+                <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20conversar%20antes%20de%20reservar."
+                   class="btn-outline px-9 py-3.5 rounded-full text-sm font-light tracking-wide">
+                    Conversar antes de reservar
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 caret" style="z-index:2">
+            <svg class="w-5 h-5" fill="none" stroke="rgba(255,255,255,0.4)" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
+    </section>
+
+
+    <!-- ─── SESSÕES ─── -->
+    <section class="relative py-16 sm:py-28 px-4 sm:px-6" id="sessoes">
+        <div class="packages-overlay absolute inset-0 pointer-events-none"></div>
+
+        <div class="relative max-w-7xl mx-auto" style="z-index:2">
+
+            <div class="text-center mb-5">
+                <h2 class="serif text-4xl sm:text-5xl md:text-6xl font-light text-white mb-6">
+                    Escolha sua sessão
+                </h2>
+                <p class="text-dim-60 text-sm sm:text-base font-light max-w-lg mx-auto leading-relaxed tracking-wide mb-4">
+                    Sessões pensadas para marcas que precisam de conteúdo com estética, consistência e agilidade.
+                </p>
+                <p class="text-dim-40 text-xs font-light max-w-md mx-auto leading-relaxed tracking-wide mb-5">
+                    Todas as opções incluem direção da sessão, curadoria do material, edição leve, entrega digital em Drive compartilhado e uso comercial digital pela marca contratante.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-xs text-dim-40 font-light tracking-wide">
+                    <span>50% na reserva · 50% na entrega</span>
+                    <span class="hidden sm:block text-dim-25">·</span>
+                    <span>Prazo: 3 a 4 dias úteis</span>
+                </div>
+            </div>
+
+            <div class="divider max-w-xs mx-auto mb-16"></div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                <!-- 3 horas -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col">
+                    <p class="text-dim-40 text-xs uppercase tracking-widest mb-3">3 horas</p>
+                    <h3 class="serif text-3xl font-light italic text-white mb-4">Essencial</h3>
+                    <div class="flex items-baseline gap-1 mb-1">
+                        <span class="text-dim-40 text-sm">R$</span>
+                        <span class="text-4xl sm:text-5xl font-light text-white">960</span>
+                    </div>
+                    <p class="text-dim-50 text-xs font-light leading-relaxed mt-3 mb-5 italic">
+                        Ideal para captação objetiva no seu local de trabalho, com foco em presença digital, bastidores, rotina e conteúdo para a semana.
+                    </p>
+                    <div class="divider mb-5"></div>
+
+                    <!-- Entrega -->
+                    <div class="mb-4">
+                        <p class="card-label">Entrega</p>
+                        <ul class="space-y-2 text-xs text-dim-70 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 20 a 25 fotos editadas</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 2 vídeos curtos em formato vertical</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cobertura -->
+                    <div class="mb-4">
+                        <p class="card-label">Cobertura</p>
+                        <ul class="space-y-2 text-xs text-dim-60 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 1 ambiente principal</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 2 pessoas em cena</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 1 troca de look</li>
+                        </ul>
+                    </div>
+
+                    <!-- Incluso -->
+                    <div class="mb-4">
+                        <p class="card-label">Incluso</p>
+                        <ul class="space-y-2 text-xs text-dim-60 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Equipamento profissional</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Iluminação portátil</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Direção de captação</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Edição de foto e vídeo</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Álbum digital em Drive compartilhado</li>
+                        </ul>
+                    </div>
+
+                    <!-- Formato -->
+                    <div class="flex-1 mb-6">
+                        <p class="card-label">Vídeos</p>
+                        <ul class="space-y-2 text-xs text-dim-50 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Vertical 9:16 · Reels e Stories</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 15 segundos por vídeo</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20reservar%20o%20plano%20Essencial."
+                       class="btn-card w-full py-3.5 rounded-2xl text-sm text-center block">
+                        Reservar sessão
+                    </a>
+                </div>
+
+                <!-- 5 horas — DESTAQUE -->
+                <div class="glass-card glass-card-featured rounded-3xl p-6 sm:p-8 flex flex-col relative">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                        <span class="featured-tag text-xs font-medium px-4 py-1.5 rounded-full inline-block">
+                            mais escolhido
+                        </span>
+                    </div>
+                    <p class="text-dim-50 text-xs uppercase tracking-widest mb-3 pt-1">5 horas</p>
+                    <h3 class="serif text-3xl font-light italic text-white mb-4">Completo</h3>
+                    <div class="flex items-baseline gap-1 mb-1">
+                        <span class="text-dim-50 text-sm">R$</span>
+                        <span class="text-4xl sm:text-5xl font-light text-white">1.400</span>
+                    </div>
+                    <p style="color:rgba(255,255,255,0.55)" class="text-xs font-light leading-relaxed mt-3 mb-5 italic">
+                        Ideal para marcas que precisam de mais variedade de conteúdo, mais momentos da rotina e melhor aproveitamento do dia.
+                    </p>
+                    <div class="divider mb-5"></div>
+
+                    <!-- Entrega -->
+                    <div class="mb-4">
+                        <p class="card-label">Entrega</p>
+                        <ul class="space-y-2 text-xs font-light" style="color:rgba(255,255,255,0.75)">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 35 a 40 fotos editadas</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 3 a 4 vídeos curtos em formato vertical</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cobertura -->
+                    <div class="mb-4">
+                        <p class="card-label">Cobertura</p>
+                        <ul class="space-y-2 text-xs font-light" style="color:rgba(255,255,255,0.70)">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 2 ambientes no mesmo local</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 4 pessoas em cena</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 2 trocas de look</li>
+                        </ul>
+                    </div>
+
+                    <!-- Incluso -->
+                    <div class="mb-4">
+                        <p class="card-label">Incluso</p>
+                        <ul class="space-y-2 text-xs font-light" style="color:rgba(255,255,255,0.70)">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Equipamento profissional</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Iluminação portátil</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Direção de captação</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Edição de foto e vídeo</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Cobertura ampla de processos e bastidores</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Álbum digital em Drive compartilhado</li>
+                        </ul>
+                    </div>
+
+                    <!-- Formato -->
+                    <div class="flex-1 mb-6">
+                        <p class="card-label">Vídeos</p>
+                        <ul class="space-y-2 text-xs font-light" style="color:rgba(255,255,255,0.60)">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Vertical 9:16 · Reels e Stories</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 30 segundos por vídeo</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20reservar%20o%20plano%20Completo."
+                       class="btn-card-featured w-full py-3.5 rounded-2xl text-sm font-medium text-center block">
+                        Reservar sessão
+                    </a>
+                </div>
+
+                <!-- 8 horas -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col">
+                    <p class="text-dim-40 text-xs uppercase tracking-widest mb-3">8 horas</p>
+                    <h3 class="serif text-3xl font-light italic text-white mb-4">Imersão</h3>
+                    <div class="flex items-baseline gap-1 mb-1">
+                        <span class="text-dim-40 text-sm">R$</span>
+                        <span class="text-4xl sm:text-5xl font-light text-white">1.860</span>
+                    </div>
+                    <p class="text-dim-50 text-xs font-light leading-relaxed mt-3 mb-5 italic">
+                        Ideal para cobertura completa do dia, com mais profundidade visual, mais variedade de cenas e construção de banco de conteúdo robusto.
+                    </p>
+                    <div class="divider mb-5"></div>
+
+                    <!-- Entrega -->
+                    <div class="mb-4">
+                        <p class="card-label">Entrega</p>
+                        <ul class="space-y-2 text-xs text-dim-70 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 60 a 70 fotos editadas</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> 5 vídeos curtos em formato vertical</li>
+                        </ul>
+                    </div>
+
+                    <!-- Cobertura -->
+                    <div class="mb-4">
+                        <p class="card-label">Cobertura</p>
+                        <ul class="space-y-2 text-xs text-dim-60 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 4 ambientes no mesmo local</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 6 pessoas em cena</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Até 3 trocas de look</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Cobertura completa do dia</li>
+                        </ul>
+                    </div>
+
+                    <!-- Incluso -->
+                    <div class="mb-4">
+                        <p class="card-label">Incluso</p>
+                        <ul class="space-y-2 text-xs text-dim-60 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Equipamento profissional</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Iluminação portátil</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Direção de captação</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Edição de foto e vídeo</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Ambientação básica do espaço</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Álbum digital em Drive compartilhado</li>
+                        </ul>
+                    </div>
+
+                    <!-- Formato -->
+                    <div class="flex-1 mb-6">
+                        <p class="card-label">Vídeos</p>
+                        <ul class="space-y-2 text-xs text-dim-50 font-light">
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Vertical 9:16 · Reels e Stories</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Vídeos curtos de até 30 segundos</li>
+                            <li class="flex gap-2"><span class="check">&#10003;</span> Vídeo-resumo de até 45 segundos</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/5531999999999?text=Ol%C3%A1%2C%20P%C3%A9rsia!%20Gostaria%20de%20reservar%20o%20plano%20Imers%C3%A3o."
+                       class="btn-card w-full py-3.5 rounded-2xl text-sm text-center block">
+                        Reservar sessão
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Info strip -->
+            <div class="info-strip rounded-2xl px-8 py-5 mt-12 max-w-xl mx-auto text-center">
+                <p class="text-dim-50 text-sm font-light leading-relaxed tracking-wide">
+                    Deslocamento incluso em toda BH e região metropolitana.<br>
+                    <span class="text-dim-30">Fora da RMBH: taxa adicional informada antes de qualquer compromisso.</span>
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    <!-- ─── INFORMAÇÕES GERAIS ─── -->
+    <section class="relative py-16 sm:py-28 px-4 sm:px-6" id="informacoes">
+        <div class="packages-overlay absolute inset-0 pointer-events-none"></div>
+
+        <div class="relative max-w-5xl mx-auto" style="z-index:2">
+
+            <div class="text-center mb-5">
+                <h2 class="serif text-3xl sm:text-4xl md:text-5xl font-light text-white mb-4">
+                    Informações gerais
+                </h2>
+                <p class="text-dim-40 text-xs font-light tracking-wide">
+                    Tudo o que você precisa saber antes de reservar.
+                </p>
+            </div>
+
+            <div class="divider max-w-xs mx-auto mb-14"></div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+                <!-- Edição leve -->
+                <div class="info-glass rounded-2xl p-7">
+                    <p class="text-dim-30 text-xs uppercase tracking-widest mb-3">O que significa</p>
+                    <h4 class="serif text-xl font-light text-white mb-4">Edição leve</h4>
+                    <p class="text-dim-50 text-xs font-light leading-relaxed mb-4">
+                        Todas as fotos e vídeos finais passam por ajuste de:
+                    </p>
+                    <ul class="space-y-1.5 text-xs text-dim-60 font-light mb-4">
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Luz e cor</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Contraste e nitidez</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Enquadramento</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Padronização visual</li>
+                    </ul>
+                    <p class="text-dim-30 text-xs font-light leading-relaxed italic">
+                        Não inclui manipulação avançada, troca de fundo, remoção complexa de objetos, montagem, tratamento de pele detalhado ou edição publicitária avançada.
+                    </p>
+                </div>
+
+                <!-- Entrega -->
+                <div class="info-glass rounded-2xl p-7">
+                    <p class="text-dim-30 text-xs uppercase tracking-widest mb-3">Entrega</p>
+                    <h4 class="serif text-xl font-light text-white mb-4">Como recebo o material</h4>
+                    <ul class="space-y-2.5 text-xs text-dim-60 font-light">
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Prazo: 3 a 4 dias úteis após a sessão</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Material enviado por Drive compartilhado</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Link disponível por 60 dias</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Alta resolução + versão otimizada para redes</li>
+                    </ul>
+                </div>
+
+                <!-- Pagamento -->
+                <div class="info-glass rounded-2xl p-7">
+                    <p class="text-dim-30 text-xs uppercase tracking-widest mb-3">Pagamento</p>
+                    <h4 class="serif text-xl font-light text-white mb-4">Formas e condições</h4>
+                    <ul class="space-y-2.5 text-xs text-dim-60 font-light mb-4">
+                        <li class="flex gap-2"><span class="check">&#10003;</span> 50% no ato da reserva</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> 50% na entrega</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Pix, transferência ou cartão</li>
+                    </ul>
+                    <p class="text-dim-30 text-xs font-light italic">Parcelamento no cartão sujeito às taxas da operadora.</p>
+                </div>
+
+                <!-- Remarcação -->
+                <div class="info-glass rounded-2xl p-7">
+                    <p class="text-dim-30 text-xs uppercase tracking-widest mb-3">Agenda</p>
+                    <h4 class="serif text-xl font-light text-white mb-4">Remarcação e cancelamento</h4>
+                    <ul class="space-y-2.5 text-xs text-dim-60 font-light mb-4">
+                        <li class="flex gap-2"><span class="check">&#10003;</span> 1 remarcação sem custo (aviso mínimo 72h)</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Sujeita à disponibilidade de agenda</li>
+                    </ul>
+                    <p class="text-dim-30 text-xs font-light italic">Em caso de cancelamento, o valor da reserva não é reembolsável.</p>
+                </div>
+
+                <!-- Deslocamento -->
+                <div class="info-glass rounded-2xl p-7">
+                    <p class="text-dim-30 text-xs uppercase tracking-widest mb-3">Deslocamento</p>
+                    <h4 class="serif text-xl font-light text-white mb-4">Onde atendo</h4>
+                    <ul class="space-y-2.5 text-xs text-dim-60 font-light mb-4">
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Atendimento no local do cliente</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Deslocamento na cidade-base incluso</li>
+                    </ul>
+                    <p class="text-dim-30 text-xs font-light italic">Para outras cidades ou regiões: taxa adicional conforme distância, pedágio e estacionamento.</p>
+                </div>
+
+                <!-- Hora extra + Uso -->
+                <div class="info-glass rounded-2xl p-7">
+                    <p class="text-dim-30 text-xs uppercase tracking-widest mb-3">Extras</p>
+                    <h4 class="serif text-xl font-light text-white mb-4">Hora extra e uso das imagens</h4>
+                    <p class="text-dim-40 text-xs font-light mb-2">Hora extra: <span class="text-dim-60">R$ 280 por hora adicional.</span></p>
+                    <p class="text-dim-30 text-xs font-light italic mb-5">Para sessões com ambientação mais complexa: valor sob consulta.</p>
+                    <div class="divider mb-4"></div>
+                    <p class="text-dim-40 text-xs font-light mb-3">O valor inclui uso comercial digital:</p>
+                    <ul class="space-y-1.5 text-xs text-dim-60 font-light mb-3">
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Redes sociais, site e anúncios</li>
+                        <li class="flex gap-2"><span class="check">&#10003;</span> Materiais institucionais digitais</li>
+                    </ul>
+                    <p class="text-dim-30 text-xs font-light italic">Não inclui cessão para terceiros, revenda ou licenciamento para outras marcas.</p>
+                </div>
+
+            </div>
+
+            <!-- Ambientação do espaço — nota do plano Imersão -->
+            <div class="info-strip rounded-2xl px-8 py-6 mt-8 max-w-2xl mx-auto">
+                <p class="text-dim-30 text-xs uppercase tracking-widest mb-3 text-center">Somente no plano Imersão</p>
+                <h5 class="serif text-lg font-light text-white mb-3 text-center">Ambientação do espaço</h5>
+                <p class="text-dim-40 text-xs font-light mb-3 text-center leading-relaxed">
+                    Organização estética básica do cenário, composição visual com elementos já existentes no local e ajuste de enquadramentos para melhor resultado visual.
+                </p>
+                <p class="text-dim-25 text-xs font-light italic text-center">
+                    Não inclui locação de mobiliário, cenografia externa, flores, objetos comprados ou produção de cenário completa.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+
+
+
+    <script>
+        const nav = document.getElementById('main-nav');
+
+        // Navbar: toggle classe via scroll — transição fica 100% no CSS
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        }, { passive: true });
+
+        // Autoplay fallback: se o browser bloquear, mostra o poster (1.jpg)
+        const video = document.getElementById('bg-video');
+        video.play().catch(() => {
+            video.style.display = 'none';
+            document.body.style.backgroundImage = "url('1.jpg')";
+            document.body.style.backgroundSize = 'cover';
+            document.body.style.backgroundPosition = 'center';
+            document.body.style.backgroundAttachment = 'fixed';
+        });
+    </script>
+</body>
+</html>

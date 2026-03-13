@@ -1,0 +1,59 @@
+name: research-squad
+version: 1.0.0
+description: >
+  Squad de inteligência e pesquisa focado em entregáveis práticos para clientes reais.
+  Produz relatórios acionáveis sobre competidores, pessoas e tópicos — cruzando
+  sempre com o contexto do cliente (cerebro/projetos).
+author: Luca
+license: MIT
+slashPrefix: research
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+components:
+  agents:
+    - intelligence-hunter.md
+    - context-analyst.md
+    - brain-mapper.md
+    - report-architect.md
+  tasks:
+    - hunt-competitor.md
+    - hunt-person.md
+    - hunt-topic.md
+    - validate-sources.md
+    - analyze-against-context.md
+    - swot-analysis.md
+    - opportunity-map.md
+    - map-brain.md
+    - extract-frameworks.md
+    - content-audit.md
+    - build-report.md
+    - executive-summary.md
+  workflows:
+    - competitor-intelligence-flow.md
+    - person-brain-clone-flow.md
+    - topic-mastery-flow.md
+  checklists: []
+  templates: []
+  tools: []
+  scripts: []
+
+config:
+  extends: extend
+  coding-standards: config/coding-standards.md
+  tech-stack: config/tech-stack.md
+
+dependencies:
+  node: []
+  python: []
+  squads: []
+
+tags:
+  - research
+  - intelligence
+  - client-deliverable
+  - competitor-analysis
+  - person-profiling
+  - topic-mastery
